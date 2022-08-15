@@ -1,0 +1,13 @@
+.MainMenu {
+  color: white;
+  a {
+    margin: 0 10px;
+  }
+  svg {
+    width: 135px;
+    height: 27px;
+  }
+  .active {
+    font-weight: 700;
+  }
+}
