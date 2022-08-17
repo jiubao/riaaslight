@@ -1,5 +1,4 @@
 import React from 'react'
-import { MainMenu } from '../../components/menu'
 
 interface IProps {
   id?: string
@@ -8,9 +7,5 @@ interface IProps {
 const PREFIX = 'Rog'
 
 export const Rog: React.FC<IProps> = ({ id }) => {
-  return (
-    <div className={PREFIX}>
-      <MainMenu />
-    </div>
-  )
+  return <div className={PREFIX}>rog</div>
 }

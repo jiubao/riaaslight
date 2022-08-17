@@ -1,0 +1,57 @@
+.Layout {
+  display: block;
+}
+
+.Header {
+  display: flex;
+  align-items: center;
+
+  position: absolute;
+  top: 17px;
+  left: 22px;
+  right: 22px;
+  height: 68px;
+
+  padding: 0 24px;
+  color: #fff;
+  background: linear-gradient(
+    280.89deg,
+    #00b4ed 1.75%,
+    #00a0e9 41.71%,
+    #0ca4d5 78.55%,
+    #1b6ac6 93.59%
+  );
+  border-radius: 12px;
+
+  &-logo {
+    flex: 1 1;
+
+    svg {
+      width: 135px;
+      height: 27px;
+    }
+  }
+
+  &-menu {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    flex: 0 0;
+    margin: 0 4px;
+    padding: 0 10px;
+    cursor: pointer;
+    svg {
+      margin-right: 10px;
+    }
+
+    &.selected,
+    &:hover {
+      background: linear-gradient(
+        148.3deg,
+        rgba(255, 255, 255, 0.49) 9.99%,
+        rgba(255, 255, 255, 0.14) 94.4%
+      );
+      border-radius: 8px;
+    }
+  }
+}
