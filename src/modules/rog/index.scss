@@ -1,0 +1,18 @@
+.Rog {
+  &-left {
+    // width: 848px;
+    width: 60%;
+    // background: green;
+    padding-top: 85px;
+  }
+  &-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 40%;
+
+    // z-index: 100;
+    // background: yellow;
+  }
+}
