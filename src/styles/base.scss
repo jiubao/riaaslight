@@ -1,0 +1,6 @@
+$base-font-family: 'PingFang SC';
+
+@mixin baseFont {
+  font-family: $base-font-family;
+  font-weight: 600;
+}

@@ -1,9 +1,17 @@
+@import '../../styles/base.scss';
+
 .Rog {
   &-left {
     // width: 848px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
     width: 60%;
     // background: green;
-    padding-top: 85px;
+    padding: 85px 25px 40px 25px;
+    // overflow-y: scroll;
+    overflow-y: auto;
   }
   &-right {
     position: absolute;
@@ -14,5 +22,26 @@
 
     // z-index: 100;
     // background: yellow;
+  }
+
+  &List {
+    &-title {
+      display: block;
+      margin: 40px 0 8px;
+
+      font-size: 16px;
+      line-height: 22px;
+
+      color: #808080;
+
+      @include baseFont;
+    }
+  }
+}
+
+.CategoryList {
+  .BizUnit {
+    // min-width: 80px;
+    height: 32px;
   }
 }

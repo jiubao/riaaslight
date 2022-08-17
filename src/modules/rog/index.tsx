@@ -15,7 +15,6 @@ export const Rog: React.FC<IProps> = ({ id }) => {
       <div className={`${PREFIX}-left`}>
         <RogList />
       </div>
-      {/* <div className={`${PREFIX}-right`}></div> */}
       <MapWrapper>
         <Map className={`${PREFIX}-right`} />
       </MapWrapper>
