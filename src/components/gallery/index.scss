@@ -1,0 +1,19 @@
+.Gallery {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  ul {
+    list-style-type: none;
+    padding-right: 8px;
+    > li {
+      display: inline-block;
+      width: 100%;
+      padding-bottom: 8px;
+      font-size: 0;
+
+      &:last-child {
+        padding-bottom: 0 !important;
+      }
+    }
+  }
+}
