@@ -1,8 +1,11 @@
 @import '../../../styles/base.scss';
 
 .RogDetail {
+  .LR-left {
+    padding-left: 50px;
+  }
+
   &Right {
-    // display: block;
     padding-top: 110px;
     background-color: #efefef;
     img {
@@ -12,6 +15,37 @@
   }
 
   &Left {
+    &-header {
+      position: relative;
+      margin: 40px 0;
+      span {
+        margin-left: 8px;
+        @include baseFont;
+      }
+    }
+
+    &-back {
+      position: absolute;
+      left: 0;
+      top: 0;
+      transform: translateX(-110%);
+      color: #545e6b;
+      cursor: pointer;
+    }
+
+    &-brand {
+      display: flex;
+      font-size: 22px;
+      color: #545e6b;
+    }
+
+    &-location {
+      font-weight: 400;
+      font-size: 14px;
+      color: #545e6b;
+      margin-top: 8px;
+    }
+
     &-title {
       display: block;
       font-size: 14px;

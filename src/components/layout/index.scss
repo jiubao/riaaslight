@@ -1,3 +1,5 @@
+@import '../../styles/base.scss';
+
 .Layout {
   display: block;
 }
@@ -40,6 +42,7 @@
     flex: 0 0;
     margin: 0 4px;
     padding: 0 10px;
+    font-size: 14px;
     cursor: pointer;
     svg {
       margin-right: 10px;
@@ -54,5 +57,7 @@
       );
       border-radius: 8px;
     }
+
+    @include baseFont;
   }
 }

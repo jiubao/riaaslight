@@ -12,7 +12,7 @@ export const CategoryList: React.FC<IProps> = ({ list = [] }) => {
   return (
     <div className={`${PREFIX} BizUnit-list`}>
       {list.map((item) => (
-        <BizUnit key={item.id} text={item.name} pure={true} />
+        <BizUnit key={item.id} id={item.id} text={item.name} pure={true} />
       ))}
     </div>
   )

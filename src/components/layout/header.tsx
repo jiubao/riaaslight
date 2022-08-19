@@ -12,7 +12,8 @@ export const MainHeader: React.FC = () => {
   return (
     <div className={PREFIX}>
       <div className={`${PREFIX}-logo`}>
-        <LogoIcon />
+        {/* <LogoIcon /> */}
+        <LogoIcon width="135" height="27" viewBox="0 0 135 27" />
       </div>
       <MenuButton
         text="ROG"

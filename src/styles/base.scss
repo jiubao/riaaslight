@@ -5,3 +5,15 @@ $base-font-family: 'PingFang SC';
   font-weight: 600;
   font-style: normal;
 }
+
+.flex {
+  display: flex;
+}
+
+.middle {
+  align-items: center;
+}
+
+.center {
+  justify-content: center;
+}

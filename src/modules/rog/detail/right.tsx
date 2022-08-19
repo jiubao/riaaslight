@@ -18,7 +18,7 @@ const Row = ({ index }: { index: number }) => {
 export const RogDetailRight: React.FC<IProps> = ({ id }) => {
   return (
     <div className={PREFIX}>
-      <Gallery columnCount={4} total={TOTAL} gutter={[15, 15]}>
+      <Gallery columnCount={4} total={TOTAL} gutter={15}>
         {Row}
       </Gallery>
     </div>

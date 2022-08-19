@@ -12,7 +12,12 @@ export const BrandList: React.FC<IProps> = ({ list = [] }) => {
   return (
     <div className={`${PREFIX} BizUnit-list`}>
       {list.map((item) => (
-        <BizUnit key={item.id} text={item.name} base64={item.picture} />
+        <BizUnit
+          key={item.id}
+          id={item.id}
+          text={item.name}
+          base64={item.picture}
+        />
       ))}
     </div>
   )
