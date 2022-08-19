@@ -1,10 +1,11 @@
+import { isArray } from 'lodash'
 import React, { useMemo } from 'react'
 import './index.scss'
 
 interface IProps {
   columnCount: number
   total: number
-  gutter?: [number, number]
+  gutter?: [number, number] | number
   children: ({ index }: { index: number }) => React.ReactNode
 }
 
@@ -17,17 +18,25 @@ export const Gallery: React.FC<IProps> = ({
   children,
 }) => {
   const columns = useMemo(() => Array(columnCount).fill(1), [columnCount])
-  const wrapStyle = useMemo(
-    () => ({ margin: `0 -${gutter[0] / 2}px` }),
+
+  const gutterX = useMemo(
+    () => (isArray(gutter) ? gutter[0] : gutter) / 2,
     [gutter]
   )
 
-  const ulStyle = useMemo(
-    () => ({ width: `${100 / columnCount}%`, padding: `0 ${gutter[0] / 2}px` }),
-    [columnCount, gutter]
+  const gutterY = useMemo(
+    () => (isArray(gutter) ? gutter[1] : gutter),
+    [gutter]
   )
 
-  const liStyle = useMemo(() => ({ paddingBottom: `${gutter[1]}px` }), [gutter])
+  const wrapStyle = useMemo(() => ({ margin: `0 -${gutterX}px` }), [gutterX])
+
+  const ulStyle = useMemo(
+    () => ({ width: `${100 / columnCount}%`, padding: `0 ${gutterX}px` }),
+    [columnCount, gutterX]
+  )
+
+  const liStyle = useMemo(() => ({ paddingBottom: `${gutterY}px` }), [gutterY])
 
   const renderColumn = (c: number) => {
     const rows = []

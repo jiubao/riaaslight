@@ -1,5 +1,6 @@
 import React from 'react'
 import { MapWrapper, Map } from '../../components/googleMap'
+import { LR } from '../../components/layout/lr'
 import './index.scss'
 import { RogList } from './list'
 
@@ -11,13 +12,10 @@ const PREFIX = 'Rog'
 
 export const Rog: React.FC<IProps> = ({ id }) => {
   return (
-    <div className={PREFIX}>
-      <div className={`${PREFIX}-left`}>
-        <RogList />
-      </div>
+    <LR className={PREFIX} left={<RogList />} percent={60}>
       <MapWrapper>
-        <Map className={`${PREFIX}-right`} />
+        <Map className={`${PREFIX}-map`} />
       </MapWrapper>
-    </div>
+    </LR>
   )
 }
