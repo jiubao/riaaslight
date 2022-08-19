@@ -18,7 +18,7 @@ const PREFIX = 'DebugGallery'
 //     return `https://fakeimg.pl/${width}x${height}`
 //   })
 
-const TOTAL = 3
+const TOTAL = 50
 const srcs = mockImgSrcByCount(TOTAL)
 
 const Row = ({ index }: { index: number }) => {
@@ -28,7 +28,7 @@ const Row = ({ index }: { index: number }) => {
 export const DebugGallery: React.FC = () => {
   return (
     <div className={PREFIX}>
-      <Gallery columnCount={3} total={TOTAL}>
+      <Gallery columnCount={4} total={TOTAL}>
         {Row}
       </Gallery>
     </div>

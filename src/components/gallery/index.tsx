@@ -20,7 +20,7 @@ export const Gallery: React.FC<IProps> = ({
   const columns = useMemo(() => Array(columnCount).fill(1), [columnCount])
 
   const gutterX = useMemo(
-    () => (isArray(gutter) ? gutter[0] : gutter) / 2,
+    () => (isArray(gutter) ? gutter[0] : gutter),
     [gutter]
   )
 
@@ -29,10 +29,13 @@ export const Gallery: React.FC<IProps> = ({
     [gutter]
   )
 
-  const wrapStyle = useMemo(() => ({ margin: `0 -${gutterX}px` }), [gutterX])
+  const wrapStyle = useMemo(() => ({ marginLeft: `-${gutterX}px` }), [gutterX])
 
   const ulStyle = useMemo(
-    () => ({ width: `${100 / columnCount}%`, padding: `0 ${gutterX}px` }),
+    () => ({
+      flexBasis: `${100 / columnCount}%`,
+      paddingLeft: `${gutterX}px`,
+    }),
     [columnCount, gutterX]
   )
 
