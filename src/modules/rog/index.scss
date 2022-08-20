@@ -1,6 +1,9 @@
 @import '../../styles/base.scss';
 
 .Rog {
+  .LR-left {
+    padding: 85px 25px 40px 25px;
+  }
   &-map {
     width: 100%;
     height: 100%;

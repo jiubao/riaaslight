@@ -12,3 +12,8 @@ export const mockImgSrcByCount = (n = 50) =>
       const height = getRandomIntInclusive(200, 600)
       return `https://fakeimg.pl/${width}x${height}`
     })
+
+export const mockFixedSrcs = (n = 50, width = 400, height = 300) =>
+  Array(n)
+    .fill(1)
+    .map(() => `https://fakeimg.pl/${width}x${height}`)

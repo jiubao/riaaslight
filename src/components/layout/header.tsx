@@ -11,7 +11,7 @@ const PREFIX = 'Header'
 
 export const MainHeader: React.FC = () => {
   const matchIndex = useMatch('/')
-  const matchRogDetail = useMatch('/rog/:id')
+  const matchRogDetail = useMatch('/retailer/:id')
   const matchPosmDetail = useMatch('/posm/:id')
 
   return (
