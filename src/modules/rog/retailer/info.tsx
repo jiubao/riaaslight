@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router'
 
 const PREFIX = 'RogDetailLeft'
 
-export const RogDetailLeft: React.FC = () => {
+export const RetailerInfo: React.FC = () => {
   const navigate = useNavigate()
 
   return (

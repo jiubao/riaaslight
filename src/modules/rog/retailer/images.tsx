@@ -15,7 +15,7 @@ const Row = ({ index }: { index: number }) => {
   return <img src={`${srcs[index]}/?text=${index}`} alt="" />
 }
 
-export const RogDetailRight: React.FC<IProps> = ({ id }) => {
+export const RetailerImages: React.FC<IProps> = ({ id }) => {
   return (
     <div className={PREFIX}>
       <Gallery columnCount={4} total={TOTAL} gutter={15}>

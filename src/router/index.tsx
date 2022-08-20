@@ -7,7 +7,7 @@ import { GoogleMapDemo } from '../debug/map'
 import { NotFound } from '../modules/notFound'
 import { Posm } from '../modules/posm'
 import { Rog } from '../modules/rog'
-import { RogDetail } from '../modules/rog/detail'
+import { Retailer } from '../modules/rog/retailer'
 
 export const MainRouter: React.FC = () => {
   return (
@@ -15,7 +15,7 @@ export const MainRouter: React.FC = () => {
       <Route path="/" element={<Layout />}>
         <Route index element={<Rog />} />
         <Route path="rog" element={<Rog />} />
-        <Route path="rog/:id" element={<RogDetail id={'1'} />} />
+        <Route path="retailer/:id" element={<Retailer id={'1'} />} />
         <Route path="posm" element={<Posm />} />
       </Route>
       <Route path="/debug" element={<Debug />}>

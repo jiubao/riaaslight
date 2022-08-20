@@ -13,7 +13,7 @@ export const RetailerList: React.FC<IProps> = ({ list = [] }) => {
   const navigate = useNavigate()
 
   const gotoDetail = (id?: string) => {
-    id !== undefined && navigate(`/rog/${id}`)
+    id !== undefined && navigate(`/retailer/${id}`)
   }
 
   return (
