@@ -5,10 +5,15 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm'
 import LocalAtmIcon from '@mui/icons-material/LocalAtm'
 import AnchorIcon from '@mui/icons-material/Anchor'
+import { useMatch } from 'react-router-dom'
 
 const PREFIX = 'Header'
 
 export const MainHeader: React.FC = () => {
+  const matchIndex = useMatch('/')
+  const matchRogDetail = useMatch('/rog/:id')
+  const matchPosmDetail = useMatch('/posm/:id')
+
   return (
     <div className={PREFIX}>
       <div className={`${PREFIX}-logo`}>
@@ -19,12 +24,14 @@ export const MainHeader: React.FC = () => {
         text="ROG"
         icon={<AddShoppingCartIcon />}
         to="/rog"
+        match={!!(matchRogDetail || matchIndex)}
         className={`${PREFIX}-menu`}
       />
       <MenuButton
         text="POSM"
         icon={<AccessAlarmIcon />}
         to="/posm"
+        match={!!matchPosmDetail}
         className={`${PREFIX}-menu`}
       />
       <MenuButton

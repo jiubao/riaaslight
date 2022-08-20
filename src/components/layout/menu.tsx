@@ -7,13 +7,20 @@ interface IProps {
   icon?: React.ReactNode
   to: string
   className?: string
+  match?: boolean
 }
 
 const PREFIX = 'MenuButton'
 
-export const MenuButton: React.FC<IProps> = ({ text, icon, to, className }) => {
+export const MenuButton: React.FC<IProps> = ({
+  text,
+  icon,
+  to,
+  className,
+  match = false,
+}) => {
   const navigate = useNavigate()
-  const match = useMatch(to)
+  const matchTo = useMatch(to)
   // const matchPosm = useMatch('/posm')
 
   const handleClick = () => {
@@ -22,7 +29,7 @@ export const MenuButton: React.FC<IProps> = ({ text, icon, to, className }) => {
 
   return (
     <div
-      className={classNames(PREFIX, className, { selected: match })}
+      className={classNames(PREFIX, className, { selected: matchTo || match })}
       onClick={handleClick}
     >
       {icon}
