@@ -105,9 +105,10 @@ export const ImageMaskWindow: React.FC<PropsWithClassName<IProps>> = ({
           <div className={`${PREFIX}-Zoom`} style={zoomStyle}>
             {rectangles.map((rect, index) => (
               <MaskWindow
-                key={JSON.stringify(rect)}
+                key={index}
                 image={image as HTMLImageElement}
-                rect={JSON.stringify(rect)}
+                // rect={JSON.stringify(rect)}
+                rect={rect}
               />
             ))}
           </div>

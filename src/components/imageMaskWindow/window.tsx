@@ -4,8 +4,8 @@ import { CanvasHelper } from '../../utils/canvas'
 
 interface IProps {
   image?: HTMLImageElement
-  // rect: RectType
-  rect: string
+  rect: RectType
+  // rect: string
   stroke?: IStroke
 }
 
@@ -22,7 +22,8 @@ export const MaskWindow: React.FC<IProps> = React.memo<IProps>(
         const helper = (helperRef.current = new CanvasHelper(canvas))
 
         const { naturalWidth, naturalHeight } = image
-        const [x, y, w, h] = JSON.parse(rect) as RectType
+        // const [x, y, w, h] = JSON.parse(rect) as RectType
+        const [x, y, w, h] = rect
         const { size, color } = stroke
         const left = x * naturalWidth
         const top = y * naturalHeight
