@@ -6,6 +6,8 @@ import 'swiper/css/navigation'
 import 'swiper/css/thumbs'
 import { FreeMode, Navigation, Thumbs, Swiper as SwiperClass } from 'swiper'
 import { mockFixedSrcs } from '../../../mock/img'
+import { ImageMaskWindow } from '../../../components/imageMaskWindow'
+import { RectType } from '../../../domain/shape'
 
 const PREFIX = 'RetailerGalleryLeft'
 
@@ -19,6 +21,13 @@ imgs.splice(
   'https://th.bing.com/th/id/R.18aaa2e072f90b0a10ec30523c4a1d57?rik=uXFP3o%2bDhxglzw&riu=http%3a%2f%2fpic.ntimg.cn%2ffile%2f20191125%2f23472843_162235820084_2.jpg&ehk=zbrnhYuUHcp6%2fYd5%2bv7xNKmLQ7U2O19IG9fDXGg8tuc%3d&risl=&pid=ImgRaw&r=0',
   'https://th.bing.com/th/id/R.201f82ae19e983a0d704f040f5c09b89?rik=r%2bqLEYYE9c1UGQ&riu=http%3a%2f%2fimg.daimg.com%2fuploads%2fallimg%2f200901%2f1-200Z11H134.jpg&ehk=pjJ9pkj%2b%2fQMBpnFO7os%2b4z2IGDopxjYmhIGroPQZArg%3d&risl=&pid=ImgRaw&r=0'
 )
+
+const rects = [
+  [0, 0, 0.1, 0.15],
+  [0.7, 0.2, 0.1, 0.15],
+  [0.5, 0.5, 0.1, 0.15],
+  [0.8, 0.8, 0.1, 0.15],
+] as RectType[]
 
 export const RetailerGalleryLeft: React.FC = () => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null)
@@ -41,8 +50,13 @@ export const RetailerGalleryLeft: React.FC = () => {
         className="mySwiper2"
       >
         {imgs.map((img, index) => (
-          <SwiperSlide>
-            <img src={`${img}/?text=${index}`} alt="" />
+          <SwiperSlide key={index}>
+            {/* <img src={`${img}/?text=${index}`} alt="" /> */}
+            <ImageMaskWindow
+              src={`${img}/?text=${index}`}
+              rectangles={rects}
+              className={`${PREFIX}-Window`}
+            />
           </SwiperSlide>
         ))}
       </Swiper>
@@ -56,7 +70,7 @@ export const RetailerGalleryLeft: React.FC = () => {
         className="mySwiper"
       >
         {imgs.map((img, index) => (
-          <SwiperSlide>
+          <SwiperSlide key={index}>
             <img src={`${img}/?text=${index}`} alt="" />
           </SwiperSlide>
         ))}
