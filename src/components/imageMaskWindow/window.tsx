@@ -1,4 +1,4 @@
-import React, { CSSProperties, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { IStroke, RectType } from '../../domain/shape'
 import { CanvasHelper } from '../../utils/canvas'
 
@@ -15,7 +15,6 @@ export const MaskWindow: React.FC<IProps> = React.memo<IProps>(
   ({ image, rect, stroke = { size: 3, color: '#ffffff' } }) => {
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const helperRef = useRef<CanvasHelper | null>(null)
-    // const [style, setStyle] = useState<CSSProperties>()
 
     useEffect(() => {
       if (canvasRef.current && image) {
@@ -32,10 +31,6 @@ export const MaskWindow: React.FC<IProps> = React.memo<IProps>(
         canvas.width = width
         canvas.height = height
         helper.drawImage(image, [left, top, width, height])
-        // setStyle({
-        //   border: `solid ${size}px ${color}`,
-        //   transform: `translate3d(${left - size}px, ${top - size}px, 0)`,
-        // })
         canvas.style.border = `solid ${size}px ${color}`
         canvas.style.transform = `translate3d(${left - size}px, ${
           top - size
