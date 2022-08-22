@@ -11,9 +11,9 @@ import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined'
 import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined'
 import { useNavigate } from 'react-router'
 
-const PREFIX = 'RogDetailLeft'
+const PREFIX = 'StoreInfo'
 
-export const RetailerInfo: React.FC = () => {
+export const StoreInfo: React.FC = () => {
   const navigate = useNavigate()
 
   return (

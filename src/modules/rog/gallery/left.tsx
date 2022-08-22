@@ -9,7 +9,7 @@ import { mockFixedSrcs } from '../../../mock/img'
 import { ImageMaskWindow } from '../../../components/imageMaskWindow'
 import { RectType } from '../../../domain/shape'
 
-const PREFIX = 'RetailerGalleryLeft'
+const PREFIX = 'StoreGalleryLeft'
 
 const imgs = mockFixedSrcs(20, 1000, 700)
 imgs.splice(
@@ -29,7 +29,7 @@ const rects = [
   [0.8, 0.8, 0.1, 0.15],
 ] as RectType[]
 
-export const RetailerGalleryLeft: React.FC = () => {
+export const StoreGalleryLeft: React.FC = () => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null)
 
   // const handleSwiper = (instance: SwiperClass) => {

@@ -6,7 +6,7 @@ interface IProps {
   id?: string
 }
 
-const PREFIX = 'RogDetailRight'
+const PREFIX = 'StoreImages'
 
 const TOTAL = 100
 const srcs = mockImgSrcByCount(TOTAL)
@@ -15,7 +15,7 @@ const Row = ({ index }: { index: number }) => {
   return <img src={`${srcs[index]}/?text=${index}`} alt="" />
 }
 
-export const RetailerImages: React.FC<IProps> = ({ id }) => {
+export const StoreImages: React.FC<IProps> = ({ id }) => {
   return (
     <div className={PREFIX}>
       <Gallery columnCount={4} total={TOTAL} gutter={15}>
