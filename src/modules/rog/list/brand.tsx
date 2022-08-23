@@ -20,7 +20,7 @@ export const BrandList: React.FC<IProps> = ({ list = [] }) => {
           key={brand.id}
           id={String(brand.id)}
           text={brand.brand_name}
-          base64={brand.brand_icon || ''}
+          base64={brand.brand_icon}
         />
       ))}
     </div>

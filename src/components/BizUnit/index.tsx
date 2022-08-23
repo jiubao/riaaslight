@@ -4,7 +4,7 @@ import './index.scss'
 interface IProps {
   id?: string
   text: string
-  base64?: string
+  base64?: string | null
   pure?: boolean
   onClick?: (id?: string) => void
 }

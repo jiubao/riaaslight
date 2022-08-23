@@ -2,7 +2,11 @@ import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { MapWrapper, Map } from '../../components/googleMap'
 import { LR } from '../../components/layout/lr'
-import { fetchBrands } from '../../store/commonSlice'
+import {
+  fetchBrands,
+  fetchCategories,
+  fetchRetailers,
+} from '../../store/commonSlice'
 import './index.scss'
 import { RogList } from './list'
 
@@ -15,6 +19,8 @@ const PREFIX = 'Rog'
 export const Rog: React.FC<IProps> = ({ id }) => {
   const dispatch = useDispatch()
   useEffect(() => {
+    dispatch(fetchRetailers() as any)
+    dispatch(fetchCategories() as any)
     dispatch(fetchBrands() as any)
   }, [dispatch])
   return (
