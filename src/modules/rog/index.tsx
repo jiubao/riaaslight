@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { MapWrapper, Map } from '../../components/googleMap'
 import { LR } from '../../components/layout/lr'
-import { brandService } from '../../services/brand'
+import { fetchBrands } from '../../store/commonSlice'
 import './index.scss'
 import { RogList } from './list'
 
@@ -12,12 +13,10 @@ interface IProps {
 const PREFIX = 'Rog'
 
 export const Rog: React.FC<IProps> = ({ id }) => {
+  const dispatch = useDispatch()
   useEffect(() => {
-    //
-    brandService.get().then((res) => {
-      console.log(res)
-    })
-  }, [])
+    dispatch(fetchBrands() as any)
+  }, [dispatch])
   return (
     <LR className={PREFIX} left={<RogList />} percent={60}>
       <MapWrapper>
