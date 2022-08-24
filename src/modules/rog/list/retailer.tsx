@@ -16,7 +16,7 @@ export const RetailerList: React.FC<IProps> = ({ list = [] }) => {
   const retailers = useSelector(selectAllRetailers)
 
   const gotoDetail = (id?: string) => {
-    id !== undefined && navigate(`/retailer/${id}`)
+    id !== undefined && navigate(`/store/${id}`)
   }
 
   return (

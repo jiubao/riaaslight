@@ -9,7 +9,9 @@ export const Layout: React.FC = () => {
   return (
     <div className={PREFIX}>
       <MainHeader />
-      <Outlet />
+      <div className={`${PREFIX}-content`}>
+        <Outlet />
+      </div>
     </div>
   )
 }

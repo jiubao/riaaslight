@@ -2,6 +2,13 @@
 
 .Layout {
   display: block;
+  &-content {
+    position: absolute;
+    top: 68px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
 }
 
 .Header {
@@ -9,9 +16,9 @@
   align-items: center;
 
   position: absolute;
-  top: 17px;
-  left: 22px;
-  right: 22px;
+  top: 0;
+  left: 0;
+  right: 0px;
   height: 68px;
   z-index: 10;
 
@@ -24,7 +31,6 @@
     #0ca4d5 78.55%,
     #1b6ac6 93.59%
   );
-  border-radius: 12px;
 
   &-logo {
     flex: 1 1;

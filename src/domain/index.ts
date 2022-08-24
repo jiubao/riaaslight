@@ -1,4 +1,4 @@
-interface IDocument {
+export interface IDocument {
   id: number
 }
 

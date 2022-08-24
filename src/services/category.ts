@@ -1,6 +1,6 @@
 import { HttpService } from '.'
 import { BASE_SERVICE_URI } from '../constants'
-import { IBrand, ICategory } from '../domain'
+import { ICategory } from '../domain'
 
 class CategoryService {
   get() {

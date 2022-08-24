@@ -2,13 +2,11 @@
 
 .Store {
   .LR-left {
-    // padding-left: 50px;
-    padding: 85px 25px 40px 50px;
+    padding: 0 25px 40px 50px;
   }
 
   &Images {
-    padding-top: 110px;
-    padding: 110px 15px 0 16px;
+    padding: 15px;
     background-color: #efefef;
     img {
       width: 100%;
