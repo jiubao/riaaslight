@@ -1,30 +1,39 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { BizUnit } from '../../../components/BizUnit'
 import {
   ToggleSelectorGroup,
   ToggleSelectorItem,
 } from '../../../components/toggleSelector'
-import { selectAllRetailers } from '../../../store/commonSlice'
+import {
+  selectAllRetailers,
+  selectSelectedRetailerIds,
+  updateCommon,
+} from '../../../store/commonSlice'
 
 const PREFIX = 'RetailerList'
 
 export const RetailerList: React.FC = () => {
   // const navigate = useNavigate()
+  const dispatch = useDispatch()
   const retailers = useSelector(selectAllRetailers)
-  const [keys, setKeys] = useState<number[]>([])
+  const retailerIds = useSelector(selectSelectedRetailerIds)
 
   // const gotoDetail = (id?: string) => {
   //   id !== undefined && navigate(`/store/${id}`)
   // }
 
   const handleChange = (value: number[]) => {
-    setKeys(value)
+    dispatch(updateCommon({ selectedRetailerIds: value }))
   }
 
   return (
     <div className={`${PREFIX} BizUnit-list`}>
-      <ToggleSelectorGroup value={keys} onChange={handleChange} mode="SINGLE">
+      <ToggleSelectorGroup
+        value={retailerIds}
+        onChange={handleChange}
+        mode="SINGLE"
+      >
         {retailers.map((item) => (
           <ToggleSelectorItem value={item.id} key={item.id}>
             <BizUnit

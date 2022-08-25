@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { BizUnit } from '../../../components/BizUnit'
 import {
   ToggleSelectorGroup,
   ToggleSelectorItem,
 } from '../../../components/toggleSelector'
 import { IRetailer } from '../../../domain/retailer'
-import { selectAllBrands } from '../../../store/commonSlice'
+import {
+  selectAllBrands,
+  selectSelectedBrandIds,
+  updateCommon,
+} from '../../../store/commonSlice'
 
 interface IProps {
   list: IRetailer[]
@@ -15,15 +19,16 @@ interface IProps {
 const PREFIX = 'BrandList'
 
 export const BrandList: React.FC<IProps> = ({ list = [] }) => {
+  const dispatch = useDispatch()
   const brands = useSelector(selectAllBrands)
-  const [value, setValue] = useState<number[]>([])
-  const handleChange = (ids: number[]) => {
-    setValue(ids)
+  const brandIds = useSelector(selectSelectedBrandIds)
+  const handleChange = (value: number[]) => {
+    dispatch(updateCommon({ selectedBrandIds: value }))
   }
 
   return (
     <div className={`${PREFIX} BizUnit-list`}>
-      <ToggleSelectorGroup value={value} onChange={handleChange}>
+      <ToggleSelectorGroup value={brandIds} onChange={handleChange}>
         {brands.map((item) => (
           <ToggleSelectorItem value={item.id} key={item.id}>
             <BizUnit

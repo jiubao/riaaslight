@@ -3,9 +3,10 @@ import { BASE_SERVICE_URI } from '../constants'
 import { IBrand } from '../domain'
 
 class BrandService {
-  get() {
+  get(categoryId: number) {
     return HttpService.get<IBrand[]>(`${BASE_SERVICE_URI}/brands`, {
       status: 'active',
+      category: categoryId,
     })
   }
 }
