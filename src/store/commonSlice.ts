@@ -7,14 +7,23 @@ import { retailerService } from '../services/retailer'
 
 export const fetchRetailers = createAsyncThunk(
   'common/fetchRetailers',
-  async () => {
+  async (_, thunkApi) => {
+    const state = thunkApi.getState() as RootState
+    if (state.common.retailers.length) {
+      return state.common.retailers
+    }
+
     return await retailerService.get()
   }
 )
 
 export const fetchCategories = createAsyncThunk(
   'common/fetchCategories',
-  async () => {
+  async (_, api) => {
+    const state = api.getState() as RootState
+    if (state.common.categories.length) {
+      return state.common.categories
+    }
     return await categoryService.get()
   }
 )
