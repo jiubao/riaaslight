@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '.'
 import { IBrand, ICategory, IRetailer } from '../domain'
 import { brandService } from '../services/brand'
@@ -38,7 +38,14 @@ const initialState: IState = {
 const commonSlice = createSlice({
   name: 'common',
   initialState,
-  reducers: {},
+  reducers: {
+    update(state, action: PayloadAction<Partial<IState>>) {
+      return {
+        ...state,
+        ...action.payload,
+      }
+    }
+  },
   extraReducers(builder) {
     builder.addCase(fetchRetailers.fulfilled, (state, action) => {
       state.retailers = action.payload
@@ -51,6 +58,8 @@ const commonSlice = createSlice({
     })
   },
 })
+
+export const { update: updateCommon } = commonSlice.actions
 
 export default commonSlice.reducer
 

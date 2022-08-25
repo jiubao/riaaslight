@@ -1,23 +1,27 @@
 import React, { PropsWithChildren } from 'react'
-import { IDocument } from '../../domain'
 import { createStateContext, IStateContext } from './context'
 
-interface IGroupProps<T extends IDocument> {
-  items: T[]
+interface IGroupProps<T> {
   disabled?: boolean
-  values: T['id'][]
-  onChange: (values: T['id'][], isSelecting: boolean) => void
+  values: T[]
+  onChange: (values: T[]) => void
 }
 
-export const ToggleSelectorGroup = <T extends IDocument>({
+export const ToggleSelectorGroup = <T extends number | string>({
+  disabled,
+  values,
+  onChange,
   children,
 }: PropsWithChildren<IGroupProps<T>>) => {
   const Context = createStateContext<T>()
-
   const context: IStateContext<T> = {
-    click: (key) => {},
+    click: (key) => {
+      if (disabled) return
+      const keySet = new Set(values)
+      keySet.has(key) ? keySet.delete(key) : keySet.add(key)
+      onChange?.(keySet.values() as unknown as T[])
+    },
     disabled: false,
-    isSelecting: false,
     checkedKeys: [],
   }
 

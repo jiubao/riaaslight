@@ -5,6 +5,7 @@ import { Debug } from '../debug'
 import { DebugGallery } from '../debug/gallary'
 import { GoogleMapDemo } from '../debug/map'
 import { DemoMask } from '../debug/mask'
+import { DemoToggleBox } from '../debug/togglebox'
 import { NotFound } from '../modules/notFound'
 import { Posm } from '../modules/posm'
 import { Rog } from '../modules/rog'
@@ -22,6 +23,7 @@ export const MainRouter: React.FC = () => {
       </Route>
       <Route path="store/:retailerId/gallery/:id" element={<StoreGallery />} />
       <Route path="/debug" element={<Debug />}>
+        <Route path="togglebox" element={<DemoToggleBox />} />
         <Route path="gallery" element={<DebugGallery />} />
         <Route path="map" element={<GoogleMapDemo />} />
         <Route path="mask" element={<DemoMask />} />

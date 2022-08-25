@@ -1,5 +1,5 @@
 import React from 'react'
-import { Brands, Retailers } from '../../../mock/retailer'
+import { Brands } from '../../../mock/retailer'
 import { BrandList } from './brand'
 import { CategoryList } from './category'
 import { RetailerList } from './retailer'
@@ -14,7 +14,7 @@ export const RogList: React.FC<IProps> = ({ id }) => {
   return (
     <div className={PREFIX}>
       <span className={`${PREFIX}-title`}>RETAILER</span>
-      <RetailerList list={Retailers} />
+      <RetailerList />
       <span className={`${PREFIX}-title`}>CATEGORY</span>
       <CategoryList list={Brands} />
       <span className={`${PREFIX}-title`}>BRAND</span>
