@@ -24,7 +24,7 @@ export const RetailerList: React.FC = () => {
 
   return (
     <div className={`${PREFIX} BizUnit-list`}>
-      <ToggleSelectorGroup value={keys} onChange={handleChange}>
+      <ToggleSelectorGroup value={keys} onChange={handleChange} mode="SINGLE">
         {retailers.map((item) => (
           <ToggleSelectorItem value={item.id} key={item.id}>
             <BizUnit
