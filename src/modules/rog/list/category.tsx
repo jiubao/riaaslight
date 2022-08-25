@@ -5,7 +5,6 @@ import {
   ToggleSelectorGroup,
   ToggleSelectorItem,
 } from '../../../components/toggleSelector'
-import { IRetailer } from '../../../domain/retailer'
 import {
   fetchBrands,
   selectAllCategories,
@@ -13,13 +12,9 @@ import {
   updateCommon,
 } from '../../../store/commonSlice'
 
-interface IProps {
-  list: IRetailer[]
-}
-
 const PREFIX = 'CategoryList'
 
-export const CategoryList: React.FC<IProps> = ({ list = [] }) => {
+export const CategoryList: React.FC = () => {
   const dispatch = useDispatch()
   const categories = useSelector(selectAllCategories)
   const categoryIds = useSelector(selectSelectedCategoryIds)

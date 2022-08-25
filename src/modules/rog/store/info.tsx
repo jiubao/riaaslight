@@ -1,7 +1,6 @@
 import { SvgIcon } from '@mui/material'
 import React from 'react'
 import { BizUnit } from '../../../components/BizUnit'
-import { Brands } from '../../../mock/retailer'
 import { BrandList } from '../list/brand'
 import { CategoryList } from '../list/category'
 // import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore'
@@ -36,9 +35,9 @@ export const StoreInfo: React.FC = () => {
       </div>
 
       <span className={`${PREFIX}-title`}>CATEGORY</span>
-      <CategoryList list={Brands} />
+      <CategoryList />
       <span className={`${PREFIX}-title`}>BRAND</span>
-      <BrandList list={Brands} />
+      <BrandList />
       <span className={`${PREFIX}-title`}>PHOTO TYPE</span>
       <div className="BizUnit-list">
         <BizUnit text={'Shelf/ Cooler Photos'} pure={true} />

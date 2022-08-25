@@ -41,4 +41,11 @@
       }
     }
   }
+  &-more {
+    text-align: center;
+    margin: 18px;
+    cursor: pointer;
+    color: #008bfc;
+    @include baseFont;
+  }
 }
