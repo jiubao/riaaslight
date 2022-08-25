@@ -8,9 +8,9 @@ import {
 import {
   fetchBrands,
   selectAllCategories,
-  selectSelectedCategoryIds,
   updateCommon,
 } from '../../../store/commonSlice'
+import { selectSelectedCategoryIds, updateRog } from '../../../store/rogSlice'
 
 const PREFIX = 'CategoryList'
 
@@ -20,7 +20,7 @@ export const CategoryList: React.FC = () => {
   const categoryIds = useSelector(selectSelectedCategoryIds)
 
   const handleChange = (value: number[]) => {
-    dispatch(updateCommon({ selectedCategoryIds: value }))
+    dispatch(updateRog({ selectedCategoryIds: value }))
     if (value.length) {
       dispatch(fetchBrands(value[0]) as any)
     } else {

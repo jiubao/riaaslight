@@ -5,23 +5,47 @@ import {
   ToggleSelectorGroup,
   ToggleSelectorItem,
 } from '../../../components/toggleSelector'
+import { selectAllBrands } from '../../../store/commonSlice'
 import {
-  selectAllBrands,
+  fetchStores,
   selectSelectedBrandIds,
-  updateCommon,
-} from '../../../store/commonSlice'
+  selectSelectedCategoryIds,
+  updateRog,
+} from '../../../store/rogSlice'
 
 const PREFIX = 'BrandList'
 
 const TOP_COUNT = 20
 
+const params = {
+  brand: 111,
+  category: 1,
+  location_range:
+    '50.97380320853852,-65.24909547188548,22.737910001296626,-128.53034547188548',
+  field_set: 'location',
+  start: 0,
+  limit: 500,
+}
+
 export const BrandList: React.FC = () => {
   const [showMore, setShowMore] = useState(false)
   const dispatch = useDispatch()
   const brands = useSelector(selectAllBrands)
+  const categoryIds = useSelector(selectSelectedCategoryIds)
   const brandIds = useSelector(selectSelectedBrandIds)
   const handleChange = (value: number[]) => {
-    dispatch(updateCommon({ selectedBrandIds: value }))
+    dispatch(updateRog({ selectedBrandIds: value }))
+    if (value.length && categoryIds.length) {
+      dispatch(
+        fetchStores({
+          ...params,
+          brand: value[0],
+          category: categoryIds[0],
+        }) as any
+      )
+    } else {
+      dispatch(updateRog({ stores: [] }))
+    }
   }
 
   return (

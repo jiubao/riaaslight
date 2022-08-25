@@ -30,18 +30,12 @@ interface IState {
   retailers: IRetailer[]
   categories: ICategory[]
   brands: IBrand[]
-  selectedRetailerIds: number[]
-  selectedCategoryIds: number[]
-  selectedBrandIds: number[]
 }
 
 const initialState: IState = {
   retailers: [],
   categories: [],
   brands: [],
-  selectedRetailerIds: [],
-  selectedCategoryIds: [],
-  selectedBrandIds: [],
 }
 
 const commonSlice = createSlice({
@@ -73,11 +67,5 @@ export const { update: updateCommon } = commonSlice.actions
 export default commonSlice.reducer
 
 export const selectAllRetailers = (state: RootState) => state.common.retailers
-export const selectSelectedRetailerIds = (state: RootState) =>
-  state.common.selectedRetailerIds
 export const selectAllCategories = (state: RootState) => state.common.categories
-export const selectSelectedCategoryIds = (state: RootState) =>
-  state.common.selectedCategoryIds
 export const selectAllBrands = (state: RootState) => state.common.brands
-export const selectSelectedBrandIds = (state: RootState) =>
-  state.common.selectedBrandIds

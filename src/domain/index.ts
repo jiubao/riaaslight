@@ -51,4 +51,5 @@ export interface IStoreRequest extends IPaginationRequest {
   brand: number
   category: number
   location_range: string
+  field_set: string
 }

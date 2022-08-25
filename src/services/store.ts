@@ -4,7 +4,7 @@ import { IStore, IStoreRequest } from '../domain'
 
 class StoreService {
   get(params: IStoreRequest) {
-    return HttpService.get<IStore[]>(`${BASE_SERVICE_URI}/brands`, params)
+    return HttpService.get<IStore[]>(`${BASE_SERVICE_URI}/stores`, params)
   }
 }
 

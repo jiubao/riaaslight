@@ -5,11 +5,8 @@ import {
   ToggleSelectorGroup,
   ToggleSelectorItem,
 } from '../../../components/toggleSelector'
-import {
-  selectAllRetailers,
-  selectSelectedRetailerIds,
-  updateCommon,
-} from '../../../store/commonSlice'
+import { selectAllRetailers } from '../../../store/commonSlice'
+import { selectSelectedRetailerIds, updateRog } from '../../../store/rogSlice'
 
 const PREFIX = 'RetailerList'
 
@@ -24,7 +21,7 @@ export const RetailerList: React.FC = () => {
   // }
 
   const handleChange = (value: number[]) => {
-    dispatch(updateCommon({ selectedRetailerIds: value }))
+    dispatch(updateRog({ selectedRetailerIds: value }))
   }
 
   return (
