@@ -19,7 +19,6 @@ export const RetailerList: React.FC = () => {
   // }
 
   const handleChange = (value: number[]) => {
-    console.log(value)
     setKeys(value)
   }
 
