@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 
 export interface IStateContext<T> {
   disabled?: boolean
-  checkedKeys: T[]
+  value: T[]
   click: (key: T) => void
 }
 
@@ -11,11 +11,10 @@ export interface IStateContext<T> {
 export const createStateContext = once(<T>() => {
   const defaultContextValue: IStateContext<T> = {
     disabled: false,
-    checkedKeys: [],
+    value: [],
     click: () => {},
   }
   return React.createContext(defaultContextValue)
 })
 
-export const useStateContext = <T>() =>
-  useContext(createStateContext<T>())
+export const useStateContext = <T>() => useContext(createStateContext<T>())

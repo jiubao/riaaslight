@@ -23,7 +23,7 @@ export const MainRouter: React.FC = () => {
       </Route>
       <Route path="store/:retailerId/gallery/:id" element={<StoreGallery />} />
       <Route path="/debug" element={<Debug />}>
-        <Route path="togglebox" element={<DemoToggleBox />} />
+        <Route path="toggle" element={<DemoToggleBox />} />
         <Route path="gallery" element={<DebugGallery />} />
         <Route path="map" element={<GoogleMapDemo />} />
         <Route path="mask" element={<DemoMask />} />

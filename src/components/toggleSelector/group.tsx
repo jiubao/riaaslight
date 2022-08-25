@@ -3,13 +3,13 @@ import { createStateContext, IStateContext } from './context'
 
 interface IGroupProps<T> {
   disabled?: boolean
-  values: T[]
-  onChange: (values: T[]) => void
+  value: T[]
+  onChange: (value: T[]) => void
 }
 
-export const ToggleSelectorGroup = <T extends number | string>({
+export const ToggleSelectorGroup = <T extends unknown>({
   disabled,
-  values,
+  value,
   onChange,
   children,
 }: PropsWithChildren<IGroupProps<T>>) => {
@@ -17,12 +17,12 @@ export const ToggleSelectorGroup = <T extends number | string>({
   const context: IStateContext<T> = {
     click: (key) => {
       if (disabled) return
-      const keySet = new Set(values)
+      const keySet = new Set(value)
       keySet.has(key) ? keySet.delete(key) : keySet.add(key)
-      onChange?.(keySet.values() as unknown as T[])
+      onChange?.(Array.from(keySet))
     },
     disabled: false,
-    checkedKeys: [],
+    value,
   }
 
   return (

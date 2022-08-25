@@ -1,24 +1,25 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { MOCK_RETAILERS } from '../mock/retailer'
-import { selectAllRetailers, updateCommon } from '../store/commonSlice'
+import { updateCommon } from '../store/commonSlice'
 import { RetailerList } from '../modules/rog/list/retailer'
 
-const PREFIX = 'demo'
+const PREFIX = 'DemoToggle'
 
 export const DemoToggleBox: React.FC = () => {
-    const dispatch = useDispatch()
-    // const retailers = useSelector(selectAllRetailers)
+  const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(updateCommon({
-            retailers: MOCK_RETAILERS as any
-        }))
-    }, [dispatch])
-
-    return (
-        <div className={PREFIX}>
-            <RetailerList />
-        </div>
+  useEffect(() => {
+    dispatch(
+      updateCommon({
+        retailers: MOCK_RETAILERS as any,
+      })
     )
+  }, [dispatch])
+
+  return (
+    <div className={PREFIX}>
+      <RetailerList />
+    </div>
+  )
 }

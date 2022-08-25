@@ -35,3 +35,18 @@
     height: 700px;
   }
 }
+
+.Demo {
+  &Toggle {
+    .ToggleSelector-item {
+      .BizUnit:hover {
+        opacity: 0.8;
+      }
+      &.isChecked {
+        .BizUnit {
+          background-color: red;
+        }
+      }
+    }
+  }
+}

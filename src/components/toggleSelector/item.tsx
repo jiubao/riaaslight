@@ -2,12 +2,11 @@ import classNames from 'classnames'
 import React, { PropsWithChildren } from 'react'
 import { useStateContext } from './context'
 
-const PREFIX = 'HoverCheckBox'
+const PREFIX = 'ToggleSelector'
 
 interface ICheckBoxProps<T> {
   className?: string
   value: T
-  onClick?: (item: T) => void
 }
 
 export const ToggleSelectorItem = <T extends number | string>({
@@ -15,21 +14,18 @@ export const ToggleSelectorItem = <T extends number | string>({
   children,
   value,
 }: PropsWithChildren<ICheckBoxProps<T>>) => {
-  const { disabled, checkedKeys, click } = useStateContext<T>()
+  const { disabled, value: values, click } = useStateContext<T>()
 
-  const handleClick = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
+  const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (disabled) return
     click(value)
-    // 避免二次触发下面的handleClick
     event.stopPropagation()
   }
 
   return (
     <div
-      className={classNames(`${PREFIX}-hoverCheckBox`, className, {
-        'isChecked': checkedKeys.indexOf(value) < 0
+      className={classNames(`${PREFIX}-item`, className, {
+        isChecked: values.includes(value),
       })}
       onClick={handleClick}
     >
