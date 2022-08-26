@@ -50,8 +50,8 @@ export interface IStoreDetail extends IStore {
 }
 
 export interface IStoreRequest extends IPaginationRequest {
-  brand: number
-  category: number
+  brand: string | number
+  category: string | number
   location_range: string
   field_set: string
 }

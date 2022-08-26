@@ -23,6 +23,9 @@ interface IMapProps extends google.maps.MapOptions {
   style?: { [key: string]: string }
   onClick?: (e: google.maps.MapMouseEvent) => void
   onIdle?: (map: google.maps.Map) => void
+  onZoom?: (map: google.maps.Map) => void
+  onDragEnd?: (map: google.maps.Map) => void
+  onBoundsChanged?: (map: google.maps.Map) => void
 }
 
 // export const Map: React.FC<
@@ -45,7 +48,17 @@ interface IMapProps extends google.maps.MapOptions {
 
 export const Map: React.FC<
   PropsWithClassName<PropsWithChildren<IMapProps>>
-> = ({ className, onClick, onIdle, children, style, ...options }) => {
+> = ({
+  className,
+  onClick,
+  onIdle,
+  onZoom,
+  onDragEnd,
+  onBoundsChanged,
+  children,
+  style,
+  ...options
+}) => {
   const ref = React.useRef<HTMLDivElement>(null)
   const [map, setMap] = React.useState<google.maps.Map>()
 
@@ -65,9 +78,16 @@ export const Map: React.FC<
 
   useEffect(() => {
     if (map) {
-      ;['click', 'idle'].forEach((eventName) =>
-        google.maps.event.clearListeners(map, eventName)
+      ;['click', 'idle', 'zoom_changed', 'bounds_changed', 'dragend'].forEach(
+        (eventName) => google.maps.event.clearListeners(map, eventName)
       )
+
+      onDragEnd && map.addListener('dragend', () => onDragEnd(map))
+
+      onBoundsChanged &&
+        map.addListener('zoom_changed', () => onBoundsChanged(map))
+
+      onZoom && map.addListener('zoom_changed', () => onZoom(map))
 
       if (onClick) {
         map.addListener('click', onClick)
@@ -77,7 +97,7 @@ export const Map: React.FC<
         map.addListener('idle', () => onIdle(map))
       }
     }
-  }, [map, onClick, onIdle])
+  }, [map, onBoundsChanged, onClick, onDragEnd, onIdle, onZoom])
 
   return (
     <>

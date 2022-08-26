@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '.'
 import { IStore, IStoreRequest } from '../domain'
+import { IMapBounds } from '../domain/map'
 import { storeService } from '../services/store'
 
 interface IState {
@@ -8,6 +9,7 @@ interface IState {
   selectedRetailerIds: number[]
   selectedCategoryIds: number[]
   selectedBrandIds: number[]
+  bounds?: IMapBounds
 }
 
 const initialState: IState = {
@@ -17,10 +19,26 @@ const initialState: IState = {
   selectedBrandIds: [],
 }
 
+const field_set = 'location'
+const default_range =
+  '50.97380320853852,-65.24909547188548,22.737910001296626,-128.53034547188548'
+
 export const fetchStores = createAsyncThunk(
   'common/fetchStores',
-  async (params: IStoreRequest) => {
-    return await storeService.get(params)
+  async (params: Partial<IStoreRequest>, api) => {
+    const state = api.getState() as RootState
+    const bounds = state.rog.bounds
+    const baseParams: IStoreRequest = {
+      brand: state.rog.selectedBrandIds.join(','),
+      category: state.rog.selectedCategoryIds.join(','),
+      field_set,
+      location_range: bounds
+        ? `${bounds.ne.lat},${bounds.ne.lng},${bounds.sw.lat},${bounds.sw.lng}`
+        : default_range,
+      start: 0,
+      limit: 5000,
+    }
+    return await storeService.get({ ...baseParams, ...params })
   }
 )
 
@@ -53,3 +71,4 @@ export const selectSelectedCategoryIds = (state: RootState) =>
 export const selectSelectedBrandIds = (state: RootState) =>
   state.rog.selectedBrandIds
 export const selectStores = (state: RootState) => state.rog.stores
+export const selectMapBounds = (state: RootState) => state.rog.bounds

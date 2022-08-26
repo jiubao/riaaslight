@@ -17,16 +17,6 @@ const PREFIX = 'BrandList'
 
 const TOP_COUNT = 20
 
-const params = {
-  brand: 111,
-  category: 1,
-  location_range:
-    '50.97380320853852,-65.24909547188548,22.737910001296626,-128.53034547188548',
-  field_set: 'location',
-  start: 0,
-  limit: 500,
-}
-
 export const BrandList: React.FC = () => {
   const [showMore, setShowMore] = useState(false)
   const dispatch = useDispatch()
@@ -38,8 +28,7 @@ export const BrandList: React.FC = () => {
     if (value.length && categoryIds.length) {
       dispatch(
         fetchStores({
-          ...params,
-          brand: value[0],
+          brand: value.join(',') as unknown as any,
           category: categoryIds[0],
         }) as any
       )
