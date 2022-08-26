@@ -52,3 +52,4 @@ export const selectSelectedCategoryIds = (state: RootState) =>
   state.rog.selectedCategoryIds
 export const selectSelectedBrandIds = (state: RootState) =>
   state.rog.selectedBrandIds
+export const selectStores = (state: RootState) => state.rog.stores

@@ -32,6 +32,10 @@ export interface IRetailer extends IDocument {
 
 export interface IStore {
   store_id: number
+  store_latitude: number
+  store_longitude: number
+}
+export interface IStoreDetail extends IStore {
   store_status: StatusEnum
   store_name: string
   store_address: string
@@ -39,8 +43,6 @@ export interface IStore {
   store_state_or_province: string
   store_country: string
   store_region: string
-  store_latitude: number
-  store_longitude: number
   retailer_id: number
   latest_img_at: string
   latest_preview_img_url: string
