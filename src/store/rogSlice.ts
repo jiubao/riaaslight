@@ -38,6 +38,10 @@ export const fetchStores = createAsyncThunk(
       start: 0,
       limit: 5000,
     }
+
+    const query = { ...baseParams, ...params }
+    if (!query.brand || !query.category || !query.location_range)
+      return Promise.resolve([])
     return await storeService.get({ ...baseParams, ...params })
   }
 )

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { MapWrapper, Map } from '../../components/googleMap'
 import { Marker } from '../../components/googleMap/marker'
@@ -38,15 +38,20 @@ export const Rog: React.FC<IProps> = ({ id }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentBounds])
 
-  const handleMapChange = (map: google.maps.Map) => {
-    const mapBounds = map.getBounds()
-    // console.log(bounds?.getNorthEast().lat())
-    // console.log(bounds?.getSouthWest().lng())
-    if (mapBounds) {
-      const bounds = getPointsFromBounds(mapBounds)
-      dispatch(updateRog({ bounds }))
-    }
-  }
+  // const handleLoad = useCallback((map: google.maps.Map) => {
+  //   console.log('map init...')
+  // }, [])
+
+  const handleMapChange = useCallback(
+    (map: google.maps.Map) => {
+      const mapBounds = map.getBounds()
+      if (mapBounds) {
+        const bounds = getPointsFromBounds(mapBounds)
+        dispatch(updateRog({ bounds }))
+      }
+    },
+    [dispatch]
+  )
 
   return (
     <LR className={PREFIX} left={<RogList />} percent={60}>
@@ -55,6 +60,7 @@ export const Rog: React.FC<IProps> = ({ id }) => {
           className={`${PREFIX}-map`}
           {...DEFAULT_MAP_OPTIONS}
           // disableDefaultUI={true}
+          onLoad={handleMapChange}
           onZoom={handleMapChange}
           onDragEnd={handleMapChange}
         >

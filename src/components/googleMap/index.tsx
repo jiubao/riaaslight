@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useEffect } from 'react'
+import React, { PropsWithChildren, useEffect, useRef } from 'react'
 import { Wrapper, Status } from '@googlemaps/react-wrapper'
 import { PropsWithClassName } from '../../domain/common'
 import classNames from 'classnames'
@@ -19,13 +19,16 @@ export const MapWrapper: React.FC<PropsWithChildren> = ({ children }) => {
   )
 }
 
+export type eventHandler = (map: google.maps.Map) => void
+
 interface IMapProps extends google.maps.MapOptions {
   style?: { [key: string]: string }
-  onClick?: (e: google.maps.MapMouseEvent) => void
-  onIdle?: (map: google.maps.Map) => void
-  onZoom?: (map: google.maps.Map) => void
-  onDragEnd?: (map: google.maps.Map) => void
-  onBoundsChanged?: (map: google.maps.Map) => void
+  onClick?: eventHandler
+  onIdle?: eventHandler
+  onZoom?: eventHandler
+  onDragEnd?: eventHandler
+  onBoundsChanged?: eventHandler
+  onLoad?: eventHandler
 }
 
 // export const Map: React.FC<
@@ -55,57 +58,60 @@ export const Map: React.FC<
   onZoom,
   onDragEnd,
   onBoundsChanged,
+  onLoad,
   children,
   style,
   ...options
 }) => {
-  const ref = React.useRef<HTMLDivElement>(null)
-  const [map, setMap] = React.useState<google.maps.Map>()
+  const ref = useRef<HTMLDivElement>(null)
+  // const [map, setMap] = useState<google.maps.Map>()
+  const mapRef = useRef<google.maps.Map>()
 
   useEffect(() => {
-    if (ref.current && !map) {
-      setMap(new window.google.maps.Map(ref.current, {}))
+    if (ref.current) {
+      // setMap(new window.google.maps.Map(ref.current, {}))
+      mapRef.current = new window.google.maps.Map(ref.current, {})
     }
-  }, [ref, map])
+  }, [])
 
   // because React does not do deep comparisons, a custom hook is used
   // see discussion in https://github.com/googlemaps/js-samples/issues/946
   useDeepCompareEffectForMaps(() => {
-    if (map) {
-      map.setOptions(options)
+    if (mapRef.current) {
+      mapRef.current.setOptions(options)
     }
-  }, [map, options])
+  }, [options])
 
   useEffect(() => {
+    const map = mapRef.current
     if (map) {
       ;['click', 'idle', 'zoom_changed', 'bounds_changed', 'dragend'].forEach(
         (eventName) => google.maps.event.clearListeners(map, eventName)
       )
 
       onDragEnd && map.addListener('dragend', () => onDragEnd(map))
-
       onBoundsChanged &&
         map.addListener('zoom_changed', () => onBoundsChanged(map))
-
       onZoom && map.addListener('zoom_changed', () => onZoom(map))
+      onClick && map.addListener('click', onClick)
+      onIdle && map.addListener('idle', () => onIdle(map))
 
-      if (onClick) {
-        map.addListener('click', onClick)
-      }
-
-      if (onIdle) {
-        map.addListener('idle', () => onIdle(map))
+      if (onLoad) {
+        const ln = map.addListener('idle', () => {
+          ln.remove()
+          onLoad(map)
+        })
       }
     }
-  }, [map, onBoundsChanged, onClick, onDragEnd, onIdle, onZoom])
+  }, [onBoundsChanged, onClick, onDragEnd, onIdle, onLoad, onZoom])
 
   return (
     <>
       <div ref={ref} style={style} className={classNames(PREFIX, className)} />
       {React.Children.map(children, (child) => {
-        if (React.isValidElement(child)) {
+        if (mapRef.current && React.isValidElement(child)) {
           // set the map prop on the child component
-          return React.cloneElement(child, { map })
+          return React.cloneElement(child, { map: mapRef.current })
         }
       })}
     </>
