@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '.'
-import { IStore, IStoreRequest } from '../domain'
+import { IStore, IStoreDetail, IStoreRequest } from '../domain'
 import { IMapBounds } from '../domain/map'
 import { storeService } from '../services/store'
 
@@ -10,6 +10,7 @@ interface IState {
   selectedCategoryIds: number[]
   selectedBrandIds: number[]
   bounds?: IMapBounds
+  storeDetail?: IStoreDetail
 }
 
 const initialState: IState = {
@@ -46,6 +47,13 @@ export const fetchStores = createAsyncThunk(
   }
 )
 
+export const fetchStoreDetail = createAsyncThunk(
+  'common/fetchStoreDetail',
+  async (id: number) => {
+    return await storeService.getById(id)
+  }
+)
+
 export const rogSlice = createSlice({
   name: 'rog',
   initialState,
@@ -60,6 +68,9 @@ export const rogSlice = createSlice({
   extraReducers(builder) {
     builder.addCase(fetchStores.fulfilled, (state, action) => {
       state.stores = action.payload
+    })
+    builder.addCase(fetchStoreDetail.fulfilled, (state, action) => {
+      state.storeDetail = action.payload
     })
   },
 })
@@ -76,3 +87,4 @@ export const selectSelectedBrandIds = (state: RootState) =>
   state.rog.selectedBrandIds
 export const selectStores = (state: RootState) => state.rog.stores
 export const selectMapBounds = (state: RootState) => state.rog.bounds
+export const selectStoreDetail = (state: RootState) => state.rog.storeDetail

@@ -6,14 +6,17 @@ import { LR } from '../../components/layout/lr'
 import { Coordinates } from '../../constants/map'
 import { fetchCategories, fetchRetailers } from '../../store/commonSlice'
 import {
+  fetchStoreDetail,
   fetchStores,
   selectMapBounds,
+  selectStoreDetail,
   selectStores,
   updateRog,
 } from '../../store/rogSlice'
 import { getPointsFromBounds } from '../../utils/map'
 import './index.scss'
 import { RogList } from './list'
+import { StoreInfo } from './storeInfo'
 
 interface IProps {
   id?: string
@@ -27,6 +30,7 @@ export const Rog: React.FC<IProps> = ({ id }) => {
   const dispatch = useDispatch()
   const stores = useSelector(selectStores)
   const currentBounds = useSelector(selectMapBounds)
+  const storeDetail = useSelector(selectStoreDetail)
 
   useEffect(() => {
     dispatch(fetchRetailers() as any)
@@ -53,28 +57,45 @@ export const Rog: React.FC<IProps> = ({ id }) => {
     [dispatch]
   )
 
+  const handleClickMarker = useCallback(
+    (marker: google.maps.Marker, id?: number) => {
+      const latLng = marker.getPosition()
+      console.log(latLng?.lat(), latLng?.lng())
+      console.log(id)
+      id && dispatch(fetchStoreDetail(id) as any)
+    },
+    [dispatch]
+  )
+
   return (
     <LR className={PREFIX} left={<RogList />} percent={60}>
-      <MapWrapper>
-        <Map
-          className={`${PREFIX}-map`}
-          {...DEFAULT_MAP_OPTIONS}
-          // disableDefaultUI={true}
-          onLoad={handleMapChange}
-          onZoom={handleMapChange}
-          onDragEnd={handleMapChange}
-        >
-          {stores.map((store) => (
-            <Marker
-              key={store.store_id}
-              position={{
-                lat: store.store_latitude,
-                lng: store.store_longitude,
-              }}
-            />
-          ))}
-        </Map>
-      </MapWrapper>
+      <>
+        <MapWrapper>
+          <Map
+            className={`${PREFIX}-map`}
+            {...DEFAULT_MAP_OPTIONS}
+            // disableDefaultUI={true}
+            onLoad={handleMapChange}
+            onZoom={handleMapChange}
+            onDragEnd={handleMapChange}
+          >
+            {stores.map((store) => (
+              <Marker
+                id={store.store_id}
+                key={store.store_id}
+                position={{
+                  lat: store.store_latitude,
+                  lng: store.store_longitude,
+                }}
+                onClick={handleClickMarker}
+              />
+            ))}
+          </Map>
+        </MapWrapper>
+        <div className={`${PREFIX}-storeOnMap`}>
+          {storeDetail && <StoreInfo store={storeDetail} />}
+        </div>
+      </>
     </LR>
   )
 }

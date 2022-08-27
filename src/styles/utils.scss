@@ -1,0 +1,15 @@
+.flexCenter,
+.flexMiddle,
+.flex {
+  display: flex;
+}
+
+.flexMiddle,
+.middle {
+  align-items: center;
+}
+
+.flexCenter,
+.center {
+  justify-content: center;
+}

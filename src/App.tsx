@@ -2,6 +2,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import { MainRouter } from './router'
+import './styles/index.scss'
+import './styles/utils.scss'
 
 const darkTheme = createTheme({
   palette: {
