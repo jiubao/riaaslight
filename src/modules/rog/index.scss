@@ -34,7 +34,7 @@
   }
 }
 
-.StoreInfo {
+.RogStoreInfo {
   display: flex;
   height: 100%;
   background-color: #fff;
@@ -81,12 +81,12 @@
     height: 26px;
     border-radius: 4px;
     justify-content: flex-end;
+    cursor: pointer;
   }
 }
 
 .BrandList,
-.RetailerList,
-.CategoryList {
+.RetailerList {
   .BizUnit {
     height: 32px;
   }

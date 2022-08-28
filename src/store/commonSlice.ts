@@ -5,6 +5,18 @@ import { brandService } from '../services/brand'
 import { categoryService } from '../services/category'
 import { retailerService } from '../services/retailer'
 
+interface IState {
+  retailers: IRetailer[]
+  categories: ICategory[]
+  brands: IBrand[]
+}
+
+const initialState: IState = {
+  retailers: [],
+  categories: [],
+  brands: [],
+}
+
 export const fetchRetailers = createAsyncThunk(
   'common/fetchRetailers',
   async (_, thunkApi) => {
@@ -34,18 +46,6 @@ export const fetchBrands = createAsyncThunk(
     return await brandService.get(id)
   }
 )
-
-interface IState {
-  retailers: IRetailer[]
-  categories: ICategory[]
-  brands: IBrand[]
-}
-
-const initialState: IState = {
-  retailers: [],
-  categories: [],
-  brands: [],
-}
 
 const commonSlice = createSlice({
   name: 'common',

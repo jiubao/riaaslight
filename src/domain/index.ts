@@ -47,6 +47,8 @@ export interface IStoreDetail extends IStore {
   latest_img_at: string
   latest_preview_img_url: string
   latest_img_url: string
+  brand_map: Record<string, number>
+  category_map: Record<string, number>
 }
 
 export interface IStoreRequest extends IPaginationRequest {
@@ -54,4 +56,18 @@ export interface IStoreRequest extends IPaginationRequest {
   category: string | number
   location_range: string
   field_set: string
+}
+
+export interface IShelfShot extends IDocument {
+  store_id: number
+  retailer_id: number
+  visit_date: string
+  img_url: string
+  preview_img_url: string
+  shelf_num: number
+}
+
+export type ShelfPosition = [string, string, string, string]
+export interface IShelfShotDetail extends IShelfShot {
+  brand_map: Record<string, ShelfPosition[]>
 }

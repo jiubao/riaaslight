@@ -10,7 +10,7 @@ import { NotFound } from '../modules/notFound'
 import { Posm } from '../modules/posm'
 import { Rog } from '../modules/rog'
 import { StoreGallery } from '../modules/rog/gallery'
-import { Store } from '../modules/rog/store'
+import { Store } from '../modules/store'
 
 export const MainRouter: React.FC = () => {
   return (

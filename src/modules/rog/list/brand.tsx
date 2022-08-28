@@ -5,9 +5,10 @@ import {
   ToggleSelectorGroup,
   ToggleSelectorItem,
 } from '../../../components/toggleSelector'
-import { selectAllBrands } from '../../../store/commonSlice'
+// import { selectAllBrands } from '../../../store/commonSlice'
 import {
   fetchStores,
+  selectRogBrands,
   selectSelectedBrandIds,
   selectSelectedCategoryIds,
   updateRog,
@@ -20,7 +21,7 @@ const TOP_COUNT = 20
 export const BrandList: React.FC = () => {
   const [showMore, setShowMore] = useState(false)
   const dispatch = useDispatch()
-  const brands = useSelector(selectAllBrands)
+  const brands = useSelector(selectRogBrands)
   const categoryIds = useSelector(selectSelectedCategoryIds)
   const brandIds = useSelector(selectSelectedBrandIds)
   const handleChange = (value: number[]) => {

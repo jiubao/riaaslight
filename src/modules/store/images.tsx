@@ -1,6 +1,6 @@
 import React from 'react'
-import { Gallery } from '../../../components/gallery'
-import { mockImgSrcByCount } from '../../../mock/img'
+import { Gallery } from '../../components/gallery'
+import { mockImgSrcByCount } from '../../mock/img'
 
 interface IProps {
   id?: string

@@ -29,12 +29,9 @@ export const Marker: React.FC<IProps> = ({ id, onClick, ...options }) => {
 
   useEffect(() => {
     if (marker) {
-      console.log('marker: ', marker)
       let offClick: google.maps.MapsEventListener
       if (onClick) {
         offClick = marker.addListener('click', () => {
-          // console.log('markerclick: ', a.latLng.lat(), a.latLng.lng())
-          // marker.getPosition()
           onClick(marker, id)
         })
       }

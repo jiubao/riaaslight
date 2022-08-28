@@ -59,9 +59,9 @@ export const Rog: React.FC<IProps> = ({ id }) => {
 
   const handleClickMarker = useCallback(
     (marker: google.maps.Marker, id?: number) => {
-      const latLng = marker.getPosition()
-      console.log(latLng?.lat(), latLng?.lng())
-      console.log(id)
+      // const latLng = marker.getPosition()
+      // console.log(latLng?.lat(), latLng?.lng())
+      // console.log(id)
       id && dispatch(fetchStoreDetail(id) as any)
     },
     [dispatch]
