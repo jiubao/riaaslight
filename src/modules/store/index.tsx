@@ -5,7 +5,7 @@ import { StoreInfo } from './info'
 import './index.scss'
 import { useParams } from 'react-router'
 import { useDispatch } from 'react-redux'
-import { fetchStoreDetail } from '../../store/storeSlice'
+import { fetchShelfShots, fetchStoreDetail } from '../../store/storeSlice'
 import { fetchCategories } from '../../store/commonSlice'
 
 const PREFIX = 'Store'
@@ -20,6 +20,7 @@ export const Store: React.FC = React.memo(() => {
 
   useEffect(() => {
     id && dispatch(fetchStoreDetail(Number(id)) as any)
+    id && dispatch(fetchShelfShots(Number(id)) as any)
   }, [dispatch, id])
 
   return (

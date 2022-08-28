@@ -1,8 +1,14 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import {
+  createAsyncThunk,
+  createSlice,
+  isFulfilled,
+  PayloadAction,
+} from '@reduxjs/toolkit'
 import { orderBy } from 'lodash'
 import { RootState } from '.'
 import { IBrand, IShelfShot, IStoreDetail } from '../domain'
 import { brandService } from '../services/brand'
+import { shelfShotService } from '../services/shelfShot'
 import { storeService } from '../services/store'
 
 interface IState {
@@ -19,6 +25,13 @@ const initialState: IState = {
   selectedBrandIds: [],
   brands: [],
 }
+
+export const fetchShelfShots = createAsyncThunk(
+  'store/fetchShelfShots',
+  async (store_id: number) => {
+    return await shelfShotService.get({ store_id })
+  }
+)
 
 export const fetchStoreDetail = createAsyncThunk(
   'store/fetchStoreDetail',
@@ -51,6 +64,9 @@ export const storeSlice = createSlice({
     })
     builder.addCase(fetchBrands.fulfilled, (state, action) => {
       state.brands = action.payload
+    })
+    builder.addCase(fetchShelfShots.fulfilled, (state, action) => {
+      state.shelfShots = action.payload
     })
   },
 })
@@ -98,3 +114,4 @@ export const selectStoreBrands = (state: RootState) => {
 }
 
 export const selectStoreDetail = (state: RootState) => state.store.storeDetail
+export const selectShelfShots = (state: RootState) => state.store.shelfShots

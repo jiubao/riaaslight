@@ -3,8 +3,8 @@ export interface IDocument {
 }
 
 interface IPaginationRequest {
-  start: number
-  limit: number
+  start?: number
+  limit?: number
 }
 
 export enum StatusEnum {
@@ -65,6 +65,12 @@ export interface IShelfShot extends IDocument {
   img_url: string
   preview_img_url: string
   shelf_num: number
+}
+
+export interface IShelfShotRequest extends IPaginationRequest {
+  store_id: number
+  category?: string // 1,2,3
+  brand?: string // 1,2,3
 }
 
 export type ShelfPosition = [string, string, string, string]
