@@ -1,10 +1,9 @@
 import {
   createAsyncThunk,
   createSlice,
-  isFulfilled,
   PayloadAction,
 } from '@reduxjs/toolkit'
-import { orderBy } from 'lodash'
+import { last, orderBy } from 'lodash'
 import { RootState } from '.'
 import { IBrand, IShelfShot, IStoreDetail } from '../domain'
 import { brandService } from '../services/brand'
@@ -13,10 +12,14 @@ import { storeService } from '../services/store'
 
 interface IState {
   storeDetail?: IStoreDetail
-  shelfShots: IShelfShot[]
   selectedCategoryIds: number[]
   selectedBrandIds: number[]
   brands: IBrand[]
+  shelfShots: IShelfShot[]
+  monthes: Array<{ month: string; shelfIds: number[] }>
+  nextShotIndex: number
+  hasNextShots: boolean
+  lockShot: boolean
 }
 
 const initialState: IState = {
@@ -24,12 +27,27 @@ const initialState: IState = {
   selectedCategoryIds: [],
   selectedBrandIds: [],
   brands: [],
+  monthes: [],
+  nextShotIndex: 0,
+  hasNextShots: true,
+  lockShot: false,
 }
+
+const SHOT_PAGE_SIZE = 50
 
 export const fetchShelfShots = createAsyncThunk(
   'store/fetchShelfShots',
-  async (store_id: number) => {
-    return await shelfShotService.get({ store_id })
+  async (store_id: number, { dispatch, getState }) => {
+    const state = getState() as RootState
+    if (state.store.lockShot) return
+    dispatch(updateStore({ lockShot: true }))
+    try {
+      const shots = await shelfShotService.get({ start: 0, limit: 50 })
+      dispatch((appendShelfShots(shots)))
+      return shots
+    } finally {
+      dispatch(updateStore({ lockShot: false }))
+    }
   }
 )
 
@@ -57,6 +75,25 @@ export const storeSlice = createSlice({
         ...action.payload,
       }
     },
+    appendShelfShots(state, action: PayloadAction<IShelfShot[]>) {
+      const { shelfShots, monthes } = state
+      const incoming = action.payload
+      const nextShelfShots = shelfShots.concat(incoming)
+      const nextMonthes = [...monthes]
+      for (let i = 0; i < incoming.length; i++) {
+        const shot = incoming[i]
+        const latest = last(nextMonthes)
+        if (latest && latest.month === shot.visit_date) {
+          latest.shelfIds.push(shot.id)
+        } else {
+          nextMonthes.push({ month: shot.visit_date, shelfIds: [shot.id] })
+        }
+      }
+      state.shelfShots = nextShelfShots
+      state.monthes = nextMonthes
+      state.nextShotIndex = nextShelfShots.length
+      state.hasNextShots = incoming.length === SHOT_PAGE_SIZE
+    }
   },
   extraReducers(builder) {
     builder.addCase(fetchStoreDetail.fulfilled, (state, action) => {
@@ -65,13 +102,13 @@ export const storeSlice = createSlice({
     builder.addCase(fetchBrands.fulfilled, (state, action) => {
       state.brands = action.payload
     })
-    builder.addCase(fetchShelfShots.fulfilled, (state, action) => {
-      state.shelfShots = action.payload
-    })
+    // builder.addCase(fetchShelfShots.fulfilled, (state, action) => {
+    //   state.shelfShots = action.payload
+    // })
   },
 })
 
-export const { update: updateStore } = storeSlice.actions
+export const { update: updateStore, appendShelfShots } = storeSlice.actions
 
 export default storeSlice.reducer
 
@@ -115,3 +152,9 @@ export const selectStoreBrands = (state: RootState) => {
 
 export const selectStoreDetail = (state: RootState) => state.store.storeDetail
 export const selectShelfShots = (state: RootState) => state.store.shelfShots
+export const selectShelfShotsGroup = (state: RootState) => {
+  const {shelfShots, monthes} = state.store
+  const hash = new Map()
+  shelfShots.forEach(shot => hash.set(shot.id, shot))
+  return monthes.map(item => ({ month: item.month, shots: item.shelfIds.map(id => hash.get(id)) }))
+}

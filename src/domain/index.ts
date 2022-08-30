@@ -68,7 +68,7 @@ export interface IShelfShot extends IDocument {
 }
 
 export interface IShelfShotRequest extends IPaginationRequest {
-  store_id: number
+  store_id?: number
   category?: string // 1,2,3
   brand?: string // 1,2,3
 }
