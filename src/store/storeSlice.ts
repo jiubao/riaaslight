@@ -1,8 +1,4 @@
-import {
-  createAsyncThunk,
-  createSlice,
-  PayloadAction,
-} from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { last, orderBy } from 'lodash'
 import { RootState } from '.'
 import { IBrand, IShelfShot, IStoreDetail } from '../domain'
@@ -33,7 +29,7 @@ const initialState: IState = {
   lockShot: false,
 }
 
-const SHOT_PAGE_SIZE = 50
+const SHOT_PAGE_SIZE = 20
 
 export const fetchShelfShots = createAsyncThunk(
   'store/fetchShelfShots',
@@ -42,8 +38,11 @@ export const fetchShelfShots = createAsyncThunk(
     if (state.store.lockShot) return
     dispatch(updateStore({ lockShot: true }))
     try {
-      const shots = await shelfShotService.get({ start: 0, limit: 50 })
-      dispatch((appendShelfShots(shots)))
+      const shots = await shelfShotService.get({
+        start: state.store.nextShotIndex,
+        limit: SHOT_PAGE_SIZE,
+      })
+      dispatch(appendShelfShots(shots))
       return shots
     } finally {
       dispatch(updateStore({ lockShot: false }))
@@ -93,7 +92,7 @@ export const storeSlice = createSlice({
       state.monthes = nextMonthes
       state.nextShotIndex = nextShelfShots.length
       state.hasNextShots = incoming.length === SHOT_PAGE_SIZE
-    }
+    },
   },
   extraReducers(builder) {
     builder.addCase(fetchStoreDetail.fulfilled, (state, action) => {
@@ -153,8 +152,15 @@ export const selectStoreBrands = (state: RootState) => {
 export const selectStoreDetail = (state: RootState) => state.store.storeDetail
 export const selectShelfShots = (state: RootState) => state.store.shelfShots
 export const selectShelfShotsGroup = (state: RootState) => {
-  const {shelfShots, monthes} = state.store
+  const { shelfShots, monthes } = state.store
   const hash = new Map()
-  shelfShots.forEach(shot => hash.set(shot.id, shot))
-  return monthes.map(item => ({ month: item.month, shots: item.shelfIds.map(id => hash.get(id)) }))
+  shelfShots.forEach((shot) => hash.set(shot.id, shot))
+  return monthes.map((item) => ({
+    month: item.month,
+    shots: item.shelfIds.map((id) => hash.get(id)),
+  }))
+}
+
+export const selectHasNextShots = (state: RootState) => {
+  return state.store.hasNextShots
 }

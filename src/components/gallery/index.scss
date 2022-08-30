@@ -5,10 +5,14 @@
     flex-grow: 0;
     flex-shrink: 0;
     list-style-type: none;
+    overflow: hidden;
     > li {
+      position: relative;
       display: inline-block;
       width: 100%;
       font-size: 0;
+      overflow: hidden;
+      min-height: 200px;
       img {
         width: 100%;
       }

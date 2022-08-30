@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Gallery } from '../../components/gallery'
-import { mockImgSrcByCount } from '../../mock/img'
+// import { mockImgSrcByCount } from '../../mock/img'
 import { selectShelfShots } from '../../store/storeSlice'
 
 interface IProps {
@@ -10,12 +10,12 @@ interface IProps {
 
 const PREFIX = 'StoreImages'
 
-const TOTAL = 100
-const srcs = mockImgSrcByCount(TOTAL)
+// const TOTAL = 100
+// const srcs = mockImgSrcByCount(TOTAL)
 
-const Row = ({ index }: { index: number }) => {
-  return <img src={`${srcs[index]}/?text=${index}`} alt="" />
-}
+// const Row = ({ index }: { index: number }) => {
+//   return <img src={`${srcs[index]}/?text=${index}`} alt="" />
+// }
 
 export const StoreImages: React.FC<IProps> = ({ id }) => {
   const shelfShots = useSelector(selectShelfShots)
