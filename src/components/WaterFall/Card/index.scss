@@ -1,0 +1,11 @@
+$prefix: 'WaterFallCard';
+
+.#{$prefix} {
+  position: relative;
+  display: inline-block;
+  &-body {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+}

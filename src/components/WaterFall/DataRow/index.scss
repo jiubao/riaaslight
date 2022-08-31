@@ -1,0 +1,20 @@
+$prefix: 'WaterFallDataRow';
+.#{$prefix} {
+  &-row {
+    display: flex;
+    flex-direction: column;
+    &Body {
+      position: relative;
+      z-index: 1;
+      white-space: nowrap;
+    }
+  }
+
+  &-card {
+    &.is-selected {
+      .WaterFallCard-body {
+        background-color: rgba(0, 102, 255, 0.14);
+      }
+    }
+  }
+}

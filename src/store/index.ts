@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import commonReducer from './commonSlice'
 import rogReducer from './rogSlice'
+import priceReducer from './priceSlice'
 
 const store = configureStore({
   reducer: {
     rog: rogReducer,
     common: commonReducer,
+    price: priceReducer,
   },
 })
 

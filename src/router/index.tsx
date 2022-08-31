@@ -8,6 +8,7 @@ import { DemoMask } from '../debug/mask'
 import { DemoToggleBox } from '../debug/togglebox'
 import { NotFound } from '../modules/notFound'
 import { Posm } from '../modules/posm'
+import { Price } from '../modules/price'
 import { Rog } from '../modules/rog'
 import { StoreGallery } from '../modules/rog/gallery'
 import { Store } from '../modules/rog/store'
@@ -20,6 +21,7 @@ export const MainRouter: React.FC = () => {
         <Route path="rog" element={<Rog />} />
         <Route path="store/:id" element={<Store />} />
         <Route path="posm" element={<Posm />} />
+        <Route path="price" element={<Price />} />
       </Route>
       <Route path="store/:retailerId/gallery/:id" element={<StoreGallery />} />
       <Route path="/debug" element={<Debug />}>

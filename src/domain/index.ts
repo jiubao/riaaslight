@@ -55,3 +55,15 @@ export interface IStoreRequest extends IPaginationRequest {
   location_range: string
   field_set: string
 }
+
+export interface ISku extends IDocument {
+  brand_id: number
+  category_id: number
+  country: string
+  sku_cover_pic_url: string
+  sku_desc: string
+  sku_id: number
+  sku_name: string
+  sku_status: number
+  sku_upc: string
+}
