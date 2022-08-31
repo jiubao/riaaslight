@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import { isArray } from 'lodash'
+import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ShelfShotGroup } from '../components/ShelfShot'
 import {
@@ -11,14 +12,41 @@ import {
 
 const PREFIX = 'DemoMasonry'
 
-export const DemoMasonry: React.FC = () => {
+export const DemoMasonry: React.FC = React.memo(() => {
+  const loadingRef = useRef<HTMLDivElement>(null)
   const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(fetchShelfShots(713295) as any)
-  }, [dispatch])
 
   const shotGroup = useSelector(selectShelfShotsGroup)
   const hasNext = useSelector(selectHasNextShots)
+
+//   useEffect(() => {
+//     dispatch(fetchShelfShots(713295) as any)
+//   }, [dispatch])
+
+  useEffect(() => {
+    if (!loadingRef.current) return
+    // console.log(1)
+    const dom = loadingRef.current
+
+    const handleIntersect = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
+        if (isArray(entries) && entries.length && entries[0].isIntersecting) {
+            dispatch(fetchShelfShots(713295) as any)
+        }
+    }
+
+    const observer = new IntersectionObserver(handleIntersect, {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0,
+    })
+    observer.observe(dom)
+
+    return () => {
+        // console.log(2)
+        observer.unobserve(dom)
+        observer.disconnect()
+    }
+  }, [dispatch])
 
   //   const getItemSize = (index: number) => {}
   //   const row = (index: number) => {
@@ -43,7 +71,7 @@ export const DemoMasonry: React.FC = () => {
       {shotGroup.map((group) => (
         <ShelfShotGroup key={group.month} {...group} />
       ))}
-      {hasNext && <div>loading...</div>}
+      {hasNext && <div ref={loadingRef}>loading...</div>}
     </div>
   )
-}
+})

@@ -1,0 +1,40 @@
+.Timeline {
+    position: relative;
+    height: 100%;
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        border-right: 4px green solid;
+    }
+
+    &Item {
+        position: absolute;
+        top: 0;
+        right: 100px;
+        &::before {
+            content: '';
+            border-bottom: solid 2px blue;
+            width: 100px;
+            height: 0;
+            font-size: 0;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translate(100px, -50%);
+        }
+        &::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translate(100px, -50%);
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            border-radius: 10px;
+        }
+    }
+}

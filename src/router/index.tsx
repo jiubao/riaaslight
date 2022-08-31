@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import { Layout } from '../components/layout'
 import { Debug } from '../debug'
 import { DebugGallery } from '../debug/gallary'
+import { DemoTimeline } from '../debug/line'
 import { GoogleMapDemo } from '../debug/map'
 import { DemoMask } from '../debug/mask'
 import { DemoMasonry } from '../debug/masonry'
@@ -29,6 +30,7 @@ export const MainRouter: React.FC = () => {
         <Route path="map" element={<GoogleMapDemo />} />
         <Route path="mask" element={<DemoMask />} />
         <Route path="masonry" element={<DemoMasonry />} />
+        <Route path="line" element={<DemoTimeline />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
