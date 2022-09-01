@@ -5,6 +5,7 @@ import { IBrand, IShelfShot, IStoreDetail } from '../domain'
 import { brandService } from '../services/brand'
 import { shelfShotService } from '../services/shelfShot'
 import { storeService } from '../services/store'
+import { removeEmptyProps } from '../utils'
 
 interface IState {
   storeDetail?: IStoreDetail
@@ -33,15 +34,33 @@ const SHOT_PAGE_SIZE = 20
 
 export const fetchShelfShots = createAsyncThunk(
   'store/fetchShelfShots',
-  async (store_id: number, { dispatch, getState }) => {
+  async ({ storeId }: { storeId?: number }, { dispatch, getState }) => {
     const state = getState() as RootState
     if (state.store.lockShot) return
     dispatch(updateStore({ lockShot: true }))
     try {
-      const shots = await shelfShotService.get({
-        start: state.store.nextShotIndex,
-        limit: SHOT_PAGE_SIZE,
-      })
+      const {
+        nextShotIndex,
+        storeDetail,
+        selectedBrandIds,
+        selectedCategoryIds,
+      } = state.store
+      // const params = {
+      //   start: nextShotIndex,
+      //   limit: SHOT_PAGE_SIZE,
+      //   store_id: storeId || storeDetail?.store_id,
+      //   brand: selectedBrandIds.join(','),
+      //   category: selectedCategoryIds.join(','),
+      // }
+      const shots = await shelfShotService.get(
+        removeEmptyProps({
+          start: nextShotIndex,
+          limit: SHOT_PAGE_SIZE,
+          store_id: storeId || storeDetail?.store_id,
+          brand: selectedBrandIds.join(','),
+          category: selectedCategoryIds.join(','),
+        })
+      )
       dispatch(appendShelfShots(shots))
       return shots
     } finally {
@@ -97,6 +116,12 @@ export const storeSlice = createSlice({
       state.nextShotIndex = nextShelfShots.length
       state.hasNextShots = incoming.length === SHOT_PAGE_SIZE
     },
+    reset(state, action: PayloadAction) {
+      state.hasNextShots = true
+      state.monthes = []
+      state.nextShotIndex = 0
+      state.shelfShots = []
+    },
   },
   extraReducers(builder) {
     builder.addCase(fetchStoreDetail.fulfilled, (state, action) => {
@@ -111,7 +136,11 @@ export const storeSlice = createSlice({
   },
 })
 
-export const { update: updateStore, appendShelfShots } = storeSlice.actions
+export const {
+  update: updateStore,
+  appendShelfShots,
+  reset: resetStore,
+} = storeSlice.actions
 
 export default storeSlice.reducer
 

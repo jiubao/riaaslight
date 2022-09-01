@@ -11,6 +11,8 @@ import { useNavigate } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   fetchBrands,
+  fetchShelfShots,
+  resetStore,
   selectSelectedBrandIds,
   selectSelectedCategoryIds,
   selectStoreBrands,
@@ -39,10 +41,14 @@ export const StoreInfo: React.FC = () => {
     } else {
       dispatch(updateStore({ brands: [] }))
     }
+    dispatch(resetStore())
+    dispatch(fetchShelfShots({}) as any)
   }
 
   const handleBrandChange = (value: number[]) => {
     dispatch(updateStore({ selectedBrandIds: value }))
+    dispatch(resetStore())
+    dispatch(fetchShelfShots({}) as any)
   }
 
   return (

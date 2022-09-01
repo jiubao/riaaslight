@@ -20,7 +20,7 @@ export const Store: React.FC = React.memo(() => {
 
   useEffect(() => {
     id && dispatch(fetchStoreDetail(Number(id)) as any)
-    id && dispatch(fetchShelfShots(Number(id)) as any)
+    id && dispatch(fetchShelfShots({ storeId: Number(id) }) as any)
   }, [dispatch, id])
 
   return (

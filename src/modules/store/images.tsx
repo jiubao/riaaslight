@@ -1,4 +1,4 @@
-import { get, isArray } from 'lodash'
+import { isArray } from 'lodash'
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ShelfShotGroup } from '../../components/ShelfShot'
@@ -44,7 +44,7 @@ export const StoreImages: React.FC<IProps> = ({ id }) => {
       observer: IntersectionObserver
     ) => {
       if (isArray(entries) && entries.length && entries[0].isIntersecting) {
-        dispatch(fetchShelfShots(713295) as any)
+        dispatch(fetchShelfShots({ storeId: 713295 }) as any)
       }
     }
 
