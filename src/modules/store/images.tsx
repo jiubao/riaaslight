@@ -1,8 +1,16 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { Gallery } from '../../components/gallery'
+import { get, isArray } from 'lodash'
+import React, { useEffect, useRef, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { ShelfShotGroup } from '../../components/ShelfShot'
 // import { mockImgSrcByCount } from '../../mock/img'
-import { selectShelfShots } from '../../store/storeSlice'
+import {
+  fetchShelfShots,
+  selectHasNextShots,
+  selectShelfShotsGroup,
+} from '../../store/storeSlice'
+import Measure, { ContentRect } from 'react-measure'
+import { ITimelineItem, Timeline } from '../../components/timeline'
+import { useTimelineScrollItems } from '../../components/timeline/hooks'
 
 interface IProps {
   id?: string
@@ -18,17 +26,74 @@ const PREFIX = 'StoreImages'
 // }
 
 export const StoreImages: React.FC<IProps> = ({ id }) => {
-  const shelfShots = useSelector(selectShelfShots)
+  const dispatch = useDispatch()
+  const loadingRef = useRef<HTMLDivElement>(null)
+  const shotGroups = useSelector(selectShelfShotsGroup)
+  const hasNext = useSelector(selectHasNextShots)
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const [timelineItems, setTimelineItems] = useState<ITimelineItem[]>([])
+  const scrollItems = useTimelineScrollItems(timelineItems, scrollRef)
 
-  const Row = ({ index }: { index: number }) => {
-    return <img src={shelfShots[index].preview_img_url} alt="" />
+  useEffect(() => {
+    if (!loadingRef.current) return
+
+    const dom = loadingRef.current
+
+    const handleIntersect = (
+      entries: IntersectionObserverEntry[],
+      observer: IntersectionObserver
+    ) => {
+      if (isArray(entries) && entries.length && entries[0].isIntersecting) {
+        dispatch(fetchShelfShots(713295) as any)
+      }
+    }
+
+    const observer = new IntersectionObserver(handleIntersect, {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0,
+    })
+    observer.observe(dom)
+
+    return () => {
+      // console.log(2)
+      observer.unobserve(dom)
+      observer.disconnect()
+    }
+  }, [dispatch])
+
+  const handleResize = (contentRect: ContentRect) => {
+    // this.setState({ dimensions: contentRect.bounds })
+    // console.log(contentRect)
+    const list = document
+      .getElementsByClassName('StoreImages')?.[0]
+      ?.querySelectorAll<HTMLElement>('[data-month]')
+    if (list && list.length) {
+      const items = Array.from(list).map((item) => {
+        const content = item.dataset.month || null
+        const offset = item.offsetTop
+        return { offset, content }
+      })
+      // Array.from(list).reduce((result, item) => {}, [{ offset: 0, content: list[0].dataset.month}])
+      console.log(items)
+      setTimelineItems(items)
+    }
   }
 
   return (
-    <div className={PREFIX}>
-      <Gallery columnCount={4} total={shelfShots.length} gutter={15}>
-        {Row}
-      </Gallery>
+    <div className={`${PREFIX}-scroller fulfilled`} ref={scrollRef}>
+      <Measure bounds onResize={handleResize}>
+        {({ measureRef }) => (
+          <div className={PREFIX} ref={measureRef}>
+            <Timeline items={scrollItems} />
+            {shotGroups.map((group) => (
+              <ShelfShotGroup key={group.month} {...group} />
+            ))}
+
+            {hasNext && <div ref={loadingRef}>loading...</div>}
+          </div>
+        )}
+      </Measure>
     </div>
   )
 }

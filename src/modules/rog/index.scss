@@ -85,11 +85,19 @@
   }
 }
 
-.BrandList,
 .RetailerList {
   .BizUnit {
-    height: 32px;
+    img {
+      background-color: #eee;
+    }
   }
+}
+
+.BrandList,
+.RetailerList {
+  // .BizUnit {
+  //   height: 72px;
+  // }
   .ToggleSelector-item {
     .BizUnit:hover {
       opacity: 0.75;

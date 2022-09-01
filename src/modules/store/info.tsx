@@ -66,8 +66,8 @@ export const StoreInfo: React.FC = () => {
 
       <span className={`${PREFIX}-title`}>PHOTO TYPE</span>
       <div className="BizUnit-list">
-        <BizUnit text={'Shelf/ Cooler Photos'} pure={true} />
-        <BizUnit text={'POSM'} pure={true} />
+        <BizUnit text={'Shelf/ Cooler Photos'} />
+        <BizUnit text={'POSM'} />
       </div>
       <span className={`${PREFIX}-title`}>CATEGORY</span>
       <CategoryList

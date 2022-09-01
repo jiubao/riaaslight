@@ -5,6 +5,7 @@ import {
   ToggleSelectorItem,
 } from '../../../components/toggleSelector'
 import { IBrand } from '../../../domain'
+import { PngIconType } from '../../../domain/icon'
 import './index.scss'
 
 const PREFIX = 'BrandList'
@@ -32,7 +33,7 @@ export const BrandList: React.FC<IProps> = React.memo(
               <BizUnit
                 id={String(item.id)}
                 text={item.brand_name}
-                base64={item.brand_icon}
+                type={PngIconType.Brand}
               />
             </ToggleSelectorItem>
           ))}

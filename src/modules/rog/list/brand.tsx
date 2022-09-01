@@ -5,6 +5,7 @@ import {
   ToggleSelectorGroup,
   ToggleSelectorItem,
 } from '../../../components/toggleSelector'
+import { PngIconType } from '../../../domain/icon'
 // import { selectAllBrands } from '../../../store/commonSlice'
 import {
   fetchStores,
@@ -48,7 +49,7 @@ export const BrandList: React.FC = () => {
                 <BizUnit
                   id={String(item.id)}
                   text={item.brand_name}
-                  base64={item.brand_icon}
+                  type={PngIconType.Brand}
                 />
               </ToggleSelectorItem>
             ))}
@@ -59,7 +60,7 @@ export const BrandList: React.FC = () => {
                   <BizUnit
                     id={String(item.id)}
                     text={item.brand_name}
-                    base64={item.brand_icon}
+                    type={PngIconType.Brand}
                   />
                 </ToggleSelectorItem>
               ))}

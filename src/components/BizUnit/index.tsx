@@ -1,11 +1,14 @@
 import React from 'react'
+import { PngIconType } from '../../domain/icon'
+import { PNGIcon } from '../icons/pngIcon'
 import './index.scss'
 
 interface IProps {
   id?: string
   text: string
-  base64?: string | null
-  pure?: boolean
+  // base64?: string | null
+  type?: PngIconType
+  // pure?: boolean
   onClick?: (id?: string) => void
 }
 
@@ -14,8 +17,8 @@ const PREFIX = 'BizUnit'
 export const BizUnit: React.FC<IProps> = ({
   id,
   text,
-  base64,
-  pure = false,
+  type,
+  // pure = false,
   onClick,
 }) => {
   const handleClick = () => {
@@ -23,7 +26,7 @@ export const BizUnit: React.FC<IProps> = ({
   }
   return (
     <div className={PREFIX} onClick={handleClick}>
-      {!pure && base64 && <img src={base64} alt="" />}
+      {type && <PNGIcon name={text} type={type} />}
       <span>{text}</span>
     </div>
   )

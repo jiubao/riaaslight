@@ -19,8 +19,8 @@ export const GalleryImage: React.FC<IProps> = ({
       const clientWidth = dom.parentElement?.clientWidth
       if (!naturalWidth || !clientWidth) return
       if (naturalHeight / naturalWidth < minHeight / clientWidth) {
-        console.log(`cw:${clientWidth},nw:${naturalWidth},nh:${naturalHeight}`)
-        console.log(dom)
+        // console.log(`cw:${clientWidth},nw:${naturalWidth},nh:${naturalHeight}`)
+        // console.log(dom)
         dom.style.height = `${minHeight}px`
         dom.style.width = 'auto'
         dom.style.position = 'absolute'
@@ -34,7 +34,6 @@ export const GalleryImage: React.FC<IProps> = ({
     return () => {
       dom.removeEventListener('load', handleLoad)
     }
-
   }, [minHeight])
 
   return <img ref={imgRef} alt="" {...props} />

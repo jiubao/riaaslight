@@ -33,11 +33,7 @@ export const CategoryList: React.FC<IProps> = React.memo(
         >
           {categories.map((item) => (
             <ToggleSelectorItem value={item.id} key={item.id}>
-              <BizUnit
-                id={`${item.id}`}
-                text={item.category_name}
-                pure={true}
-              />
+              <BizUnit id={`${item.id}`} text={item.category_name} />
             </ToggleSelectorItem>
           ))}
         </ToggleSelectorGroup>

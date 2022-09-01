@@ -64,6 +64,9 @@ export const fetchBrands = createAsyncThunk(
   }
 )
 
+// date: yyyy-MM-dd
+const date2Month = (date: string) => date.slice(0, 7)
+
 export const storeSlice = createSlice({
   name: 'store',
   initialState,
@@ -81,11 +84,12 @@ export const storeSlice = createSlice({
       const nextMonthes = [...monthes]
       for (let i = 0; i < incoming.length; i++) {
         const shot = incoming[i]
+        const month = date2Month(shot.visit_date)
         const latest = last(nextMonthes)
-        if (latest && latest.month === shot.visit_date) {
+        if (latest && latest.month === month) {
           latest.shelfIds.push(shot.id)
         } else {
-          nextMonthes.push({ month: shot.visit_date, shelfIds: [shot.id] })
+          nextMonthes.push({ month: month, shelfIds: [shot.id] })
         }
       }
       state.shelfShots = nextShelfShots
