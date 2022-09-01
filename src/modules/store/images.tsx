@@ -11,6 +11,7 @@ import {
 import Measure, { ContentRect } from 'react-measure'
 import { ITimelineItem, Timeline } from '../../components/timeline'
 import { useTimelineScrollItems } from '../../components/timeline/hooks'
+import CircularProgress from '@mui/material/CircularProgress'
 
 interface IProps {
   id?: string
@@ -75,7 +76,7 @@ export const StoreImages: React.FC<IProps> = ({ id }) => {
         return { offset, content }
       })
       // Array.from(list).reduce((result, item) => {}, [{ offset: 0, content: list[0].dataset.month}])
-      console.log(items)
+      // console.log(items)
       setTimelineItems(items)
     }
   }
@@ -90,7 +91,11 @@ export const StoreImages: React.FC<IProps> = ({ id }) => {
               <ShelfShotGroup key={group.month} {...group} />
             ))}
 
-            {hasNext && <div ref={loadingRef}>loading...</div>}
+            {hasNext && (
+              <div className="flexCenter" ref={loadingRef}>
+                <CircularProgress />
+              </div>
+            )}
           </div>
         )}
       </Measure>
