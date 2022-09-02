@@ -12,6 +12,9 @@ import Measure, { ContentRect } from 'react-measure'
 import { ITimelineItem, Timeline } from '../../components/timeline'
 import { useTimelineScrollItems } from '../../components/timeline/hooks'
 import CircularProgress from '@mui/material/CircularProgress'
+import { fetchShelf } from '../../store/shelfSlice'
+import { Drawer } from '@mui/material'
+import { ShelfDetail } from '../shelf'
 
 interface IProps {
   id?: string
@@ -34,6 +37,7 @@ export const StoreImages: React.FC<IProps> = ({ id }) => {
   const scrollRef = useRef<HTMLDivElement>(null)
   const [timelineItems, setTimelineItems] = useState<ITimelineItem[]>([])
   const scrollItems = useTimelineScrollItems(timelineItems, scrollRef)
+  const [detailVisible, setDetailVisible] = useState(false)
 
   useEffect(() => {
     if (!loadingRef.current) return
@@ -81,6 +85,13 @@ export const StoreImages: React.FC<IProps> = ({ id }) => {
     }
   }
 
+  const handleOpenDetail = (shelfId: number) => {
+    dispatch(fetchShelf(shelfId) as any).then((res: any) => {
+      console.log(res.payload)
+      setDetailVisible(true)
+    })
+  }
+
   return (
     <div className={`${PREFIX}-scroller fulfilled`} ref={scrollRef}>
       <Measure bounds onResize={handleResize}>
@@ -88,7 +99,11 @@ export const StoreImages: React.FC<IProps> = ({ id }) => {
           <div className={PREFIX} ref={measureRef}>
             <Timeline items={scrollItems} />
             {shotGroups.map((group) => (
-              <ShelfShotGroup key={group.month} {...group} />
+              <ShelfShotGroup
+                key={group.month}
+                onClick={handleOpenDetail}
+                {...group}
+              />
             ))}
 
             {hasNext && (
@@ -99,6 +114,15 @@ export const StoreImages: React.FC<IProps> = ({ id }) => {
           </div>
         )}
       </Measure>
+      <Drawer
+        anchor="bottom"
+        open={detailVisible}
+        onClose={() => setDetailVisible(false)}
+        className={`${PREFIX}-drawer`}
+        elevation={100}
+      >
+        <ShelfDetail />
+      </Drawer>
     </div>
   )
 }

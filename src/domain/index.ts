@@ -76,4 +76,6 @@ export interface IShelfShotRequest extends IPaginationRequest {
 export type ShelfPosition = [string, string, string, string]
 export interface IShelfShotDetail extends IShelfShot {
   brand_map: Record<string, ShelfPosition[]>
+  category_map: Record<string, ShelfPosition[]>
+  survey: string
 }
