@@ -1,17 +1,17 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
-import { IShelfShotDetail } from '../../domain'
-import { selectShelfShotDetail } from '../../store/shelfSlice'
+import { LR } from '../../components/layout/lr'
+import { StoreGalleryLeft } from '../rog/gallery/left'
+import { ShelfDetailRight } from './right'
 import './index.scss'
 
 const PREFIX = 'ShelfDetail'
 
 export const ShelfDetail: React.FC = () => {
-  const detail = useSelector(selectShelfShotDetail) as IShelfShotDetail
+  // const detail = useSelector(selectShelfShotDetail)!
 
   return (
-    <div className={PREFIX}>
-      <div>{detail.id}</div>
-    </div>
+    <LR className={PREFIX} percent={77} left={<StoreGalleryLeft />}>
+      <ShelfDetailRight />
+    </LR>
   )
 }

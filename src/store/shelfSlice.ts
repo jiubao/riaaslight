@@ -48,3 +48,21 @@ export const selectSelectedCategoryIds = (state: RootState) =>
   state.shelf.selectedCategoryIds
 export const selectSelectedBrandIds = (state: RootState) =>
   state.shelf.selectedBrandIds
+
+export const selectShelfBrands = (state: RootState) => {
+  const hash = new Map()
+  state.store.brands.forEach((brand) => hash.set(`${brand.id}`, brand))
+  return Object.keys(state.shelf.detail!.brand_map)
+    .map((id) => hash.get(id))
+    .filter(Boolean)
+}
+
+export const selectShelfCategories = (state: RootState) => {
+  const hash = new Map()
+  state.common.categories.forEach((category) =>
+    hash.set(String(category.id), category)
+  )
+  return Object.keys(state.shelf.detail!.category_map)
+    .map((id) => hash.get(id))
+    .filter(Boolean)
+}

@@ -119,7 +119,6 @@ export const StoreImages: React.FC<IProps> = ({ id }) => {
         open={detailVisible}
         onClose={() => setDetailVisible(false)}
         className={`${PREFIX}-drawer`}
-        elevation={100}
       >
         <ShelfDetail />
       </Drawer>

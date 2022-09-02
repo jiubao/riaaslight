@@ -1,5 +1,4 @@
 const fs = require('fs')
-const path = require('path')
 
 const encode_base64 = (file, ext = 'png') => {
   return `data:image/${ext};base64,${fs.readFileSync(file, 'base64')}`
