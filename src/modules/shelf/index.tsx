@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { CSSProperties, useState } from 'react'
 import { LR } from '../../components/layout/lr'
 import './index.scss'
 import { ShelfDetailRight } from './right'
 import { ShelfDetailLeft } from './left'
-import { on } from '../../utils/dom'
+import { useWindowResize } from '../../hooks/useWindowResize'
 
 const PREFIX = 'ShelfDetail'
 
@@ -12,26 +12,11 @@ interface IProps {
 }
 
 export const ShelfDetail: React.FC<IProps> = ({ onClose }) => {
-  const [height, setHeight] = useState(0)
-  const style = useMemo(() => ({ height: height - 90 }), [height])
+  const [style, setStyle] = useState<CSSProperties>()
 
-  const resize = useCallback(() => {
-    console.log(window.innerHeight)
-    setHeight(window.innerHeight)
-  }, [])
-
-  useEffect(() => {
-    resize()
-  }, [resize])
-
-  useEffect(() => {
-    const off = on(window, 'resize', () => {
-      resize()
-    })
-    return () => {
-      off()
-    }
-  }, [resize])
+  useWindowResize(() => {
+    setStyle({ height: window.innerHeight - 90 })
+  })
 
   return (
     <LR
