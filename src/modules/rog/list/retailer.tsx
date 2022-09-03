@@ -5,6 +5,7 @@ import {
   ToggleSelectorGroup,
   ToggleSelectorItem,
 } from '../../../components/toggleSelector'
+import { PngIconType } from '../../../domain/icon'
 import { selectAllRetailers } from '../../../store/commonSlice'
 import { selectSelectedRetailerIds, updateRog } from '../../../store/rogSlice'
 
@@ -36,7 +37,7 @@ export const RetailerList: React.FC = () => {
             <BizUnit
               id={String(item.id)}
               text={item.retailer_name}
-              base64={item.retailer_icon}
+              type={PngIconType.Retailer}
             />
           </ToggleSelectorItem>
         ))}

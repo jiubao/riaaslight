@@ -5,9 +5,11 @@ import {
   ToggleSelectorGroup,
   ToggleSelectorItem,
 } from '../../../components/toggleSelector'
-import { selectAllBrands } from '../../../store/commonSlice'
+import { PngIconType } from '../../../domain/icon'
+// import { selectAllBrands } from '../../../store/commonSlice'
 import {
   fetchStores,
+  selectRogBrands,
   selectSelectedBrandIds,
   selectSelectedCategoryIds,
   updateRog,
@@ -20,7 +22,7 @@ const TOP_COUNT = 20
 export const BrandList: React.FC = () => {
   const [showMore, setShowMore] = useState(false)
   const dispatch = useDispatch()
-  const brands = useSelector(selectAllBrands)
+  const brands = useSelector(selectRogBrands)
   const categoryIds = useSelector(selectSelectedCategoryIds)
   const brandIds = useSelector(selectSelectedBrandIds)
   const handleChange = (value: number[]) => {
@@ -47,7 +49,7 @@ export const BrandList: React.FC = () => {
                 <BizUnit
                   id={String(item.id)}
                   text={item.brand_name}
-                  base64={item.brand_icon}
+                  type={PngIconType.Brand}
                 />
               </ToggleSelectorItem>
             ))}
@@ -58,7 +60,7 @@ export const BrandList: React.FC = () => {
                   <BizUnit
                     id={String(item.id)}
                     text={item.brand_name}
-                    base64={item.brand_icon}
+                    type={PngIconType.Brand}
                   />
                 </ToggleSelectorItem>
               ))}

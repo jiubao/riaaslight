@@ -1,15 +1,33 @@
+
+.flexCore,
 .flexCenter,
 .flexMiddle,
 .flex {
   display: flex;
 }
 
+.flexCore,
 .flexMiddle,
 .middle {
   align-items: center;
 }
 
+.flexCore,
 .flexCenter,
 .center {
   justify-content: center;
+}
+
+.textNoWrap {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fulfilled {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrandList } from '../list/brand'
-import { CategoryList } from '../list/category'
+import { CategoryList } from '../../common/category/category'
 
 const PREFIX = 'StoreGalleryRight'
 export const StoreGalleryRight: React.FC = () => {

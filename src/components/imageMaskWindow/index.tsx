@@ -1,4 +1,10 @@
-import React, { CSSProperties, useEffect, useRef, useState } from 'react'
+import React, {
+  CSSProperties,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import { MaskWindow } from './window'
 import './index.scss'
 import { on } from '../../utils/dom'
@@ -10,10 +16,13 @@ import {
   IdentityTransformMatrix2D,
   TransformMatrix2D,
 } from '../../utils/matrix'
+import { SpotWindow } from './spotWindow'
 
 interface IProps {
   src: string
   rectangles: RectType[]
+  mask?: boolean
+  mode?: 'box' | 'spot'
 }
 
 const PREFIX = 'ImageMaskWindow'
@@ -22,6 +31,8 @@ export const ImageMaskWindow: React.FC<PropsWithClassName<IProps>> = ({
   className,
   src,
   rectangles,
+  mask = true,
+  mode = 'box',
 }) => {
   const [loaded, setLoaded] = useState(false)
   const [image, setImage] = useState<HTMLImageElement>()
@@ -96,15 +107,21 @@ export const ImageMaskWindow: React.FC<PropsWithClassName<IProps>> = ({
     })
   }, [divSize, imageSize])
 
+  const Item = useMemo(() => (mode === 'box' ? MaskWindow : SpotWindow), [mode])
+
   return (
     <div className={classNames(PREFIX, className)} ref={divRef}>
       {loaded && (
         <div className={`${PREFIX}-wrapper`} style={wrapStyle}>
           <img src={src} alt="" />
-          <div className={`${PREFIX}-Mask`}></div>
+          <div
+            className={classNames(`${PREFIX}-Mask`, {
+              'is-masked': rectangles.length && mask,
+            })}
+          ></div>
           <div className={`${PREFIX}-Zoom`} style={zoomStyle}>
             {rectangles.map((rect, index) => (
-              <MaskWindow
+              <Item
                 key={index}
                 image={image as HTMLImageElement}
                 // rect={JSON.stringify(rect)}

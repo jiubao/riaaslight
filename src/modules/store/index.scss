@@ -1,4 +1,4 @@
-@import '../../../styles/base.scss';
+@import '../../styles/base.scss';
 
 .Store {
   .LR-left {
@@ -6,11 +6,23 @@
   }
 
   &Images {
-    padding: 15px;
-    background-color: #efefef;
+    position: relative;
+    padding: 0 40px 0 20px;
+    min-height: 100%;
     img {
       width: 100%;
-      border-radius: 10px;
+      // border-radius: 10px;
+    }
+    &-scroller {
+      background-color: #efefef;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    &-drawer {
+      .MuiDrawer-paper {
+        border-radius: 20px 20px 0 0;
+      }
     }
   }
 

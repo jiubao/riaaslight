@@ -1,0 +1,70 @@
+@import '../../styles/base.scss';
+
+.ShelfDetail {
+  // height: 1280px;
+  // height: 730px;
+
+  &Right {
+    position: relative;
+    padding: 20px;
+    &-title {
+      display: block;
+      font-size: 14px;
+      color: #808080;
+      margin: 24px 0 8px 0;
+
+      @include baseFont;
+    }
+
+    &-close {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      cursor: pointer;
+    }
+  }
+
+  &Left {
+    height: 100%;
+
+    .swiper-slide {
+      background-size: cover;
+      background-position: center;
+    }
+
+    &-mainSwiper {
+      height: 80%;
+      width: 100%;
+      background-color: #eee;
+    }
+
+    &-thumbSwiper {
+      height: 20%;
+      box-sizing: border-box;
+      padding: 10px 0;
+
+      .swiper-slide {
+        width: 25%;
+        height: 100%;
+        opacity: 0.4;
+      }
+
+      .swiper-slide-thumb-active {
+        opacity: 1;
+      }
+    }
+
+
+    .swiper-slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    &-Window {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
