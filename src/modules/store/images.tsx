@@ -1,5 +1,5 @@
 import { isArray } from 'lodash'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ShelfShotGroup } from '../../components/ShelfShot'
 // import { mockImgSrcByCount } from '../../mock/img'
@@ -94,6 +94,10 @@ export const StoreImages: React.FC<IProps> = ({ id }) => {
     })
   }
 
+  const handleCloseDetail = useCallback(() => {
+    setDetailVisible(false)
+  }, [])
+
   return (
     <div className={`${PREFIX}-scroller fulfilled`} ref={scrollRef}>
       <Measure bounds onResize={handleResize}>
@@ -119,10 +123,10 @@ export const StoreImages: React.FC<IProps> = ({ id }) => {
       <Drawer
         anchor="bottom"
         open={detailVisible}
-        onClose={() => setDetailVisible(false)}
+        onClose={handleCloseDetail}
         className={`${PREFIX}-drawer`}
       >
-        <ShelfDetail />
+        <ShelfDetail onClose={handleCloseDetail} />
       </Drawer>
     </div>
   )

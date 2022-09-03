@@ -8,9 +8,14 @@ import {
 } from '../../store/shelfSlice'
 import { BrandList } from '../common/brand'
 import { CategoryList } from '../common/category/category'
+import CloseIcon from '@mui/icons-material/Close'
 
 const PREFIX = 'ShelfDetailRight'
-export const ShelfDetailRight: React.FC = () => {
+interface IProps {
+  onClose?: () => void
+}
+
+export const ShelfDetailRight: React.FC<IProps> = ({ onClose }) => {
   const dispatch = useDispatch()
   const selectedBrandIds = useSelector(selectSelectedBrandIds)
   const brands = useSelector(selectShelfBrands)
@@ -30,6 +35,7 @@ export const ShelfDetailRight: React.FC = () => {
         brands={brands}
         onChange={handleBrandChange}
       />
+      <CloseIcon className={`${PREFIX}-close`} onClick={onClose} />
     </div>
   )
 }

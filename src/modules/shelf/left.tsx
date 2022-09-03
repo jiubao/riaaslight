@@ -15,7 +15,7 @@ import {
   selectShelfIndex,
 } from '../../store/shelfSlice'
 
-const PREFIX = 'StoreGalleryLeft'
+const PREFIX = 'ShelfDetailLeft'
 
 export const ShelfDetailLeft: React.FC = () => {
   const dispatch = useDispatch()
@@ -31,8 +31,6 @@ export const ShelfDetailLeft: React.FC = () => {
   // }
 
   const handleSlideChagne = () => {
-    console.log('...')
-    console.log(mainSwiper?.activeIndex)
     dispatch(resetShelf() as any)
     if (mainSwiper?.activeIndex !== undefined) {
       dispatch(fetchShelfByIndex(mainSwiper.activeIndex) as any)
@@ -42,6 +40,7 @@ export const ShelfDetailLeft: React.FC = () => {
   return (
     <div className={PREFIX}>
       <Swiper
+        className={`${PREFIX}-mainSwiper`}
         onSwiper={setMainSwiper}
         spaceBetween={10}
         // navigation={true}
@@ -50,7 +49,6 @@ export const ShelfDetailLeft: React.FC = () => {
           swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
         }}
         modules={[FreeMode, Navigation, Thumbs]}
-        className="mySwiper2"
         initialSlide={index}
         onSlideChange={handleSlideChagne}
       >
@@ -72,7 +70,8 @@ export const ShelfDetailLeft: React.FC = () => {
         freeMode={true}
         watchSlidesProgress={true}
         modules={[FreeMode, Navigation, Thumbs]}
-        className="mySwiper"
+        // className="mySwiper"
+        className={`${PREFIX}-thumbSwiper`}
       >
         {shots.map((shot) => (
           <SwiperSlide key={shot.id}>
