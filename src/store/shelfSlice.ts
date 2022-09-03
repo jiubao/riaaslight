@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { get } from 'lodash'
 import { RootState } from '.'
-import { IShelfShotDetail, ShelfPosition } from '../domain'
+import { IShelfShotDetail } from '../domain'
+import { PositionType } from '../domain/shape'
 import { shelfShotService } from '../services/shelfShot'
 
 interface IState {
@@ -91,7 +92,7 @@ export const selectShelfCategories = (state: RootState) => {
 export const selectSelectedBrandsPositions = (state: RootState) => {
   const { detail, selectedBrandIds } = state.shelf
   if (!detail || selectedBrandIds.length === 0) return []
-  return selectedBrandIds.reduce<ShelfPosition[]>((result, id) => {
+  return selectedBrandIds.reduce<PositionType[]>((result, id) => {
     if (detail.brand_map[id]) {
       result = result.concat(
         detail.brand_map[id].map((position) => [

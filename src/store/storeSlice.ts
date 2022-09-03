@@ -5,7 +5,7 @@ import { IBrand, IShelfShot, IStoreDetail } from '../domain'
 import { brandService } from '../services/brand'
 import { shelfShotService } from '../services/shelfShot'
 import { storeService } from '../services/store'
-import { removeEmptyProps } from '../utils'
+import { date2Month, removeEmptyProps } from '../utils'
 
 interface IState {
   storeDetail?: IStoreDetail
@@ -84,7 +84,6 @@ export const fetchBrands = createAsyncThunk(
 )
 
 // date: yyyy-MM-dd
-const date2Month = (date: string) => date.slice(0, 7)
 
 export const storeSlice = createSlice({
   name: 'store',

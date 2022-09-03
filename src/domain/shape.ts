@@ -9,6 +9,8 @@ export interface IStroke {
   color: string
 }
 
+export type PositionType = [number, number, number, number] // let top right bottom
+
 // export interface IRect {
 //   x: number
 //   y: number

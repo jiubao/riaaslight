@@ -1,3 +1,5 @@
+import { PositionType } from './shape'
+
 export interface IDocument {
   id: number
 }
@@ -73,9 +75,40 @@ export interface IShelfShotRequest extends IPaginationRequest {
   brand?: string // 1,2,3
 }
 
-export type ShelfPosition = [number, number, number, number]
+// export type ShelfPosition = [number, number, number, number]
 export interface IShelfShotDetail extends IShelfShot {
-  brand_map: Record<string, ShelfPosition[]>
-  category_map: Record<string, ShelfPosition[]>
+  brand_map: Record<string, PositionType[]>
+  category_map: Record<string, PositionType[]>
   survey: string
+}
+
+export interface IPosmShot extends IDocument {
+  store_id: number
+  retailer_id: number
+  category_id: number
+  brand_id: number
+  posm_internal_id: number
+  posm_name: string
+  img_id: string
+  img_url: string
+  thumbnail_url: string
+  visit_date: string
+  store_city: string
+  store_state_or_province: string
+  position: PositionType
+}
+
+export interface IPosmShotRequest extends IPaginationRequest {
+  brand?: number
+  category?: number
+  retailer?: number
+  region?: RegionEnum
+  store_id?: number
+}
+
+// export type RegionType = 'NA' | 'SEA'
+
+export enum RegionEnum {
+  NA = 'NA',
+  SEA = 'SEA',
 }

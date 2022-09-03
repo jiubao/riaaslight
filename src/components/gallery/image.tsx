@@ -5,7 +5,7 @@ interface IProps extends ImgHTMLAttributes<any> {
 }
 
 export const GalleryImage: React.FC<IProps> = ({
-  minHeight = 200,
+  minHeight = 120,
   ...props
 }) => {
   const imgRef = useRef<HTMLImageElement>(null)
