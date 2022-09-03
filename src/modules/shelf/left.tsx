@@ -23,7 +23,7 @@ export const ShelfDetailLeft: React.FC = () => {
   const [mainSwiper, setMainSwiper] = useState<SwiperClass | null>(null)
   const shots = useSelector(selectShelfShots)
   const positions = useSelector(selectSelectedBrandsPositions)
-  const index = useSelector(selectShelfIndex)
+  const shelfIndex = useSelector(selectShelfIndex)
 
   // const handleSwiper = (instance: SwiperClass) => {
   //   instance.originalParams = instance.originalParams || {}
@@ -49,10 +49,10 @@ export const ShelfDetailLeft: React.FC = () => {
           swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
         }}
         modules={[FreeMode, Navigation, Thumbs]}
-        initialSlide={index}
+        initialSlide={shelfIndex}
         onSlideChange={handleSlideChagne}
       >
-        {shots.map((shot) => (
+        {shots.map((shot, index) => (
           <SwiperSlide key={shot.id}>
             {/* <img src={shot.preview_img_url} alt="" /> */}
             <ImageMaskWindow
@@ -61,6 +61,7 @@ export const ShelfDetailLeft: React.FC = () => {
               className={`${PREFIX}-Window`}
               mask={false}
               mode="spot"
+              drawing={shelfIndex === index}
             />
           </SwiperSlide>
         ))}
