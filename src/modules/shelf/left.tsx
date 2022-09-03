@@ -59,6 +59,8 @@ export const ShelfDetailLeft: React.FC = () => {
               src={shot.preview_img_url}
               rectangles={positions}
               className={`${PREFIX}-Window`}
+              mask={false}
+              mode="spot"
             />
           </SwiperSlide>
         ))}

@@ -1,17 +1,19 @@
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { on } from '../utils/dom'
 
-export const useWindowResize = (callback: () => void) => {
-  useEffect(() => {
-    callback()
-  }, [callback])
+export const useWindowResize = (callback: () => void, deps: any[]) => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const fn = useCallback(callback, [deps])
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(fn, [])
 
   useEffect(() => {
     const off = on(window, 'resize', () => {
-      callback()
+      fn()
     })
     return () => {
       off()
     }
-  }, [callback])
+  }, [fn])
 }

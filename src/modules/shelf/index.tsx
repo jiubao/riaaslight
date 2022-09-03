@@ -16,7 +16,7 @@ export const ShelfDetail: React.FC<IProps> = ({ onClose }) => {
 
   useWindowResize(() => {
     setStyle({ height: window.innerHeight - 90 })
-  })
+  }, [])
 
   return (
     <LR
