@@ -73,7 +73,7 @@ export interface IShelfShotRequest extends IPaginationRequest {
   brand?: string // 1,2,3
 }
 
-export type ShelfPosition = [string, string, string, string]
+export type ShelfPosition = [number, number, number, number]
 export interface IShelfShotDetail extends IShelfShot {
   brand_map: Record<string, ShelfPosition[]>
   category_map: Record<string, ShelfPosition[]>

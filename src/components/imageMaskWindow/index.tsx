@@ -101,7 +101,11 @@ export const ImageMaskWindow: React.FC<PropsWithClassName<IProps>> = ({
       {loaded && (
         <div className={`${PREFIX}-wrapper`} style={wrapStyle}>
           <img src={src} alt="" />
-          <div className={`${PREFIX}-Mask`}></div>
+          <div
+            className={classNames(`${PREFIX}-Mask`, {
+              'is-masked': rectangles.length,
+            })}
+          ></div>
           <div className={`${PREFIX}-Zoom`} style={zoomStyle}>
             {rectangles.map((rect, index) => (
               <MaskWindow

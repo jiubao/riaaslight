@@ -38,6 +38,7 @@ export const StoreImages: React.FC<IProps> = ({ id }) => {
   const [timelineItems, setTimelineItems] = useState<ITimelineItem[]>([])
   const scrollItems = useTimelineScrollItems(timelineItems, scrollRef)
   const [detailVisible, setDetailVisible] = useState(false)
+  // const [selectedShelfId, setSelectedShelfId] = useState<number | null>(null)
 
   useEffect(() => {
     if (!loadingRef.current) return
@@ -87,7 +88,8 @@ export const StoreImages: React.FC<IProps> = ({ id }) => {
 
   const handleOpenDetail = (shelfId: number) => {
     dispatch(fetchShelf(shelfId) as any).then((res: any) => {
-      console.log(res.payload)
+      // console.log(res.payload)
+      // setSelectedShelfId(shelfId)
       setDetailVisible(true)
     })
   }

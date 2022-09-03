@@ -116,7 +116,7 @@ export const storeSlice = createSlice({
       state.nextShotIndex = nextShelfShots.length
       state.hasNextShots = incoming.length === SHOT_PAGE_SIZE
     },
-    reset(state, action: PayloadAction) {
+    reset(state) {
       state.hasNextShots = true
       state.monthes = []
       state.nextShotIndex = 0
