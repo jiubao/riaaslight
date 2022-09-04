@@ -9,23 +9,35 @@ interface IState {
   retailers: IRetailer[]
   categories: ICategory[]
   brands: IBrand[]
+  lockRetailer: boolean
 }
 
 const initialState: IState = {
   retailers: [],
   categories: [],
   brands: [],
+  lockRetailer: false,
 }
 
 export const fetchRetailers = createAsyncThunk(
   'common/fetchRetailers',
-  async (_, thunkApi) => {
-    const state = thunkApi.getState() as RootState
-    if (state.common.retailers.length) {
+  async (_, { getState, dispatch }) => {
+    const state = getState() as RootState
+    const { retailers, lockRetailer } = state.common
+    if (retailers.length) {
       return state.common.retailers
     }
+    if (lockRetailer) {
+      return Promise.reject(0)
+    }
 
-    return await retailerService.get()
+    dispatch(updateCommon({ lockRetailer: true }))
+
+    try {
+      return await retailerService.get()
+    } finally {
+      dispatch(updateCommon({ lockRetailer: false }))
+    }
   }
 )
 

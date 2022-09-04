@@ -101,7 +101,7 @@ export interface IPosmShot extends IDocument {
 export interface IPosmShotRequest extends IPaginationRequest {
   brand?: number
   category?: number
-  retailer?: number
+  retailer?: number | ''
   region?: RegionEnum
   store_id?: number
 }

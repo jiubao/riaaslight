@@ -50,7 +50,7 @@ export const StoreImages: React.FC<IProps> = ({ id }) => {
       observer: IntersectionObserver
     ) => {
       if (isArray(entries) && entries.length && entries[0].isIntersecting) {
-        dispatch(fetchShelfShots({ storeId: 713295 }) as any)
+        dispatch(fetchShelfShots({}) as any)
       }
     }
 

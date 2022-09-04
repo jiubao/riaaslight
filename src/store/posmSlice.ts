@@ -3,11 +3,12 @@ import { last } from 'lodash'
 import { RootState } from '.'
 import { IPosmShot, RegionEnum } from '../domain'
 import { posmService } from '../services/posm'
-import { date2Month } from '../utils'
+import { date2Month, removeEmptyProps } from '../utils'
 
 interface IState {
   shots: IPosmShot[]
-  selectedRetailerId?: number
+  selectedRetailerId: number | ''
+  selectedRegion: string
   region?: RegionEnum
   nextShotIndex: number
   hasNextShots: boolean
@@ -21,24 +22,42 @@ const initialState: IState = {
   hasNextShots: true,
   lockShot: false,
   monthes: [],
+  selectedRetailerId: '',
+  selectedRegion: '',
 }
 
 const PAGE_SIZE = 20
 
 export const fetchPosmShots = createAsyncThunk(
   'posm/fetchPosmShots',
-  async (_, { getState, dispatch }) => {
+  async (refetch: boolean, { getState, dispatch }) => {
     const state = getState() as RootState
-    const { nextShotIndex, lockShot } = state.posm
+    const { nextShotIndex, lockShot, selectedRegion, selectedRetailerId } =
+      state.posm
     if (lockShot) return
+    if (refetch) {
+      dispatch(
+        updatePosm({
+          shots: [],
+          nextShotIndex: 0,
+          hasNextShots: true,
+          monthes: [],
+        })
+      )
+    }
 
     dispatch(updatePosm({ lockShot: true }))
     try {
-      const shots = await posmService.get({
-        start: nextShotIndex,
-        limit: PAGE_SIZE,
-      })
+      const shots = await posmService.get(
+        removeEmptyProps({
+          start: nextShotIndex,
+          limit: PAGE_SIZE,
+          region: selectedRegion as RegionEnum,
+          retailer: selectedRetailerId,
+        })
+      )
       dispatch(appendPosmShots(shots))
+      return shots
     } finally {
       dispatch(updatePosm({ lockShot: false }))
     }
@@ -88,10 +107,10 @@ export const { update: updatePosm, append: appendPosmShots } = posmSlice.actions
 export default posmSlice.reducer
 
 // export const selectShelfShotDetail = (state: RootState) => state.shelf.detail
-// export const selectSelectedCategoryIds = (state: RootState) =>
-//   state.shelf.selectedCategoryIds
-// export const selectSelectedBrandIds = (state: RootState) =>
-//   state.shelf.selectedBrandIds
+export const selectSelectedRegion = (state: RootState) =>
+  state.posm.selectedRegion
+export const selectSelectedRetailer = (state: RootState) =>
+  state.posm.selectedRetailerId
 
 export const selectPosmShotsGroup = (state: RootState) => {
   const { shots, monthes } = state.posm
@@ -101,4 +120,8 @@ export const selectPosmShotsGroup = (state: RootState) => {
     month: item.month,
     shots: item.shotIds.map((id) => hash.get(id)),
   }))
+}
+
+export const selectHasNextShots = (state: RootState) => {
+  return state.posm.hasNextShots
 }
