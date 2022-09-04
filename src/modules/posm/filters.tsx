@@ -17,12 +17,12 @@ import {
 } from '../../store/posmSlice'
 
 interface IProps {
-  id?: string
+  onChange?: () => void
 }
 
 const PREFIX = 'PosmFilters'
 
-export const PosmFilters: React.FC<IProps> = ({ id }) => {
+export const PosmFilters: React.FC<IProps> = ({ onChange }) => {
   const dispatch = useDispatch()
   const retailers = useSelector(selectAllRetailers)
   const selectedRegions = useSelector(selectSelectedRegions)
@@ -30,14 +30,16 @@ export const PosmFilters: React.FC<IProps> = ({ id }) => {
 
   const handleRegionChange = useCallback(
     (event: SelectChangeEvent<string[]>) => {
+      onChange?.()
       dispatch(updatePosm({ selectedRegions: event.target.value as string[] }))
       dispatch(fetchPosmShots(true) as any)
     },
-    [dispatch]
+    [dispatch, onChange]
   )
 
   const handleRetailerChange = useCallback(
     (event: SelectChangeEvent<number[]>) => {
+      onChange?.()
       dispatch(
         updatePosm({
           selectedRetailerIds: event.target.value as number[],
@@ -45,7 +47,7 @@ export const PosmFilters: React.FC<IProps> = ({ id }) => {
       )
       dispatch(fetchPosmShots(true) as any)
     },
-    [dispatch]
+    [dispatch, onChange]
   )
 
   return (

@@ -1,7 +1,7 @@
 import { CircularProgress } from '@mui/material'
 import classNames from 'classnames'
 import { isArray } from 'lodash'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Measure, { ContentRect } from 'react-measure'
 import { useDispatch, useSelector } from 'react-redux'
 import { ITimelineItem, Timeline } from '../../components/timeline'
@@ -47,9 +47,7 @@ export const Posm: React.FC<IProps> = ({ id }) => {
     [dispatch]
   )
 
-  const handleResize = (contentRect: ContentRect) => {
-    // this.setState({ dimensions: contentRect.bounds })
-    // console.log(contentRect)
+  const handleResize = useCallback(() => {
     const list = document
       .getElementsByClassName(PREFIX)?.[0]
       ?.querySelectorAll<HTMLElement>('[data-month]')
@@ -59,15 +57,21 @@ export const Posm: React.FC<IProps> = ({ id }) => {
         const offset = item.offsetTop
         return { offset, content }
       })
-      // Array.from(list).reduce((result, item) => {}, [{ offset: 0, content: list[0].dataset.month}])
-      // console.log(items)
       setTimelineItems(items)
     }
-  }
+  }, [])
+
+  useEffect(() => {
+    handleResize()
+  }, [handleResize])
+
+  const handleFilterChange = useCallback(() => {
+    setTimelineItems([])
+  }, [])
 
   return (
-    <div className={`${PREFIX}-wrap fulfilled`}>
-      <PosmFilters />
+    <div className={`${PREFIX}-wrap fulfilled`} ref={scrollRef}>
+      <PosmFilters onChange={handleFilterChange} />
       <Measure bounds onResize={handleResize}>
         {({ measureRef }) => (
           <div className={PREFIX} ref={measureRef}>

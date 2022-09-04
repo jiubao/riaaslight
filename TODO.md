@@ -1,8 +1,15 @@
-# shelf detail
+# ISSUES
+- masnory - bottom radius
+
 - rect border
+- red spot
+- google map aggregate
 
 # DONE
 - select right item when open modal
 - reset selection if swipe imgs
 - close button
 - modal height resize
+- timeline stick
+- timeline init
+- timeline clean
