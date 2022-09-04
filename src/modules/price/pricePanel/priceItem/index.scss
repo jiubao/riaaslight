@@ -1,0 +1,48 @@
+.PriceItem {
+  display: inline-block;
+  padding: 6px 4px;
+  height: 52px;
+  &-content {
+    height: 40px;
+    background: #ffffff;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding: 0 14px 0 10px;
+  }
+  &-title {
+    font-family: 'PingFang SC';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: #545e6b;
+    flex: 1;
+    overflow: hidden;
+    width: 0;
+    margin-right: 10px;
+    text-overflow: ellipsis;
+  }
+  &-price {
+    font-family: 'PingFang SC';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 25px;
+
+    color: #545e6b;
+
+    opacity: 0.8;
+    &.low {
+      .prefix {
+        color: #00936e;
+      }
+    }
+    &.high {
+      margin-left: 24px;
+      .prefix {
+        color: #dd1717;
+      }
+    }
+  }
+}

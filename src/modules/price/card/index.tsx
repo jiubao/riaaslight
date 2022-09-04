@@ -6,14 +6,15 @@ import { WaterFallDataItem } from '../../../components/WaterFall/interface'
 import { useHideWhenChildExceedRow } from './useHideWhenChildExceedRow'
 const PREFIX = 'SkuCard'
 
-interface IProps {
+interface IProps<T> {
   className?: string
-  data: WaterFallDataItem
+  data: T
   url: string
   onClick?: (item: any) => void
+  showDetail: (data: T) => void
 }
 
-const SkuCard: React.FC<IProps> = React.memo(function SkuCard(props) {
+function SkuCard<T extends WaterFallDataItem>(props: IProps<T>) {
   const { className, url, data } = props
   const [detailVisible, setDetailVisible] = useState<boolean>(false)
   const dataRef = useRef<any>(data)
@@ -64,6 +65,9 @@ const SkuCard: React.FC<IProps> = React.memo(function SkuCard(props) {
     },
     [detailVisible]
   )
+  const goDetail = () => {
+    props.showDetail(data)
+  }
   return (
     <div
       className={cls(`${PREFIX}`, className, { active: detailVisible })}
@@ -88,11 +92,13 @@ const SkuCard: React.FC<IProps> = React.memo(function SkuCard(props) {
               ...
             </span>
           </div>
-          <div className={`${PREFIX}-detailFooter`}>{'Details >'}</div>
+          <div className={`${PREFIX}-detailFooter`} onClick={goDetail}>
+            {'Details >'}
+          </div>
         </div>
       )}
     </div>
   )
-})
+}
 
 export default SkuCard

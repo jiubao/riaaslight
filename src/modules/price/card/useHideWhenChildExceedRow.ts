@@ -48,7 +48,6 @@ export const useHideWhenChildExceedRow: IUseHideWhenChildExceedRow = (
               tops.push(node.offsetTop)
             }
           } else {
-            console.log(node.offsetTop)
             if (node.offsetTop > clientHeight - 20) {
               node.style.opacity = '0'
               isShowTotal = true

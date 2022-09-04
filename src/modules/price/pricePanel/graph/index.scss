@@ -1,0 +1,12 @@
+.PriceGraph {
+  display: flex;
+  flex-direction: column;
+  &-content {
+    flex: 1;
+    overflow: hidden;
+  }
+  &-graph {
+    height: 100% !important;
+    width: 100%;
+  }
+}

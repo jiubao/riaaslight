@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   selectSearchParams,
   updateParams,
-  fetchPriceList,
+  fetchSkuList,
 } from '../../../store/priceSlice'
 import cls from 'classnames'
 import './index.scss'
@@ -30,7 +30,7 @@ const PriceSearch: React.FC<IProps> = function PriceSearch(props) {
   const countries: any[] = []
   const params = useSelector(selectSearchParams)
   useEffect(() => {
-    dispatch(fetchPriceList() as any)
+    dispatch(fetchSkuList() as any)
   }, [])
   const handleCategoryChange = (e: SelectChangeEvent<string>) => {
     dispatch(

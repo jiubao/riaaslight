@@ -6,8 +6,24 @@
   left: 0;
   z-index: 1000;
   background-color: rgba(0, 0, 0, 0.3);
+  display: none;
+  &.visible {
+    display: block;
+  }
+  &-loading {
+    position: absolute;
+    background-color: white;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+  }
   &-content {
     position: relative;
+    padding: 37px 27px 0 27px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
     height: 100%;
     background-color: white;
     margin-top: 44px;
@@ -17,5 +33,78 @@
       right: 10px;
       top: 10px;
     }
+  }
+  &-price {
+    height: 380px;
+    display: flex;
+    &-left {
+      height: 380px;
+      width: 380px;
+      border: 1px solid black;
+    }
+    &-right {
+      display: flex;
+      flex-direction: column;
+      margin-left: 20px;
+      flex: 1;
+
+      .date {
+        display: flex;
+        align-items: center;
+        margin-top: 12px;
+      }
+      .title {
+        font-family: 'PingFang SC';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 34px;
+      }
+    }
+  }
+
+  &-price-list {
+    flex: 1;
+    overflow: auto;
+    height: 0;
+    background: #f1f2f7;
+    padding: 12px;
+    &-item {
+      width: 33.33%;
+    }
+  }
+  &-trend {
+    margin-top: 10px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    &-content {
+      overflow: hidden;
+      flex: 1;
+      display: flex;
+
+      &-left {
+        display: inline-block;
+        width: 50%;
+        height: 80%;
+        border-right: 1px solid #ccc;
+      }
+      &-right {
+        display: inline-block;
+        width: 50%;
+        height: 80%;
+      }
+    }
+  }
+
+  .label {
+    font-family: 'PingFang SC';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 20px;
+    color: #469ce2;
+    padding: 0 6px;
+    border-left: 6px solid #469ce2;
   }
 }

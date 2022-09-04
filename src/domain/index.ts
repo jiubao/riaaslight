@@ -80,7 +80,7 @@ export interface IShelfShotDetail extends IShelfShot {
   survey: string
 }
 
-export interface ISku extends IDocument {
+export interface ISku {
   brand_id: number
   category_id: number
   country: string
@@ -90,4 +90,17 @@ export interface ISku extends IDocument {
   sku_name: string
   sku_status: number
   sku_upc: string
+}
+
+export interface IPrice {
+  currency: string
+  min_price: number
+  max_price: number
+  avg_price: number
+  price_count: number
+}
+export interface IPriceMap {
+  [key: string]: {
+    [data: string]: IPrice
+  }
 }
