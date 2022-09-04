@@ -1,8 +1,7 @@
 # ISSUES
 - store img try 3 imgs: thumb -> preview -> img
-- posm list img crop
 - rog detail - info on main image
-- rog detail -pagination
+- rog detail - pagination
 - posm detail
 - login
 - timeline flash
@@ -24,3 +23,4 @@
 - timeline init
 - timeline clean
 - masnory - bottom radius
+- posm list img crop

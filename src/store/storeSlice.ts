@@ -45,13 +45,6 @@ export const fetchShelfShots = createAsyncThunk(
         selectedBrandIds,
         selectedCategoryIds,
       } = state.store
-      // const params = {
-      //   start: nextShotIndex,
-      //   limit: SHOT_PAGE_SIZE,
-      //   store_id: storeId || storeDetail?.store_id,
-      //   brand: selectedBrandIds.join(','),
-      //   category: selectedCategoryIds.join(','),
-      // }
       const shots = await shelfShotService.get(
         removeEmptyProps({
           start: nextShotIndex,
