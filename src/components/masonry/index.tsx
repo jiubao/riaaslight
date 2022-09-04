@@ -9,9 +9,9 @@ interface IProps {
   children: ({ index }: { index: number }) => React.ReactNode
 }
 
-const PREFIX = 'Gallery'
+const PREFIX = 'Masonry'
 
-export const Gallery: React.FC<IProps> = ({
+export const Masonry: React.FC<IProps> = ({
   columnCount,
   total,
   gutter = [8, 8],

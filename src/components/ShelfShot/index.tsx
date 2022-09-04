@@ -1,8 +1,8 @@
 import React from 'react'
 import { IShelfShot } from '../../domain'
 // import { mockImgSrcByCount } from '../../mock/img'
-import { Gallery } from '../gallery'
-import { GalleryImage } from '../gallery/image'
+import { Masonry } from '../masonry'
+import { MasonryImage } from '../masonry/image'
 import './index.scss'
 
 interface IProps {
@@ -19,7 +19,7 @@ export const ShelfShotGroup: React.FC<IProps> = ({ month, shots, onClick }) => {
   const Row = ({ index }: { index: number }) => {
     const shot = shots[index]
     return (
-      <GalleryImage
+      <MasonryImage
         src={shot.preview_img_url}
         alt=""
         onClick={() => onClick?.(shot.id)}
@@ -32,9 +32,9 @@ export const ShelfShotGroup: React.FC<IProps> = ({ month, shots, onClick }) => {
   return (
     <div className={PREFIX}>
       <div className={`${PREFIX}-month`} data-month={month}></div>
-      <Gallery columnCount={4} total={shots.length}>
+      <Masonry columnCount={4} total={shots.length}>
         {Row}
-      </Gallery>
+      </Masonry>
     </div>
   )
 }

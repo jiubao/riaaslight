@@ -4,7 +4,7 @@ interface IProps extends ImgHTMLAttributes<any> {
   minHeight?: number
 }
 
-export const GalleryImage: React.FC<IProps> = ({
+export const MasonryImage: React.FC<IProps> = ({
   minHeight = 120,
   ...props
 }) => {

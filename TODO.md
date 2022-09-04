@@ -1,5 +1,6 @@
 # ISSUES
 - masnory - bottom radius
+- timeline flash
 
 - rect border
 - red spot

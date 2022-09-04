@@ -1,6 +1,6 @@
 import React from 'react'
-import { Gallery } from '../../components/gallery'
-import { GalleryImage } from '../../components/gallery/image'
+import { Masonry } from '../../components/masonry'
+import { MasonryImage } from '../../components/masonry/image'
 import { IPosmShot } from '../../domain'
 // import './index.scss'
 
@@ -16,7 +16,7 @@ export const PosmShotGroup: React.FC<IProps> = ({ month, shots, onClick }) => {
   const Row = ({ index }: { index: number }) => {
     const shot = shots[index]
     return (
-      <GalleryImage
+      <MasonryImage
         src={shot.thumbnail_url}
         alt=""
         onClick={() => onClick?.(shot.id)}
@@ -27,9 +27,9 @@ export const PosmShotGroup: React.FC<IProps> = ({ month, shots, onClick }) => {
   return (
     <div className={PREFIX}>
       <div className={`${PREFIX}-month`} data-month={month}></div>
-      <Gallery columnCount={5} total={shots.length} gutter={20}>
+      <Masonry columnCount={5} total={shots.length} gutter={20}>
         {Row}
-      </Gallery>
+      </Masonry>
     </div>
   )
 }
