@@ -1,4 +1,6 @@
-.Posm {
+.Posm { 
+  position: relative;
+  min-height: 100%;
   &-wrap {
     overflow-y: auto;
     overflow-x: hidden;

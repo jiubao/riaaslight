@@ -1,4 +1,5 @@
 import { CircularProgress } from '@mui/material'
+import classNames from 'classnames'
 import { isArray } from 'lodash'
 import React, { useEffect, useRef, useState } from 'react'
 import Measure, { ContentRect } from 'react-measure'
@@ -78,11 +79,13 @@ export const Posm: React.FC<IProps> = ({ id }) => {
                 {...group}
               />
             ))}
-            {hasNext && (
-              <div className="flexCenter" ref={loadingRef}>
-                <CircularProgress />
-              </div>
-            )}
+            {/* {hasNext && ()} */}
+            <div
+              className={classNames('flexCenter', { hide: !hasNext })}
+              ref={loadingRef}
+            >
+              <CircularProgress />
+            </div>
           </div>
         )}
       </Measure>

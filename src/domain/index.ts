@@ -102,8 +102,8 @@ export interface IPosmShotRequest extends IPaginationRequest {
   brand?: number
   category?: number
   retailer?: number | ''
-  region?: RegionEnum
-  store_id?: number
+  region?: string
+  store_id?: string
 }
 
 // export type RegionType = 'NA' | 'SEA'

@@ -7,8 +7,8 @@ import { date2Month, removeEmptyProps } from '../utils'
 
 interface IState {
   shots: IPosmShot[]
-  selectedRetailerId: number | ''
-  selectedRegion: string
+  selectedRetailerIds: number[]
+  selectedRegions: string[]
   region?: RegionEnum
   nextShotIndex: number
   hasNextShots: boolean
@@ -22,8 +22,8 @@ const initialState: IState = {
   hasNextShots: true,
   lockShot: false,
   monthes: [],
-  selectedRetailerId: '',
-  selectedRegion: '',
+  selectedRetailerIds: [],
+  selectedRegions: [],
 }
 
 const PAGE_SIZE = 20
@@ -32,7 +32,7 @@ export const fetchPosmShots = createAsyncThunk(
   'posm/fetchPosmShots',
   async (refetch: boolean, { getState, dispatch }) => {
     const state = getState() as RootState
-    const { nextShotIndex, lockShot, selectedRegion, selectedRetailerId } =
+    const { nextShotIndex, lockShot, selectedRegions, selectedRetailerIds } =
       state.posm
     if (lockShot) return
     if (refetch) {
@@ -52,8 +52,8 @@ export const fetchPosmShots = createAsyncThunk(
         removeEmptyProps({
           start: nextShotIndex,
           limit: PAGE_SIZE,
-          region: selectedRegion as RegionEnum,
-          retailer: selectedRetailerId,
+          region: selectedRegions.join(','),
+          retailer: selectedRetailerIds.join(','),
         })
       )
       dispatch(appendPosmShots(shots))
@@ -107,10 +107,10 @@ export const { update: updatePosm, append: appendPosmShots } = posmSlice.actions
 export default posmSlice.reducer
 
 // export const selectShelfShotDetail = (state: RootState) => state.shelf.detail
-export const selectSelectedRegion = (state: RootState) =>
-  state.posm.selectedRegion
-export const selectSelectedRetailer = (state: RootState) =>
-  state.posm.selectedRetailerId
+export const selectSelectedRegions = (state: RootState) =>
+  state.posm.selectedRegions
+export const selectSelectedRetailers = (state: RootState) =>
+  state.posm.selectedRetailerIds
 
 export const selectPosmShotsGroup = (state: RootState) => {
   const { shots, monthes } = state.posm
