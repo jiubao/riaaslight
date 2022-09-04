@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import { isArray } from 'lodash'
 import React, { useMemo } from 'react'
 import './index.scss'
@@ -5,6 +6,7 @@ import './index.scss'
 export const IMAGE_MIN_HEIGHT = 120
 
 interface IProps {
+  mode?: 'shrink' | 'normal'
   columnCount: number
   total: number
   gutter?: [number, number] | number
@@ -14,6 +16,7 @@ interface IProps {
 const PREFIX = 'Masonry'
 
 export const Masonry: React.FC<IProps> = ({
+  mode = 'shrink',
   columnCount,
   total,
   gutter = [8, 8],
@@ -43,10 +46,10 @@ export const Masonry: React.FC<IProps> = ({
 
   const liStyle = useMemo(
     () => ({
-      paddingBottom: `${gutterY}px`,
-      minHeight: `${gutterY + IMAGE_MIN_HEIGHT}px`,
+      marginBottom: `${gutterY}px`,
+      minHeight: mode === 'shrink' ? 'auto' : `${IMAGE_MIN_HEIGHT}px`,
     }),
-    [gutterY]
+    [gutterY, mode]
   )
 
   const renderColumn = (c: number) => {
@@ -64,7 +67,10 @@ export const Masonry: React.FC<IProps> = ({
   }
 
   return (
-    <div className={PREFIX} style={wrapStyle}>
+    <div
+      className={classNames(PREFIX, { abc: mode === 'normal' })}
+      style={wrapStyle}
+    >
       {columns.map((_, index) => (
         <ul style={ulStyle} key={index}>
           {renderColumn(index)}

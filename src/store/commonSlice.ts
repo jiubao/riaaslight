@@ -10,6 +10,7 @@ interface IState {
   categories: ICategory[]
   brands: IBrand[]
   lockRetailer: boolean
+  lockCategory: boolean
 }
 
 const initialState: IState = {
@@ -17,6 +18,7 @@ const initialState: IState = {
   categories: [],
   brands: [],
   lockRetailer: false,
+  lockCategory: false,
 }
 
 export const fetchRetailers = createAsyncThunk(
@@ -43,12 +45,22 @@ export const fetchRetailers = createAsyncThunk(
 
 export const fetchCategories = createAsyncThunk(
   'common/fetchCategories',
-  async (_, api) => {
-    const state = api.getState() as RootState
-    if (state.common.categories.length) {
+  async (_, { getState, dispatch }) => {
+    const state = getState() as RootState
+    const { categories, lockCategory } = state.common
+    if (categories.length) {
       return state.common.categories
     }
-    return await categoryService.get()
+    if (lockCategory) return Promise.reject(0)
+
+    dispatch(updateCommon({ lockCategory: true }))
+    try {
+      const res = await categoryService.get()
+      dispatch(updateCommon({ categories: res }))
+      return res
+    } finally {
+      dispatch(updateCommon({ lockCategory: false }))
+    }
   }
 )
 
@@ -74,9 +86,9 @@ const commonSlice = createSlice({
     builder.addCase(fetchRetailers.fulfilled, (state, action) => {
       state.retailers = action.payload
     })
-    builder.addCase(fetchCategories.fulfilled, (state, action) => {
-      state.categories = action.payload
-    })
+    // builder.addCase(fetchCategories.fulfilled, (state, action) => {
+    //   state.categories = action.payload
+    // })
     builder.addCase(fetchBrands.fulfilled, (state, action) => {
       state.brands = action.payload
     })

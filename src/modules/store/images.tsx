@@ -1,5 +1,5 @@
 import { isArray } from 'lodash'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ShelfShotGroup } from '../../components/ShelfShot'
 // import { mockImgSrcByCount } from '../../mock/img'
@@ -7,6 +7,7 @@ import {
   fetchShelfShots,
   selectHasNextShots,
   selectShelfShotsGroup,
+  selectStoreDetail,
 } from '../../store/storeSlice'
 import Measure, { ContentRect } from 'react-measure'
 import { ITimelineItem, Timeline } from '../../components/timeline'
@@ -15,6 +16,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 import { fetchShelf } from '../../store/shelfSlice'
 import { Drawer } from '@mui/material'
 import { ShelfDetail } from '../shelf'
+import { useIntersection } from '../../hooks/useIntersection'
 
 interface IProps {
   id?: string
@@ -34,39 +36,21 @@ export const StoreImages: React.FC<IProps> = ({ id }) => {
   const loadingRef = useRef<HTMLDivElement>(null)
   const shotGroups = useSelector(selectShelfShotsGroup)
   const hasNext = useSelector(selectHasNextShots)
+  const storeDetail = useSelector(selectStoreDetail)
   const scrollRef = useRef<HTMLDivElement>(null)
   const [timelineItems, setTimelineItems] = useState<ITimelineItem[]>([])
   const scrollItems = useTimelineScrollItems(timelineItems, scrollRef)
   const [detailVisible, setDetailVisible] = useState(false)
-  // const [selectedShelfId, setSelectedShelfId] = useState<number | null>(null)
 
-  useEffect(() => {
-    if (!loadingRef.current) return
-
-    const dom = loadingRef.current
-
-    const handleIntersect = (
-      entries: IntersectionObserverEntry[],
-      observer: IntersectionObserver
-    ) => {
+  useIntersection(
+    loadingRef,
+    (entries) => {
       if (isArray(entries) && entries.length && entries[0].isIntersecting) {
-        dispatch(fetchShelfShots({}) as any)
+        storeDetail?.store_id && dispatch(fetchShelfShots({}) as any)
       }
-    }
-
-    const observer = new IntersectionObserver(handleIntersect, {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0,
-    })
-    observer.observe(dom)
-
-    return () => {
-      // console.log(2)
-      observer.unobserve(dom)
-      observer.disconnect()
-    }
-  }, [dispatch])
+    },
+    [dispatch, storeDetail?.store_id]
+  )
 
   const handleResize = (contentRect: ContentRect) => {
     // this.setState({ dimensions: contentRect.bounds })

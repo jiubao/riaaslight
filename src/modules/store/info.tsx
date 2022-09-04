@@ -54,6 +54,7 @@ export const StoreInfo: React.FC = () => {
 
   const handleBrandChange = useCallback(
     (value: number[]) => {
+      console.log(value)
       dispatch(updateStore({ selectedBrandIds: value }))
       dispatch(resetStore())
       dispatch(fetchShelfShots({}) as any)
@@ -64,17 +65,16 @@ export const StoreInfo: React.FC = () => {
   useEffect(() => {
     dispatch(fetchCategories() as any).then((res: any) => {
       const categories = res.payload as ICategory[]
-      if (categories.length) {
-        handleCategoryChange([categories[0].id])
-      } else if (id) {
-        dispatch(fetchShelfShots({ storeId: Number(id) }) as any)
+      if (categories?.length) {
+        const id = categories[0].id
+        dispatch(updateStore({ selectedCategoryIds: [id] }))
+        dispatch(fetchBrands(id) as any)
       }
     })
   }, [dispatch, handleCategoryChange, id])
 
   useEffect(() => {
     id && dispatch(fetchStoreDetail(Number(id)) as any)
-    // id && dispatch(fetchShelfShots({ storeId: Number(id) }) as any)
   }, [dispatch, id])
 
   return (

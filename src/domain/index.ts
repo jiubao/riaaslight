@@ -66,6 +66,7 @@ export interface IShelfShot extends IDocument {
   visit_date: string
   img_url: string
   preview_img_url: string
+  thumbnail_url: string
   shelf_num: number
 }
 

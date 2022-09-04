@@ -3,6 +3,7 @@ import retailers from '../../assets/jsons/retailers.json'
 import brands from '../../assets/jsons/brands.json'
 import { PropsWithClassName } from '../../domain/common'
 import { PngIconType } from '../../domain/icon'
+import classNames from 'classnames'
 
 interface IProps {
   name: string
@@ -43,7 +44,7 @@ export const PNGIcon: React.FC<PropsWithClassName<IProps>> = ({
 }) => {
   return (
     <img
-      className={`${PREFIX} ${className}`}
+      className={classNames(PREFIX, className)}
       alt=""
       src={IconHash[type].get(name)}
     />

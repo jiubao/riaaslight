@@ -1,3 +1,5 @@
+@import '../../styles/base.scss';
+
 .Posm { 
   position: relative;
   min-height: 100%;
@@ -10,7 +12,6 @@
     top: 97px;
     left: 22px;
     width: 384px;
-    // height: 64px;
     padding: 11px 20px;
     background: #F1F2F7;
     border-radius: 8px;
@@ -28,10 +29,36 @@
     &-month {
       height: 64px;
     }
-    .Gallery {
+    .Masonry {
       img {
         cursor: pointer;
       }
+    }
+
+    &-imgWrap {
+      position: relative;
+    }
+    &-info {
+      position: absolute;
+      bottom: 5px;
+      left: 5px;
+      display: flex;
+      font-size: 11px;
+      color: #545E6B;
+
+      &Item {
+        height: 28px;
+        border-radius: 4px;
+        padding: 7px 8px;
+        margin-right: 4px;
+        background-color: #fff;
+        svg {
+          font-size: 18px;
+          margin-right: 4px;
+        }
+      }
+
+      @include baseFont
     }
   }
 }

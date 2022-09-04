@@ -20,7 +20,7 @@ export const ShelfShotGroup: React.FC<IProps> = ({ month, shots, onClick }) => {
     const shot = shots[index]
     return (
       <MasonryImage
-        src={shot.preview_img_url}
+        src={shot.thumbnail_url}
         alt=""
         onClick={() => onClick?.(shot.id)}
       />
@@ -32,7 +32,7 @@ export const ShelfShotGroup: React.FC<IProps> = ({ month, shots, onClick }) => {
   return (
     <div className={PREFIX}>
       <div className={`${PREFIX}-month`} data-month={month}></div>
-      <Masonry columnCount={4} total={shots.length}>
+      <Masonry columnCount={4} total={shots.length} mode="normal">
         {Row}
       </Masonry>
     </div>
