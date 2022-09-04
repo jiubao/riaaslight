@@ -52,6 +52,7 @@ export const ImageMaskWindow: React.FC<PropsWithClassName<IProps>> = React.memo(
 
       const img = new Image()
       const off = on(img, 'load', () => {
+        console.log('l1...')
         setLoaded(true)
         setImage(img)
         setImageSize({
@@ -71,10 +72,16 @@ export const ImageMaskWindow: React.FC<PropsWithClassName<IProps>> = React.memo(
     }, [src])
 
     useEffect(() => {
-      const { width: iw, height: ih } = imageSize
-      const { width: dw, height: dh } = divSize
+      console.log('l2...')
+      // const { width: iw, height: ih } = imageSize
+      // const { width: dw, height: dh } = divSize
+      const iw = imageSize.width,
+        ih = imageSize.height
+      const dw = divSize.width,
+        dh = divSize.height
       if ([iw, ih, dw, dh].indexOf(0) >= 0) return
 
+      console.log('l3...')
       const ir = iw / ih
       const dr = dw / dh
       const center = [1, 0, 0, 1, -iw / 2, -ih / 2] as TransformMatrix2D
@@ -108,7 +115,7 @@ export const ImageMaskWindow: React.FC<PropsWithClassName<IProps>> = React.memo(
           center
         ).join(',')})`,
       })
-    }, [divSize, imageSize])
+    }, [divSize.width, divSize.height, imageSize.width, imageSize.height])
 
     const Item = useMemo(
       () => (mode === 'box' ? MaskWindow : SpotWindow),

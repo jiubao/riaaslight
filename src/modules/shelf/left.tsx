@@ -56,7 +56,8 @@ export const ShelfDetailLeft: React.FC = () => {
           <SwiperSlide key={shot.id}>
             {/* <img src={shot.preview_img_url} alt="" /> */}
             <ImageMaskWindow
-              src={shot.preview_img_url}
+              // src={shot.preview_img_url}
+              src={shot.thumbnail_url}
               rectangles={positions}
               className={`${PREFIX}-Window`}
               mask={false}
@@ -78,7 +79,7 @@ export const ShelfDetailLeft: React.FC = () => {
       >
         {shots.map((shot) => (
           <SwiperSlide key={shot.id}>
-            <img src={shot.preview_img_url} alt="" />
+            <img src={shot.thumbnail_url} alt="" />
           </SwiperSlide>
         ))}
       </Swiper>
