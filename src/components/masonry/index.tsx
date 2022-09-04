@@ -2,6 +2,8 @@ import { isArray } from 'lodash'
 import React, { useMemo } from 'react'
 import './index.scss'
 
+export const IMAGE_MIN_HEIGHT = 120
+
 interface IProps {
   columnCount: number
   total: number
@@ -39,7 +41,13 @@ export const Masonry: React.FC<IProps> = ({
     [columnCount, gutterX]
   )
 
-  const liStyle = useMemo(() => ({ paddingBottom: `${gutterY}px` }), [gutterY])
+  const liStyle = useMemo(
+    () => ({
+      paddingBottom: `${gutterY}px`,
+      minHeight: `${gutterY + IMAGE_MIN_HEIGHT}px`,
+    }),
+    [gutterY]
+  )
 
   const renderColumn = (c: number) => {
     const rows = []

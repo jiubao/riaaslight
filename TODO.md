@@ -1,5 +1,4 @@
 # ISSUES
-- masnory - bottom radius
 - timeline flash
 
 - rect border
@@ -12,5 +11,7 @@
 - close button
 - modal height resize
 - timeline stick
+
 - timeline init
 - timeline clean
+- masnory - bottom radius

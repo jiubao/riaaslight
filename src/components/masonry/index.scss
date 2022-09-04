@@ -10,10 +10,10 @@
       position: relative;
       display: inline-block;
       width: 100%;
+      min-height: 140px;
       font-size: 0;
       overflow: hidden;
-      min-height: 200px;
-      border-radius: 10px;
+
       img {
         width: 100%;
       }
@@ -22,5 +22,12 @@
         padding-bottom: 0 !important;
       }
     }
+  }
+  &Image {
+    border-radius: 10px;
+    width: 100%;
+    min-height: 120px;
+    background-color: #eee;
+    overflow: hidden;
   }
 }

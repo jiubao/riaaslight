@@ -1,40 +1,50 @@
 import React, { ImgHTMLAttributes, useEffect, useRef } from 'react'
+import { IMAGE_MIN_HEIGHT } from '.'
+import { on } from '../../utils/dom'
 
-interface IProps extends ImgHTMLAttributes<any> {
-  minHeight?: number
-}
+const PREFIX = 'MasonryImage'
 
-export const MasonryImage: React.FC<IProps> = ({
-  minHeight = 120,
+// interface IProps extends ImgHTMLAttributes<any> {
+//   minHeight?: number
+// }
+
+export const MasonryImage: React.FC<ImgHTMLAttributes<any>> = ({
   ...props
 }) => {
+  const divRef = useRef<HTMLImageElement>(null)
   const imgRef = useRef<HTMLImageElement>(null)
 
   useEffect(() => {
     const dom = imgRef.current
-    if (!dom) return
+    const wrap = divRef.current
+    if (!dom || !wrap) return
 
     const handleLoad = () => {
       const { naturalWidth, naturalHeight } = dom
       const clientWidth = dom.parentElement?.clientWidth
       if (!naturalWidth || !clientWidth) return
-      if (naturalHeight / naturalWidth < minHeight / clientWidth) {
+      if (naturalHeight / naturalWidth < IMAGE_MIN_HEIGHT / clientWidth) {
         // console.log(`cw:${clientWidth},nw:${naturalWidth},nh:${naturalHeight}`)
         // console.log(dom)
-        dom.style.height = `${minHeight}px`
+        dom.style.height = `${IMAGE_MIN_HEIGHT}px`
         dom.style.width = 'auto'
         dom.style.position = 'absolute'
         dom.style.left = '50%'
         dom.style.transform = 'translateX(-50%)'
+        wrap.style.position = 'absolute'
       }
     }
 
-    dom.addEventListener('load', handleLoad)
+    const off = on(dom, 'load', handleLoad)
 
     return () => {
-      dom.removeEventListener('load', handleLoad)
+      off()
     }
-  }, [minHeight])
+  }, [])
 
-  return <img ref={imgRef} alt="" {...props} />
+  return (
+    <div className={PREFIX} ref={divRef}>
+      <img ref={imgRef} alt="" {...props} />
+    </div>
+  )
 }
