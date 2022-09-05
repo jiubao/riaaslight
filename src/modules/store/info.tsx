@@ -1,6 +1,6 @@
 import { SvgIcon } from '@mui/material'
 import React, { useCallback, useEffect } from 'react'
-import { BizUnit } from '../../components/BizUnit'
+// import { BizUnit } from '../../components/BizUnit'
 import { CategoryList } from '../common/category/category'
 // import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore'
 import GitHubIcon from '@mui/icons-material/GitHub'
@@ -54,6 +54,7 @@ export const StoreInfo: React.FC = () => {
 
   const handleBrandChange = useCallback(
     (value: number[]) => {
+      console.log(value)
       dispatch(updateStore({ selectedBrandIds: value }))
       dispatch(resetStore())
       dispatch(fetchShelfShots({}) as any)
@@ -64,17 +65,16 @@ export const StoreInfo: React.FC = () => {
   useEffect(() => {
     dispatch(fetchCategories() as any).then((res: any) => {
       const categories = res.payload as ICategory[]
-      if (categories.length) {
-        handleCategoryChange([categories[0].id])
-      } else if (id) {
-        dispatch(fetchShelfShots({ storeId: Number(id) }) as any)
+      if (categories?.length) {
+        const id = categories[0].id
+        dispatch(updateStore({ selectedCategoryIds: [id] }))
+        dispatch(fetchBrands(id) as any)
       }
     })
   }, [dispatch, handleCategoryChange, id])
 
   useEffect(() => {
     id && dispatch(fetchStoreDetail(Number(id)) as any)
-    // id && dispatch(fetchShelfShots({ storeId: Number(id) }) as any)
   }, [dispatch, id])
 
   return (
@@ -96,11 +96,11 @@ export const StoreInfo: React.FC = () => {
         </div>
       </div>
 
-      <span className={`${PREFIX}-title`}>PHOTO TYPE</span>
+      {/* <span className={`${PREFIX}-title`}>PHOTO TYPE</span>
       <div className="BizUnit-list">
         <BizUnit text={'Shelf/ Cooler Photos'} />
         <BizUnit text={'POSM'} />
-      </div>
+      </div> */}
       <span className={`${PREFIX}-title`}>CATEGORY</span>
       <CategoryList
         categories={categories}

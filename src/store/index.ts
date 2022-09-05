@@ -3,6 +3,7 @@ import commonReducer from './commonSlice'
 import rogReducer from './rogSlice'
 import storeReducer from './storeSlice'
 import shelfReducer from './shelfSlice'
+import posmReducer from './posmSlice'
 import priceReducer from './priceSlice'
 
 const store = configureStore({
@@ -11,6 +12,7 @@ const store = configureStore({
     rog: rogReducer,
     store: storeReducer,
     shelf: shelfReducer,
+    posm: posmReducer,
     price: priceReducer,
   },
 })

@@ -9,34 +9,58 @@ interface IState {
   retailers: IRetailer[]
   categories: ICategory[]
   brands: IBrand[]
+  lockRetailer: boolean
+  lockCategory: boolean
 }
 
 const initialState: IState = {
   retailers: [],
   categories: [],
   brands: [],
+  lockRetailer: false,
+  lockCategory: false,
 }
 
 export const fetchRetailers = createAsyncThunk(
   'common/fetchRetailers',
-  async (_, thunkApi) => {
-    const state = thunkApi.getState() as RootState
-    if (state.common.retailers.length) {
+  async (_, { getState, dispatch }) => {
+    const state = getState() as RootState
+    const { retailers, lockRetailer } = state.common
+    if (retailers.length) {
       return state.common.retailers
     }
+    if (lockRetailer) {
+      return Promise.reject(0)
+    }
 
-    return await retailerService.get()
+    dispatch(updateCommon({ lockRetailer: true }))
+
+    try {
+      return await retailerService.get()
+    } finally {
+      dispatch(updateCommon({ lockRetailer: false }))
+    }
   }
 )
 
 export const fetchCategories = createAsyncThunk(
   'common/fetchCategories',
-  async (_, api) => {
-    const state = api.getState() as RootState
-    if (state.common.categories.length) {
+  async (_, { getState, dispatch }) => {
+    const state = getState() as RootState
+    const { categories, lockCategory } = state.common
+    if (categories.length) {
       return state.common.categories
     }
-    return await categoryService.get()
+    if (lockCategory) return Promise.reject(0)
+
+    dispatch(updateCommon({ lockCategory: true }))
+    try {
+      const res = await categoryService.get()
+      dispatch(updateCommon({ categories: res }))
+      return res
+    } finally {
+      dispatch(updateCommon({ lockCategory: false }))
+    }
   }
 )
 
@@ -62,9 +86,9 @@ const commonSlice = createSlice({
     builder.addCase(fetchRetailers.fulfilled, (state, action) => {
       state.retailers = action.payload
     })
-    builder.addCase(fetchCategories.fulfilled, (state, action) => {
-      state.categories = action.payload
-    })
+    // builder.addCase(fetchCategories.fulfilled, (state, action) => {
+    //   state.categories = action.payload
+    // })
     builder.addCase(fetchBrands.fulfilled, (state, action) => {
       state.brands = action.payload
     })

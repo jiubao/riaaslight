@@ -5,7 +5,7 @@ import { IBrand, IShelfShot, IStoreDetail } from '../domain'
 import { brandService } from '../services/brand'
 import { shelfShotService } from '../services/shelfShot'
 import { storeService } from '../services/store'
-import { removeEmptyProps } from '../utils'
+import { date2Month, removeEmptyProps } from '../utils'
 
 interface IState {
   storeDetail?: IStoreDetail
@@ -45,13 +45,6 @@ export const fetchShelfShots = createAsyncThunk(
         selectedBrandIds,
         selectedCategoryIds,
       } = state.store
-      // const params = {
-      //   start: nextShotIndex,
-      //   limit: SHOT_PAGE_SIZE,
-      //   store_id: storeId || storeDetail?.store_id,
-      //   brand: selectedBrandIds.join(','),
-      //   category: selectedCategoryIds.join(','),
-      // }
       const shots = await shelfShotService.get(
         removeEmptyProps({
           start: nextShotIndex,
@@ -84,7 +77,6 @@ export const fetchBrands = createAsyncThunk(
 )
 
 // date: yyyy-MM-dd
-const date2Month = (date: string) => date.slice(0, 7)
 
 export const storeSlice = createSlice({
   name: 'store',

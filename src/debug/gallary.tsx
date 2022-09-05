@@ -1,5 +1,5 @@
 import React from 'react'
-import { Gallery } from '../components/gallery'
+import { Masonry } from '../components/masonry'
 import { mockImgSrcByCount } from '../mock/img'
 
 const PREFIX = 'DebugGallery'
@@ -28,9 +28,9 @@ const Row = ({ index }: { index: number }) => {
 export const DebugGallery: React.FC = () => {
   return (
     <div className={PREFIX}>
-      <Gallery columnCount={4} total={TOTAL}>
+      <Masonry columnCount={4} total={TOTAL}>
         {Row}
-      </Gallery>
+      </Masonry>
     </div>
   )
 }

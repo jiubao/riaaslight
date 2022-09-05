@@ -15,3 +15,5 @@ export const removeEmptyProps = <T extends Record<string, any>>(
     return result
   }, {})
 }
+
+export const date2Month = (date: string) => date.slice(0, 7)

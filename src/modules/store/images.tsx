@@ -1,5 +1,5 @@
 import { isArray } from 'lodash'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ShelfShotGroup } from '../../components/ShelfShot'
 // import { mockImgSrcByCount } from '../../mock/img'
@@ -7,14 +7,16 @@ import {
   fetchShelfShots,
   selectHasNextShots,
   selectShelfShotsGroup,
+  selectStoreDetail,
 } from '../../store/storeSlice'
-import Measure, { ContentRect } from 'react-measure'
+import Measure from 'react-measure'
 import { ITimelineItem, Timeline } from '../../components/timeline'
 import { useTimelineScrollItems } from '../../components/timeline/hooks'
 import CircularProgress from '@mui/material/CircularProgress'
 import { fetchShelf } from '../../store/shelfSlice'
 import { Drawer } from '@mui/material'
 import { ShelfDetail } from '../shelf'
+import { useIntersection } from '../../hooks/useIntersection'
 
 interface IProps {
   id?: string
@@ -34,41 +36,23 @@ export const StoreImages: React.FC<IProps> = ({ id }) => {
   const loadingRef = useRef<HTMLDivElement>(null)
   const shotGroups = useSelector(selectShelfShotsGroup)
   const hasNext = useSelector(selectHasNextShots)
+  const storeDetail = useSelector(selectStoreDetail)
   const scrollRef = useRef<HTMLDivElement>(null)
   const [timelineItems, setTimelineItems] = useState<ITimelineItem[]>([])
   const scrollItems = useTimelineScrollItems(timelineItems, scrollRef)
   const [detailVisible, setDetailVisible] = useState(false)
-  // const [selectedShelfId, setSelectedShelfId] = useState<number | null>(null)
 
-  useEffect(() => {
-    if (!loadingRef.current) return
-
-    const dom = loadingRef.current
-
-    const handleIntersect = (
-      entries: IntersectionObserverEntry[],
-      observer: IntersectionObserver
-    ) => {
+  useIntersection(
+    loadingRef,
+    (entries) => {
       if (isArray(entries) && entries.length && entries[0].isIntersecting) {
-        dispatch(fetchShelfShots({ storeId: 713295 }) as any)
+        storeDetail?.store_id && dispatch(fetchShelfShots({}) as any)
       }
-    }
+    },
+    [dispatch, storeDetail?.store_id]
+  )
 
-    const observer = new IntersectionObserver(handleIntersect, {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0,
-    })
-    observer.observe(dom)
-
-    return () => {
-      // console.log(2)
-      observer.unobserve(dom)
-      observer.disconnect()
-    }
-  }, [dispatch])
-
-  const handleResize = (contentRect: ContentRect) => {
+  const handleResize = useCallback(() => {
     // this.setState({ dimensions: contentRect.bounds })
     // console.log(contentRect)
     const list = document
@@ -84,15 +68,18 @@ export const StoreImages: React.FC<IProps> = ({ id }) => {
       // console.log(items)
       setTimelineItems(items)
     }
-  }
+  }, [])
 
-  const handleOpenDetail = (shelfId: number) => {
-    dispatch(fetchShelf(shelfId) as any).then((res: any) => {
-      // console.log(res.payload)
-      // setSelectedShelfId(shelfId)
-      setDetailVisible(true)
-    })
-  }
+  const handleOpenDetail = useCallback(
+    (shelfId: number) => {
+      dispatch(fetchShelf(shelfId) as any).then((res: any) => {
+        // console.log(res.payload)
+        // setSelectedShelfId(shelfId)
+        setDetailVisible(true)
+      })
+    },
+    [dispatch]
+  )
 
   const handleCloseDetail = useCallback(() => {
     setDetailVisible(false)
@@ -100,26 +87,28 @@ export const StoreImages: React.FC<IProps> = ({ id }) => {
 
   return (
     <div className={`${PREFIX}-scroller fulfilled`} ref={scrollRef}>
-      <Measure bounds onResize={handleResize}>
-        {({ measureRef }) => (
-          <div className={PREFIX} ref={measureRef}>
-            <Timeline items={scrollItems} />
-            {shotGroups.map((group) => (
-              <ShelfShotGroup
-                key={group.month}
-                onClick={handleOpenDetail}
-                {...group}
-              />
-            ))}
+      <div className={PREFIX}>
+        <Timeline items={scrollItems} />
+        <Measure bounds onResize={handleResize}>
+          {({ measureRef }) => (
+            <div ref={measureRef}>
+              {shotGroups.map((group) => (
+                <ShelfShotGroup
+                  key={group.month}
+                  onClick={handleOpenDetail}
+                  {...group}
+                />
+              ))}
+            </div>
+          )}
+        </Measure>
 
-            {hasNext && (
-              <div className="flexCenter" ref={loadingRef}>
-                <CircularProgress />
-              </div>
-            )}
+        {hasNext && (
+          <div className="flexCenter" ref={loadingRef}>
+            <CircularProgress />
           </div>
         )}
-      </Measure>
+      </div>
       <Drawer
         anchor="bottom"
         open={detailVisible}
