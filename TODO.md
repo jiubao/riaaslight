@@ -1,17 +1,16 @@
 # ISSUES
-- store img try 3 imgs: thumb -> preview -> img
-- rog list - left title icon
+- rog detail - pagination
+- rog detail - clear brand cache
 - map page: filter by retailerIds
 - fetch all brands
-- rog detail - clear brand cache
-- rog detail - cache issue
-- rog detail - info on main image
-- rog detail - pagination
 - posm detail
+- store img try 3 imgs: thumb -> preview -> img
 - login
-- timeline flash
-- Masonry - inline-block margin
+- publications
+- google map key
 
+- rog list - left title icon
+- timeline flash
 - icons
 - rect border
 - red spot
@@ -30,3 +29,6 @@
 - timeline clean
 - masnory - bottom radius
 - posm list img crop
+- rog detail - cache issue
+- rog detail - info on main image
+- Masonry - inline-block margin
