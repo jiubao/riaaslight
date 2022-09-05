@@ -53,7 +53,7 @@ export const StoreGalleryLeft: React.FC = () => {
           <SwiperSlide key={index}>
             {/* <img src={`${img}/?text=${index}`} alt="" /> */}
             <ImageMaskWindow
-              src={`${img}/?text=${index}`}
+              src={[`${img}/?text=${index}`]}
               rectangles={rects}
               className={`${PREFIX}-Window`}
             />

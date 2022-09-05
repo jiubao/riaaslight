@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/free-mode'
@@ -19,32 +19,33 @@ const PREFIX = 'ShelfDetailLeft'
 
 export const ShelfDetailLeft: React.FC = () => {
   const dispatch = useDispatch()
-  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null)
-  const [mainSwiper, setMainSwiper] = useState<SwiperClass | null>(null)
+  const swiperRef = useRef<SwiperClass>()
+  // const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null)
+  // const [mainSwiper, setMainSwiper] = useState<SwiperClass | null>(null)
   const shots = useSelector(selectShelfShots)
   const positions = useSelector(selectSelectedBrandsPositions)
   const shelfIndex = useSelector(selectShelfIndex)
 
-  // const handleSwiper = (instance: SwiperClass) => {
-  //   instance.originalParams = instance.originalParams || {}
-  //   setThumbsSwiper(instance)
-  // }
+  const handleSwiper = (swiper: SwiperClass) => {
+    ;(window as any).si = swiperRef.current = swiper
+  }
 
   const handleSlideChagne = () => {
+    const swiper = swiperRef.current
+    if (!swiper) return
+
     dispatch(resetShelf() as any)
-    if (mainSwiper?.activeIndex !== undefined) {
-      dispatch(fetchShelfByIndex(mainSwiper.activeIndex) as any)
+    if (swiper?.activeIndex !== undefined) {
+      dispatch(fetchShelfByIndex(swiper.activeIndex) as any)
     }
   }
 
   return (
     <div className={PREFIX}>
-      <Swiper
+      {/* <Swiper
         className={`${PREFIX}-mainSwiper`}
         onSwiper={setMainSwiper}
         spaceBetween={10}
-        // navigation={true}
-        // thumbs={{ swiper: thumbsSwiper }}
         thumbs={{
           swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
         }}
@@ -54,9 +55,7 @@ export const ShelfDetailLeft: React.FC = () => {
       >
         {shots.map((shot, index) => (
           <SwiperSlide key={shot.id}>
-            {/* <img src={shot.preview_img_url} alt="" /> */}
             <ImageMaskWindow
-              // src={shot.preview_img_url}
               src={shot.thumbnail_url}
               rectangles={positions}
               className={`${PREFIX}-Window`}
@@ -66,16 +65,32 @@ export const ShelfDetailLeft: React.FC = () => {
             />
           </SwiperSlide>
         ))}
-      </Swiper>
+      </Swiper> */}
+      <div className={`${PREFIX}-mainSwiper`}>
+        <ImageMaskWindow
+          src={[shots[shelfIndex]?.preview_img_url, shots[shelfIndex]?.img_url]}
+          rectangles={positions}
+          className={`${PREFIX}-Window`}
+          mask={false}
+          mode="spot"
+          drawing={true}
+        />
+      </div>
+      {/* <div className={`${PREFIX}-thumbSwiper`}> */}
       <Swiper
-        onSwiper={setThumbsSwiper}
+        className={`${PREFIX}-thumbSwiper`}
+        onSwiper={handleSwiper}
         spaceBetween={10}
         slidesPerView={7}
         freeMode={true}
         watchSlidesProgress={true}
         modules={[FreeMode, Navigation, Thumbs]}
-        // className="mySwiper"
-        className={`${PREFIX}-thumbSwiper`}
+        initialSlide={shelfIndex}
+        slideToClickedSlide={true}
+        slideActiveClass="swiper-slide-thumb-active"
+        onSlideChange={handleSlideChagne}
+        centeredSlides={true}
+        centeredSlidesBounds={true}
       >
         {shots.map((shot) => (
           <SwiperSlide key={shot.id}>
@@ -83,6 +98,7 @@ export const ShelfDetailLeft: React.FC = () => {
           </SwiperSlide>
         ))}
       </Swiper>
+      {/* </div> */}
     </div>
   )
 }

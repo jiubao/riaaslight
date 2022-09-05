@@ -1,9 +1,9 @@
-import React, { CSSProperties, useState } from 'react'
+import React from 'react'
 import { LR } from '../../components/layout/lr'
 import './index.scss'
 import { ShelfDetailRight } from './right'
 import { ShelfDetailLeft } from './left'
-import { useWindowResize } from '../../hooks/useWindowResize'
+// import { useWindowResize } from '../../hooks/useWindowResize'
 
 const PREFIX = 'ShelfDetail'
 
@@ -12,16 +12,16 @@ interface IProps {
 }
 
 export const ShelfDetail: React.FC<IProps> = ({ onClose }) => {
-  const [style, setStyle] = useState<CSSProperties>()
+  // const [style, setStyle] = useState<CSSProperties>()
 
-  useWindowResize(() => {
-    setStyle({ height: window.innerHeight - 90 })
-  }, [])
+  // useWindowResize(() => {
+  //   setStyle({ height: window.innerHeight - 90 })
+  // }, [])
 
   return (
     <LR
       className={PREFIX}
-      style={style}
+      // style={style}
       percent={77}
       left={<ShelfDetailLeft />}
     >

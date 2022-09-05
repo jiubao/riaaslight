@@ -13,7 +13,7 @@ import { DemoToggleBox } from '../debug/togglebox'
 import { NotFound } from '../modules/notFound'
 import { Posm } from '../modules/posm'
 import { Rog } from '../modules/rog'
-import { StoreGallery } from '../modules/rog/gallery'
+// import { StoreGallery } from '../modules/rog/gallery'
 import { Store } from '../modules/store'
 
 export const MainRouter: React.FC = () => {
@@ -25,7 +25,7 @@ export const MainRouter: React.FC = () => {
         <Route path="store/:id" element={<Store />} />
         <Route path="posm" element={<Posm />} />
       </Route>
-      <Route path="store/:retailerId/gallery/:id" element={<StoreGallery />} />
+      {/* <Route path="store/:retailerId/gallery/:id" element={<StoreGallery />} /> */}
       <Route path="/debug" element={<Debug />}>
         <Route path="toggle" element={<DemoToggleBox />} />
         <Route path="gallery" element={<DebugGallery />} />
