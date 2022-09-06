@@ -1,4 +1,5 @@
 # ISSUES
+- sort by brand count not work
 - new brand/retailer logos
 - rog detail - pagination
 - rog detail - clear brand cache

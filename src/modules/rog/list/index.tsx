@@ -26,7 +26,13 @@ export const RogList: React.FC<IProps> = ({ id }) => {
   const selectedCategoryIds = useSelector(selectSelectedCategoryIds)
 
   const handleCategoryChange = (value: number[]) => {
-    dispatch(updateRog({ selectedCategoryIds: value }))
+    dispatch(
+      updateRog({
+        selectedCategoryIds: value,
+        brands: [],
+        selectedBrandIds: [],
+      })
+    )
     if (value.length) {
       dispatch(fetchBrands(value[0]) as any)
     } else {
