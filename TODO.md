@@ -1,4 +1,5 @@
 # ISSUES
+- new brand/retailer logos
 - rog detail - pagination
 - rog detail - clear brand cache
 - map page: filter by retailerIds
