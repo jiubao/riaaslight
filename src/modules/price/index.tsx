@@ -1,9 +1,10 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import Search from './search'
 import WaterFall from '../../components/WaterFall'
 import { WaterFallDataItem } from '../../components/WaterFall/interface'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { skuList } from '../../store/priceSlice'
+import { fetchRetailers } from '../../store/commonSlice'
 import Card from './card'
 import PricePanel from './pricePanel'
 import './index.scss'
@@ -16,6 +17,7 @@ const PREFIX = 'Price'
 
 export const Price: React.FC<IProps> = ({ id }) => {
   const list = useSelector(skuList)
+  const dispatch = useDispatch()
   const [visible, setVisible] = useState<boolean>(false)
   const [currentItem, setCurrentItem] = useState<WaterFallDataItem & ISku>()
   const photos: Array<WaterFallDataItem & ISku> = useMemo(() => {
@@ -28,7 +30,9 @@ export const Price: React.FC<IProps> = ({ id }) => {
       }
     })
   }, [list])
-
+  useEffect(() => {
+    dispatch(fetchRetailers() as any)
+  }, [])
   const onDynamicLoad = () => {}
   const showDetail = (data: WaterFallDataItem & ISku) => {
     setVisible(true)

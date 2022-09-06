@@ -1,15 +1,18 @@
-import React, { useEffect, useCallback } from 'react'
-import cls from 'classnames'
 import CloseIcon from '@mui/icons-material/Close'
 import {
-  IconButton,
-  Select,
-  MenuItem,
   FormControl,
+  IconButton,
+  MenuItem,
+  Select,
   SelectChangeEvent,
 } from '@mui/material'
+import cls from 'classnames'
+import { pick } from 'lodash'
+import React, { useCallback, useEffect, useMemo } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { UriImageWithLoading } from '../../../components/UriImageWithLoading'
-import './index.scss'
+import { ISku } from '../../../domain'
+import { selectAllRetailers } from '../../../store/commonSlice'
 import {
   fetchPriceMap,
   leftRetailerSelector,
@@ -18,10 +21,11 @@ import {
   updatePrice,
   updateSelectedDate,
 } from '../../../store/priceSlice'
-import { useDispatch, useSelector } from 'react-redux'
-import { ISku } from '../../../domain'
-import PriceItem from './priceItem'
 import PriceGraph from './graph'
+import './index.scss'
+import { IPriceItem } from './interface'
+import PriceItem from './priceItem'
+
 const PREFIX = 'PricePanel'
 
 interface IProps {
@@ -35,10 +39,29 @@ const PricePanel: React.FC<IProps> = React.memo(function PricePanel(props) {
   const { className, data, visible } = props
 
   const dispatch = useDispatch()
-  const { loading, dateList, selectedDate, retailerPriceForSelectedDate } =
-    useSelector(priceInfo)
+  const {
+    loading,
+    dateList,
+    selectedDate,
+    skuInfo,
+    retailerPriceForSelectedDate,
+  } = useSelector(priceInfo)
   const leftRetailer = useSelector(leftRetailerSelector)
   const rightRetailer = useSelector(rightRetailerSelector)
+  const allRetailers = useSelector(selectAllRetailers)
+
+  const priceItemList = useMemo(() => {
+    return retailerPriceForSelectedDate.map((item) => {
+      const retailer = allRetailers.find(
+        (retailer) => retailer.id === Number(item.retailerId)
+      )
+      return {
+        ...item,
+        ...pick(retailer, ['retailer_name', 'retailer_icon', 'retailer_color']),
+      } as IPriceItem
+    })
+  }, [allRetailers, retailerPriceForSelectedDate])
+
   // 更新数据
   useEffect(() => {
     if (data) {
@@ -82,14 +105,11 @@ const PricePanel: React.FC<IProps> = React.memo(function PricePanel(props) {
           <div className={`${PREFIX}-price-left`}>
             <UriImageWithLoading
               className={`${PREFIX}-headImage`}
-              imageUri={''}
+              imageUri={skuInfo?.sku_cover_pic_url}
             />
           </div>
           <div className={`${PREFIX}-price-right`}>
-            <div className="title">
-              Pampers Diapers Size 7, 88 Count - Pampers Pull On Cruisers 360°
-              Fit Disposable Baby Diapers with Stretchy Waistband
-            </div>
+            <div className="title">{skuInfo?.sku_name}</div>
             <div className="date">
               <span className="label">Price</span>
               <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
@@ -107,7 +127,7 @@ const PricePanel: React.FC<IProps> = React.memo(function PricePanel(props) {
               </FormControl>
             </div>
             <div className={`${PREFIX}-price-list`}>
-              {retailerPriceForSelectedDate.map((item) => (
+              {priceItemList.map((item) => (
                 <PriceItem
                   className={`${PREFIX}-price-list-item`}
                   data={item}

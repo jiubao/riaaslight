@@ -40,7 +40,8 @@
     &-left {
       height: 380px;
       width: 380px;
-      border: 1px solid black;
+      background: #f8f8f8;
+      border: 1px solid #b4b4b4;
     }
     &-right {
       display: flex;
@@ -84,15 +85,15 @@
       display: flex;
 
       &-left {
-        display: inline-block;
+        display: flex;
         width: 50%;
-        height: 80%;
+        height: 100%;
         border-right: 1px solid #ccc;
       }
       &-right {
-        display: inline-block;
+        display: flex;
         width: 50%;
-        height: 80%;
+        height: 100%;
       }
     }
   }

@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { RootState } from '.'
-import { skuService } from '../services/sku'
-import { IPrice, IPriceMap, ISku } from '../domain'
 import { union } from 'lodash'
+import { RootState } from '.'
+import { IPrice, IPriceMap, ISku } from '../domain'
+import { skuService } from '../services/sku'
 
 export type IPriceWithRetailer = {
   retailerId: string

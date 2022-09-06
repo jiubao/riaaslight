@@ -1,20 +1,30 @@
-import React, { useRef, useEffect, useState } from 'react'
+import { FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import cls from 'classnames'
 import ReactECharts from 'echarts-for-react'
-import { getOption } from './util'
-const PREFIX = 'PriceGraph'
-import './index.scss'
-import { Select, MenuItem, FormControl, SelectChangeEvent } from '@mui/material'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { selectAllRetailers } from '../../../../store/commonSlice'
 import {
   priceMapSelector,
   retailerListSelector,
 } from '../../../../store/priceSlice'
+import './index.scss'
+
+import { createSelector } from 'reselect'
+import { IRetailer } from '../../../../domain'
+import { getOption } from './util'
+const PREFIX = 'PriceGraph'
 interface IProps {
   className?: string
   value: string
   onChange?: (data: string) => void
 }
+const retailerMapSelector = createSelector(selectAllRetailers, (retailers) => {
+  return (retailers || []).reduce((out, item) => {
+    out[item.id] = item
+    return out
+  }, {} as { [key: string]: IRetailer })
+})
 
 const PriceGraph: React.FC<IProps> = React.memo(function PriceGraph({
   value,
@@ -23,24 +33,35 @@ const PriceGraph: React.FC<IProps> = React.memo(function PriceGraph({
 }) {
   const retailerList = useSelector(retailerListSelector)
   const priceMap = useSelector(priceMapSelector)
+  const retailerMap = useSelector(retailerMapSelector)
   const [options, setOptions] = useState<any>(null)
   useEffect(() => {
     if (priceMap && value && priceMap[value]) {
-      console.log('render graph', className, value)
-      setOptions(getOption(priceMap[value]))
+      const retailer = retailerMap[value]
+      setOptions(getOption(priceMap[value], retailer?.retailer_color))
     }
-  }, [value, priceMap])
+  }, [value, priceMap, retailerMap])
 
   const handleChange = (e: SelectChangeEvent<string>) => {
     onChange?.(e.target.value)
   }
+
+  const retailerOptions = useMemo(() => {
+    return (retailerList || []).map((item) => {
+      const retailer = retailerMap[item] || {}
+      return {
+        label: retailer.retailer_name || item,
+        value: item,
+      }
+    })
+  }, [retailerList, retailerMap])
   return (
     <div className={cls(`${PREFIX}`, className)}>
       <FormControl sx={{ m: 1, width: 162, marginLeft: 2 }} size="small">
         <Select id="demo-select-small" value={value} onChange={handleChange}>
-          {retailerList.map((item) => (
-            <MenuItem key={item} value={item}>
-              {item}
+          {retailerOptions.map((item) => (
+            <MenuItem key={item.value} value={item.value}>
+              {item.label}
             </MenuItem>
           ))}
         </Select>

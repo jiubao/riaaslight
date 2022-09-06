@@ -1,25 +1,68 @@
 let isReverse = false
 let showLabel = true
 import { IPrice } from '../../../../domain'
-export function getOption(source: { [key: string]: IPrice }) {
+export function getOption(
+  source: { [key: string]: IPrice },
+  color: string | null
+) {
   let option
 
   const category = Object.keys(source)
   const data: [number, number, string][] = category.map((date) => {
     const item = source[date]
-    return [item.min_price, item.max_price, '#ff5722']
+    return [item.min_price, item.max_price, color || '#469CE2']
   })
 
   let series: any = [...createSeries(data, '1', showLabel, isReverse)]
 
   let yAxis: any = {
     type: 'value',
+    name: 'unit：$',
+    nameTextStyle: {
+      color: '#86909C',
+      fontWeight: 600,
+      align: 'right',
+      padding: [0, 38, 30, 0],
+      fontSize: 14,
+      fontFamily: 'PingFang SC',
+    },
+    axisLabel: {
+      show: true,
+      align: 'right',
+      color: '#86909C',
+      fontWeight: 600,
+      fontSize: 14,
+      margin: 38,
+      fontFamily: 'PingFang SC',
+    },
+    splitLine: {
+      show: true,
+      lineStyle: {
+        type: 'dashed',
+      },
+    },
   }
 
   let xAxis: any = {
     type: 'category',
     splitLine: {
       show: false,
+    },
+    axisLabel: {
+      show: true,
+      align: 'top',
+      color: '#000000',
+      fontWeight: 600,
+      fontSize: 12,
+      margin: 8,
+      fontFamily: 'PingFang SC',
+    },
+    axisLine: {
+      show: true,
+      lineStyle: {
+        color: '#C9CDD4',
+        width: 1.6,
+      },
     },
     data: category,
   }
@@ -53,9 +96,10 @@ export function getOption(source: { [key: string]: IPrice }) {
       },
     },
     grid: {
-      left: '3%',
-      right: '4%',
-      bottom: '3%',
+      left: 60,
+      right: 60,
+      bottom: 60,
+      top: 80,
       containLabel: true,
     },
     xAxis: xAxis,
@@ -96,6 +140,7 @@ function createSeries(
           color: 'rgba(0,0,0,0)',
         },
       },
+      barWidth: 35,
       label: {
         show: false,
       },
@@ -112,14 +157,11 @@ function createSeries(
         show: showLabel,
         position: maxPosition,
       },
+      barWidth: 35,
       markPoint: {
         symbol: 'rect',
         // 图形上面的小头隐藏
         symbolSize: 0.000000000000001,
-        label: {
-          show: showLabel,
-          position: minPosition,
-        },
         data: minLabel,
       },
       data: max,
@@ -142,7 +184,8 @@ function dataFormat(
     name: string
     [key: string]: any
   }> = [] // 区间的最大值
-  let minLabel: Array<{ value: number; coord: number[] }> = [] // 显示区间的最小值的 label 数据，在 max 上通过 markpoint 实现，以控制 label 颜色值和显示的柱子颜色值一致，并且显示隐藏有效
+  let minLabel: Array<{ value: number; coord: number[]; [key: string]: any }> =
+    [] // 显示区间的最小值的 label 数据，在 max 上通过 markpoint 实现，以控制 label 颜色值和显示的柱子颜色值一致，并且显示隐藏有效
 
   data.forEach((item, i) => {
     min.push(item[0])
@@ -153,6 +196,13 @@ function dataFormat(
     minLabel.push({
       value: item[0], // 对值进行格式化
       coord: item[0] ? coord : [],
+      label: {
+        position: 'bottom',
+        color: item[2],
+        fontFamily: 'PingFang SC',
+        fontSize: 16,
+        fontWeight: 600,
+      },
     })
 
     max.push({
@@ -161,6 +211,10 @@ function dataFormat(
       name, // legend 显示
       label: {
         formatter: '' + item[1], // 最终值作为显示值
+        color: item[2],
+        fontFamily: 'PingFang SC',
+        fontSize: 16,
+        fontWeight: 600,
       },
       itemStyle: {
         color: item[2],
