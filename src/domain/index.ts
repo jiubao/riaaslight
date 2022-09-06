@@ -48,6 +48,7 @@ export interface IStoreDetail extends IStore {
   retailer_id: number
   latest_img_at: string
   latest_preview_img_url: string
+  latest_thumbnail_url: string
   latest_img_url: string
   brand_map: Record<string, number>
   category_map: Record<string, number>

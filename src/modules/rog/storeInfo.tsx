@@ -24,7 +24,7 @@ export const StoreInfo: React.FC<IProps> = ({ store }) => {
   return (
     <div className={PREFIX}>
       <div className={`${PREFIX}-img`}>
-        <img src={store.latest_preview_img_url} alt="" />
+        <img src={store.latest_thumbnail_url} alt="" />
       </div>
       <div className={`${PREFIX}-info`}>
         <div className={`${PREFIX}-name textNoWrap`}>{store.store_name}</div>
