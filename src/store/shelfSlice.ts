@@ -52,7 +52,7 @@ export const shelfSlice = createSlice({
   },
   extraReducers(builder) {
     builder.addCase(fetchShelf.fulfilled, (state, action) => {
-      state.detail = action.payload
+      if (action.payload) state.detail = action.payload
     })
   },
 })

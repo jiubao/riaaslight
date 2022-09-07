@@ -6,31 +6,37 @@ interface IProps {
   srcs: string[]
   index: number
   onClick?: (index: number) => void
+  size?: number
 }
 
 const PREFIX = 'Slider'
 
-export const Slider: React.FC<IProps> = ({ srcs, index, onClick }) => {
+export const Slider: React.FC<IProps> = ({
+  srcs,
+  index,
+  onClick,
+  size = 7,
+}) => {
   const [partial, setPartial] = useState<string[]>([])
   const [current, setCurrent] = useState(-1)
   useEffect(() => {
-    const next: string[] = []
-    let length = 6
-    for (let i = 1; i <= 3; i++) {
-      if (index - i < 0) break
-      next.unshift(srcs[index - i])
-      --length
+    const total = srcs.length
+    if (total < size) {
+      setPartial(srcs)
+      setCurrent(index)
+    } else {
+      const middle = ~~(size / 2)
+      let start = index - middle
+      if (index < middle) {
+        start = 0
+      } else if (index + middle >= total) {
+        start = total - size
+      }
+      const next = srcs.slice(start, start + size)
+      setPartial(next)
+      setCurrent(next.indexOf(srcs[index]))
     }
-
-    setCurrent(next.length)
-    next.push(srcs[index])
-    for (let i = 1; i <= srcs.length; i++) {
-      if (index + i >= srcs.length || length === 0) break
-      next.push(srcs[index + i])
-      --length
-    }
-    setPartial(next)
-  }, [srcs, index])
+  }, [srcs, index, size])
 
   const handleClick = (src: string) => {
     onClick?.(srcs.indexOf(src))

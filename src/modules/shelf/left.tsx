@@ -8,7 +8,7 @@ import { selectShelfShots, selectStoreDetail } from '../../store/storeSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   fetchShelfByIndex,
-  resetShelf,
+  // resetShelf,
   selectSelectedBrandsPositions,
   selectShelfIndex,
 } from '../../store/shelfSlice'
@@ -26,7 +26,7 @@ export const ShelfDetailLeft: React.FC = () => {
 
   const handleChange = (index: number) => {
     if (index >= 0) {
-      dispatch(resetShelf() as any)
+      // dispatch(resetShelf() as any)
       dispatch(fetchShelfByIndex(index) as any)
     }
   }
