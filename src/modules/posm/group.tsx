@@ -13,7 +13,7 @@ import { selectAllRetailers } from '../../store/commonSlice'
 interface IProps {
   month: string
   shots: IPosmShot[]
-  onClick?: (id: number) => void
+  onClick?: (shot: IPosmShot) => void
 }
 
 const PREFIX = 'PosmShotGroup'
@@ -36,7 +36,7 @@ export const PosmShotGroup: React.FC<IProps> = ({ month, shots, onClick }) => {
       //   alt=""
       //   onClick={() => onClick?.(shot.id)}
       // />
-      <div className={`${PREFIX}-imgWrap`}>
+      <div className={`${PREFIX}-imgWrap`} onClick={() => onClick?.(shot)}>
         {/* <CropImage src={shot.img_url} position={shot.position} /> */}
         <CropImage src={shot.thumbnail_url} position={shot.position} />
         <div className={`${PREFIX}-info`} data-id={shot.retailer_id}>

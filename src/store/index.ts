@@ -5,6 +5,7 @@ import storeReducer from './storeSlice'
 import shelfReducer from './shelfSlice'
 import posmReducer from './posmSlice'
 import priceReducer from './priceSlice'
+import posmShotReducer from './posmShotSlice'
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     shelf: shelfReducer,
     posm: posmReducer,
     price: priceReducer,
+    posmShot: posmShotReducer,
   },
 })
 

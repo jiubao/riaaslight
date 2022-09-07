@@ -26,15 +26,20 @@ export const Slider: React.FC<IProps> = ({
       setCurrent(index)
     } else {
       const middle = ~~(size / 2)
+      let value = middle
       let start = index - middle
       if (index < middle) {
         start = 0
+        value = index
       } else if (index + middle >= total) {
         start = total - size
+        value = size - (total - index)
       }
       const next = srcs.slice(start, start + size)
       setPartial(next)
-      setCurrent(next.indexOf(srcs[index]))
+      // setCurrent(next.indexOf(srcs[index]))
+      console.log(index, value)
+      setCurrent(value)
     }
   }, [srcs, index, size])
 
