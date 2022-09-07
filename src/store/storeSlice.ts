@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { last, orderBy } from 'lodash'
 import { RootState } from '.'
-import { IBrand, IShelfShot, IStoreDetail } from '../domain'
-import { brandService } from '../services/brand'
+import { IShelfShot, IStoreDetail } from '../domain'
 import { shelfShotService } from '../services/shelfShot'
 import { storeService } from '../services/store'
 import { date2Month, removeEmptyProps } from '../utils'
@@ -11,7 +10,7 @@ interface IState {
   storeDetail?: IStoreDetail
   selectedCategoryIds: number[]
   selectedBrandIds: number[]
-  brands: IBrand[]
+  // brands: IBrand[]
   shelfShots: IShelfShot[]
   monthes: Array<{ month: string; shelfIds: number[] }>
   nextShotIndex: number
@@ -23,7 +22,7 @@ const initialState: IState = {
   shelfShots: [],
   selectedCategoryIds: [],
   selectedBrandIds: [],
-  brands: [],
+  // brands: [],
   monthes: [],
   nextShotIndex: 0,
   hasNextShots: true,
@@ -69,15 +68,6 @@ export const fetchStoreDetail = createAsyncThunk(
   }
 )
 
-export const fetchBrands = createAsyncThunk(
-  'store/fetchBrands',
-  async (id: number) => {
-    return await brandService.get(id)
-  }
-)
-
-// date: yyyy-MM-dd
-
 export const storeSlice = createSlice({
   name: 'store',
   initialState,
@@ -119,9 +109,6 @@ export const storeSlice = createSlice({
     builder.addCase(fetchStoreDetail.fulfilled, (state, action) => {
       state.storeDetail = action.payload
     })
-    builder.addCase(fetchBrands.fulfilled, (state, action) => {
-      state.brands = action.payload
-    })
     // builder.addCase(fetchShelfShots.fulfilled, (state, action) => {
     //   state.shelfShots = action.payload
     // })
@@ -159,7 +146,7 @@ export const selectSelectedBrandIds = (state: RootState) =>
   state.store.selectedBrandIds
 
 export const selectStoreBrands = (state: RootState) => {
-  const all = state.store.brands
+  const all = state.common.brands
   const map = new Map()
   all.forEach((item) => map.set(item.id, item))
 

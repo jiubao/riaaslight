@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { LR } from '../../components/layout/lr'
 import { StoreImages } from './images'
 import { StoreInfo } from './info'
 import './index.scss'
 // import { useParams } from 'react-router'
-// import { useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { resetStore } from '../../store/storeSlice'
+import { fetchAllBrands, fetchCategories } from '../../store/commonSlice'
 // import { fetchShelfShots, fetchStoreDetail } from '../../store/storeSlice'
 // import { fetchCategories } from '../../store/commonSlice'
 // import { ICategory } from '../../domain'
@@ -12,8 +14,16 @@ import './index.scss'
 const PREFIX = 'Store'
 
 export const Store: React.FC = React.memo(() => {
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
   // const { id } = useParams()
+
+  useEffect(() => {
+    dispatch(fetchCategories() as any)
+    dispatch(fetchAllBrands() as any)
+    return () => {
+      dispatch(resetStore() as any)
+    }
+  }, [dispatch])
 
   // useEffect(() => {
   //   dispatch(fetchCategories() as any).then((res: any) => {

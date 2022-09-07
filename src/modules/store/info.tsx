@@ -10,7 +10,6 @@ import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutl
 import { useNavigate, useParams } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  fetchBrands,
   fetchShelfShots,
   fetchStoreDetail,
   resetStore,
@@ -23,8 +22,6 @@ import {
 } from '../../store/storeSlice'
 import { parseStoreAddress } from '../../utils'
 import { BrandList } from '../common/brand'
-import { fetchCategories } from '../../store/commonSlice'
-import { ICategory } from '../../domain'
 
 const PREFIX = 'StoreInfo'
 
@@ -40,12 +37,9 @@ export const StoreInfo: React.FC = () => {
 
   const handleCategoryChange = useCallback(
     (value: number[]) => {
-      dispatch(updateStore({ selectedCategoryIds: value }))
-      if (value.length) {
-        dispatch(fetchBrands(value[0]) as any)
-      } else {
-        dispatch(updateStore({ brands: [] }))
-      }
+      dispatch(
+        updateStore({ selectedCategoryIds: value, selectedBrandIds: [] })
+      )
       dispatch(resetStore())
       dispatch(fetchShelfShots({}) as any)
     },
@@ -62,16 +56,20 @@ export const StoreInfo: React.FC = () => {
     [dispatch]
   )
 
-  useEffect(() => {
-    dispatch(fetchCategories() as any).then((res: any) => {
-      const categories = res.payload as ICategory[]
-      if (categories?.length) {
-        const id = categories[0].id
-        dispatch(updateStore({ selectedCategoryIds: [id] }))
-        dispatch(fetchBrands(id) as any)
-      }
-    })
-  }, [dispatch, handleCategoryChange, id])
+  // useEffect(() => {
+  //   dispatch(fetchCategories() as any).then((res: any) => {
+  //     const categories = res.payload as ICategory[]
+  //     if (categories?.length) {
+  //       const id = categories[0].id
+  //       dispatch(updateStore({ selectedCategoryIds: [id] }))
+  //       // dispatch(fetchBrands(id) as any)
+  //     }
+  //   })
+  // }, [dispatch, handleCategoryChange, id])
+
+  // useEffect(() => {
+  //   dispatch(updateStore({ selectedCategoryIds: categories[0]?.id }))
+  // }, [categories, dispatch])
 
   useEffect(() => {
     id && dispatch(fetchStoreDetail(Number(id)) as any)

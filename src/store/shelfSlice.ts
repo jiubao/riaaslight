@@ -69,7 +69,7 @@ export const selectSelectedBrandIds = (state: RootState) =>
 
 export const selectShelfBrands = (state: RootState) => {
   const hash = new Map()
-  state.store.brands.forEach((brand) => hash.set(`${brand.id}`, brand))
+  state.common.brands.forEach((brand) => hash.set(`${brand.id}`, brand))
   return state.shelf.detail
     ? Object.keys(state.shelf.detail.brand_map)
         .map((id) => hash.get(id))
