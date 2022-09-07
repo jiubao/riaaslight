@@ -14,9 +14,9 @@ import { ITimelineItem, Timeline } from '../../components/timeline'
 import { useTimelineScrollItems } from '../../components/timeline/hooks'
 import CircularProgress from '@mui/material/CircularProgress'
 import { fetchShelf } from '../../store/shelfSlice'
-import { Drawer } from '@mui/material'
 import { ShelfDetail } from '../shelf'
 import { useIntersection } from '../../hooks/useIntersection'
+import { Modal } from '../../components/modal'
 
 interface IProps {
   id?: string
@@ -109,14 +109,19 @@ export const StoreImages: React.FC<IProps> = ({ id }) => {
           </div>
         )}
       </div>
-      <Drawer
+      {/* <Drawer
         anchor="bottom"
         open={detailVisible}
         onClose={handleCloseDetail}
         className={`${PREFIX}-drawer`}
       >
-        <ShelfDetail onClose={handleCloseDetail} />
-      </Drawer>
+      </Drawer> */}
+
+      {detailVisible && (
+        <Modal>
+          <ShelfDetail onClose={handleCloseDetail} />
+        </Modal>
+      )}
     </div>
   )
 }

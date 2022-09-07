@@ -4,8 +4,13 @@ import { MapWrapper, Map } from '../../components/googleMap'
 import { Marker } from '../../components/googleMap/marker'
 import { LR } from '../../components/layout/lr'
 import { Coordinates } from '../../constants/map'
-import { fetchCategories, fetchRetailers } from '../../store/commonSlice'
 import {
+  fetchAllBrands,
+  fetchCategories,
+  fetchRetailers,
+} from '../../store/commonSlice'
+import {
+  fetchBrands,
   fetchStoreDetail,
   fetchStores,
   selectMapBounds,
@@ -34,7 +39,19 @@ export const Rog: React.FC<IProps> = ({ id }) => {
 
   useEffect(() => {
     dispatch(fetchRetailers() as any)
-    dispatch(fetchCategories() as any)
+    dispatch(fetchCategories() as any).then((res: any) => {
+      const categories = res.payload
+      // console.log(categories)
+      if (categories?.length) {
+        dispatch(updateRog({ selectedCategoryIds: [categories[0].id] }))
+        dispatch(fetchBrands(categories[0].id) as any)
+      }
+    })
+    dispatch(fetchAllBrands() as any)
+
+    return () => {
+      dispatch(updateRog({ selectedBrandIds: [], storeDetail: undefined }))
+    }
   }, [dispatch])
 
   useEffect(() => {

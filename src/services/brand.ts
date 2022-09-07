@@ -9,6 +9,11 @@ class BrandService {
       category: categoryId,
     })
   }
+  getAll() {
+    return HttpService.get<IBrand[]>(`${BASE_SERVICE_URI}/brands`, {
+      status: 'active',
+    })
+  }
 }
 
 export const brandService = new BrandService()

@@ -20,7 +20,7 @@ export const DemoMask: React.FC = () => {
     <div className={PREFIX}>
       mask
       <ImageMaskWindow
-        src={src}
+        src={[src]}
         rectangles={rects}
         className={`${PREFIX}-Window`}
       />

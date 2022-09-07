@@ -1,0 +1,30 @@
+.Slider {
+  display: flex;
+  justify-content: center;
+  // width: 100%;
+  height: 100%;
+  padding-top: 3px;
+  margin-left: -4px;
+  flex-flow: row wrap;
+  &-item {
+    height: 100%;
+    flex-basis: 14.2857%;
+    padding-left: 4px;
+    flex-grow: 0;
+    flex-shrink: 0;
+  }
+  &-wrap {
+    width: 100%;
+    height: 100%;
+    opacity: 0.4;
+    cursor: pointer;
+    &.is-active {
+      opacity: 1;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}

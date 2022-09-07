@@ -14,7 +14,7 @@ import { NotFound } from '../modules/notFound'
 import { Posm } from '../modules/posm'
 import { Price } from '../modules/price'
 import { Rog } from '../modules/rog'
-import { StoreGallery } from '../modules/rog/gallery'
+// import { StoreGallery } from '../modules/rog/gallery'
 import { Store } from '../modules/store'
 
 export const MainRouter: React.FC = () => {
@@ -27,7 +27,7 @@ export const MainRouter: React.FC = () => {
         <Route path="posm" element={<Posm />} />
         <Route path="price" element={<Price />} />
       </Route>
-      <Route path="store/:retailerId/gallery/:id" element={<StoreGallery />} />
+      {/* <Route path="store/:retailerId/gallery/:id" element={<StoreGallery />} /> */}
       <Route path="/debug" element={<Debug />}>
         <Route path="toggle" element={<DemoToggleBox />} />
         <Route path="gallery" element={<DebugGallery />} />

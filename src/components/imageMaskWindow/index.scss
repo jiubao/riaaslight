@@ -1,5 +1,6 @@
 .ImageMaskWindow {
   position: relative;
+  overflow: hidden;
 
   &-Mask {
     position: absolute;
