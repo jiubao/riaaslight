@@ -14,7 +14,7 @@ const WaterFallNoMoreDataRow: React.FC<IProps> = React.memo(
     return (
       <div style={style} className={`${PREFIX}-noMoreData`}>
         <span className={`${PREFIX}-noMoreDataLine`}></span>
-        <span>无更多结果</span>
+        <span className={`${PREFIX}-noMoreDataDesc`}>End</span>
         <span className={`${PREFIX}-noMoreDataLine`}></span>
       </div>
     )

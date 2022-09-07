@@ -13,6 +13,10 @@ export enum StatusEnum {
   Active = 0,
 }
 
+export interface ICountry {
+  country_name: string
+}
+
 export interface ICategory extends IDocument {
   category_name: string
   category_status: StatusEnum

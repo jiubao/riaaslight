@@ -13,7 +13,7 @@ const WaterFallLoadingRow: React.FC<IProps> = React.memo(
     const { style } = props
     return (
       <div style={style} className={`${PREFIX}-loading`}>
-        <span>loading...</span>
+        <span>Loading...</span>
       </div>
     )
   }

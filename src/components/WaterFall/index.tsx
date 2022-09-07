@@ -1,16 +1,16 @@
-import { IDataItem, RowItem, WaterFallDataItem } from './interface'
-import { VariableSizeList as List } from 'react-window'
-import { addItemToRow, getRowWidth, zoomRowItems } from './util'
-import { areEqual } from '../../utils/areEqual'
-import AutoSizer from 'react-virtualized-auto-sizer'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import WaterFallDataRow from './DataRow'
-import WaterFallLoadingRow from './LoadingRow'
-import WaterFallNoMoreDataRow from './NoMoreDataRow'
 import cls from 'classnames'
 import memoize from 'memoize-one'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import AutoSizer from 'react-virtualized-auto-sizer'
+import { VariableSizeList as List } from 'react-window'
+import { areEqual } from '../../utils/areEqual'
 import Resize from '../Resize'
+import WaterFallDataRow from './DataRow'
 import './index.scss'
+import { IDataItem, RowItem, WaterFallDataItem } from './interface'
+import WaterFallLoadingRow from './LoadingRow'
+import WaterFallNoMoreDataRow from './NoMoreDataRow'
+import { addItemToRow, zoomRowItems } from './util'
 
 const createStepData = memoize(
   (
@@ -111,14 +111,14 @@ const WaterFall = function WaterFall({
   const listRef = useRef<List>(null)
   const [dataList, setDataList] = useState<RowItem[]>([])
   const selectedItem = useRef<WaterFallDataItem>()
-  const [rect, setRect] = useState<{ width: number; height: number }>({
-    width: 0,
-    height: 0,
-  })
 
   useEffect(() => {
     listRef.current?.resetAfterIndex(0)
   }, [dataList])
+
+  const handleResize = () => {
+    updateDataList()
+  }
 
   const updateSelectedItem = useCallback(
     (imgGrid: RowItem[]) => {
@@ -302,7 +302,7 @@ const WaterFall = function WaterFall({
   )
 
   return (
-    <Resize>
+    <Resize onResize={handleResize}>
       <div className={cls(className, `${PREFIX}-wrapper`)} ref={wrapper}>
         <AutoSizer>
           {({ height, width }) => {

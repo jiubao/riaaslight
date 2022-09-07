@@ -1,6 +1,6 @@
 import { HttpService } from '.'
 import { BASE_SERVICE_URI } from '../constants'
-import { ISku, IPriceMap } from '../domain'
+import { IPriceMap, ISku } from '../domain'
 
 class SkuService {
   get(params: { category: string; country: string }) {
@@ -10,9 +10,9 @@ class SkuService {
       limit: 5000,
       ...params,
       // mock
-      category: 1,
-      brand: '1988,1964',
-      country: 'Philippines',
+      // category: 1,
+      // brand: '1988,1964',
+      // country: 'Philippines',
     })
   }
   getSkuPriceMap(params: Pick<ISku, 'sku_id'>) {

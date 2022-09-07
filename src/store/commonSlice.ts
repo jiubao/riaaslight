@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '.'
-import { IBrand, ICategory, IRetailer } from '../domain'
+import { IBrand, ICategory, ICountry, IRetailer } from '../domain'
 import { brandService } from '../services/brand'
 import { categoryService } from '../services/category'
 import { retailerService } from '../services/retailer'
@@ -8,6 +8,7 @@ import { retailerService } from '../services/retailer'
 interface IState {
   retailers: IRetailer[]
   categories: ICategory[]
+  countries: ICountry[]
   brands: IBrand[]
   lockRetailer: boolean
   lockCategory: boolean
@@ -21,6 +22,7 @@ const initialState: IState = {
   lockRetailer: false,
   lockCategory: false,
   lockBrand: false,
+  countries: [{ country_name: 'US' }, { country_name: 'Philippines' }],
 }
 
 export const fetchRetailers = createAsyncThunk(
@@ -123,4 +125,5 @@ export default commonSlice.reducer
 
 export const selectAllRetailers = (state: RootState) => state.common.retailers
 export const selectAllCategories = (state: RootState) => state.common.categories
+export const selectAllCountries = (state: RootState) => state.common.countries
 export const selectAllBrands = (state: RootState) => state.common.brands

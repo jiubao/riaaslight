@@ -8,7 +8,11 @@ export type IPriceWithRetailer = {
   retailerId: string
 } & IPrice
 interface IState {
+  skuListLoading: boolean
+  noMoreSku: boolean
   searchParams: {
+    start: number
+    limit: number
     category: string
     country: string
   }
@@ -27,9 +31,13 @@ interface IState {
 }
 
 const initialState: IState = {
+  skuListLoading: false,
+  noMoreSku: false,
   searchParams: {
-    category: '',
-    country: '',
+    start: 0,
+    limit: 50,
+    category: 'All',
+    country: 'All',
   },
   skuList: [],
   price: {
@@ -47,18 +55,54 @@ const initialState: IState = {
 
 export const fetchSkuList = createAsyncThunk(
   'common/fetchSkuList',
-  async (_, api) => {
+  async (startFromScratch: boolean, api) => {
+    if (startFromScratch) {
+      api.dispatch(
+        update({
+          noMoreSku: false,
+          skuList: [],
+        })
+      )
+    }
     const state = api.getState() as RootState
-    if (state.price.skuList.length) {
-      return state.price.skuList
+    if (state.price.noMoreSku) return
+    api.dispatch(
+      update({
+        skuListLoading: true,
+      })
+    )
+    let params: any = {
+      start: startFromScratch ? 0 : state.price.skuList.length,
+      limit: state.price.searchParams.limit,
     }
-    const res = await skuService.get(state.price.searchParams)
-    if (res && Array.isArray(res)) {
-      return res
+    if (state.price.searchParams.country !== 'All') {
+      params.country = state.price.searchParams.country
     }
-    return []
+    if (state.price.searchParams.category !== 'All') {
+      params.category = state.price.searchParams.category
+    }
+    try {
+      const res = await skuService.get(params)
+      let noMoreSku = Array.isArray(res) && res.length ? false : true
+      api.dispatch(
+        update({
+          skuListLoading: false,
+          noMoreSku,
+          skuList: !noMoreSku
+            ? [...state.price.skuList, ...res]
+            : state.price.skuList,
+        })
+      )
+    } catch (error) {
+      api.dispatch(
+        update({
+          skuListLoading: false,
+        })
+      )
+    }
   }
 )
+
 export const fetchPriceMap = createAsyncThunk(
   'common/fetchPriceMap',
   async (skuInfo: ISku, api) => {
@@ -159,11 +203,7 @@ export const priceSlice = createSlice({
       }
     },
   },
-  extraReducers(builder) {
-    builder.addCase(fetchSkuList.fulfilled, (state, action) => {
-      state.skuList = action.payload
-    })
-  },
+  extraReducers(builder) {},
 })
 
 export const { update, updatePrice, updateParams, updateSelectedDate } =
@@ -181,3 +221,6 @@ export const leftRetailerSelector = (state: RootState) =>
 export const rightRetailerSelector = (state: RootState) =>
   state.price.price.rightRetailer
 export const priceMapSelector = (state: RootState) => state.price.price.priceMap
+export const skuListLoadingSelector = (state: RootState) =>
+  state.price.skuListLoading
+export const noMoreSkuSelector = (state: RootState) => state.price.noMoreSku

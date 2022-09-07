@@ -1,8 +1,7 @@
-import { useLayoutEffect, useRef } from 'react'
-import React, { useEffect, useState } from 'react'
 import cls from 'classnames'
-import './index.scss'
+import { useEffect, useRef, useState } from 'react'
 import { WaterFallDataItem } from '../../../components/WaterFall/interface'
+import './index.scss'
 import { useHideWhenChildExceedRow } from './useHideWhenChildExceedRow'
 const PREFIX = 'SkuCard'
 

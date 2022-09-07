@@ -3,6 +3,7 @@ $prefix: 'WaterFallCard';
 .#{$prefix} {
   position: relative;
   display: inline-block;
+  vertical-align: top;
   &-body {
     position: relative;
     width: 100%;

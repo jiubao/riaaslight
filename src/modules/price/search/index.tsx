@@ -1,22 +1,17 @@
-import React, { useEffect } from 'react'
-import {
-  Select,
-  MenuItem,
-  FormControl,
-  SelectChangeEvent,
-  OutlinedInput,
-  InputAdornment,
-} from '@mui/material'
+import { FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material'
+import cls from 'classnames'
+import React, { useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
+  selectAllCategories,
+  selectAllCountries,
+} from '../../../store/commonSlice'
+import {
+  fetchSkuList,
   selectSearchParams,
   updateParams,
-  fetchSkuList,
 } from '../../../store/priceSlice'
-import cls from 'classnames'
 import './index.scss'
-import { selectAllCategories } from '../../../store/commonSlice'
-import SearchIcon from '@mui/icons-material/Search'
 const PREFIX = 'PriceSearch'
 
 interface IProps {
@@ -27,10 +22,43 @@ const PriceSearch: React.FC<IProps> = function PriceSearch(props) {
   const { className } = props
   const dispatch = useDispatch()
   const categories = useSelector(selectAllCategories)
-  const countries: any[] = []
+  const countries = useSelector(selectAllCountries)
   const params = useSelector(selectSearchParams)
+
+  const categoryOptions = useMemo(() => {
+    return categories.reduce(
+      (out, item) => {
+        out.push({
+          label: item.category_name,
+          value: item.id,
+        })
+        return out
+      },
+      [{ label: 'All', value: 'All' }] as Array<{
+        label: string
+        value: number | string
+      }>
+    )
+  }, [categories])
+
+  const countryOptions = useMemo(() => {
+    return countries.reduce(
+      (out, item) => {
+        out.push({
+          label: item.country_name,
+          value: item.country_name,
+        })
+        return out
+      },
+      [{ label: 'All', value: 'All' }] as Array<{
+        label: string
+        value: string
+      }>
+    )
+  }, [countries])
+
   useEffect(() => {
-    dispatch(fetchSkuList() as any)
+    dispatch(fetchSkuList(true) as any)
   }, [])
   const handleCategoryChange = (e: SelectChangeEvent<string>) => {
     dispatch(
@@ -38,6 +66,7 @@ const PriceSearch: React.FC<IProps> = function PriceSearch(props) {
         category: e.target.value,
       })
     )
+    dispatch(fetchSkuList(true) as any)
     console.log(e.target.value)
   }
 
@@ -47,19 +76,10 @@ const PriceSearch: React.FC<IProps> = function PriceSearch(props) {
         country: e.target.value,
       })
     )
+    dispatch(fetchSkuList(true) as any)
     console.log(e.target.value)
   }
 
-  // const handleSearchChange: React.ChangeEventHandler<HTMLInputElement> = (
-  //   e
-  // ) => {
-  //   dispatch(
-  //     updateParams({
-  //       search: e.target.value,
-  //     })
-  //   )
-  //   console.log(e.target.value)
-  // }
   return (
     <div className={cls(`${PREFIX}`, className)}>
       <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
@@ -68,9 +88,9 @@ const PriceSearch: React.FC<IProps> = function PriceSearch(props) {
           value={params.country}
           onChange={handleCountryChange}
         >
-          {countries.map((item) => (
-            <MenuItem key={item.name} value={item.name}>
-              {item.name}
+          {countryOptions.map((item) => (
+            <MenuItem key={item.value} value={item.value}>
+              {item.label}
             </MenuItem>
           ))}
         </Select>
@@ -81,27 +101,13 @@ const PriceSearch: React.FC<IProps> = function PriceSearch(props) {
           value={params.category}
           onChange={handleCategoryChange}
         >
-          {categories.map((item) => (
-            <MenuItem key={item.category_name} value={item.category_name}>
-              {item.category_name}
+          {categoryOptions.map((item) => (
+            <MenuItem key={item.value} value={item.value}>
+              {item.label}
             </MenuItem>
           ))}
         </Select>
       </FormControl>
-      {/* <FormControl sx={{ m: 1, width: 200 }} variant="filled">
-        <OutlinedInput
-          id="outlined-adornment-amount"
-          value={params.search}
-          size="small"
-          placeholder="search"
-          onChange={handleSearchChange}
-          startAdornment={
-            <InputAdornment position="end">
-              <SearchIcon></SearchIcon>
-            </InputAdornment>
-          }
-        />
-      </FormControl> */}
     </div>
   )
 }
