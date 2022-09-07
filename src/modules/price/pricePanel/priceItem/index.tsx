@@ -19,7 +19,11 @@ const PriceItem: React.FC<IProps> = React.memo(function PriceItem(props) {
   return (
     <div className={cls(`${PREFIX}`, className)}>
       <div className={cls(`${PREFIX}-content`)}>
-        <PNGIcon name={retailer_name} type={PngIconType.Retailer} />
+        <PNGIcon
+          className={`${PREFIX}-icon`}
+          name={retailer_name}
+          type={PngIconType.Retailer}
+        />
         <span className={`${PREFIX}-title`}>{retailer_name}</span>
         <div className={`${PREFIX}-price low`}>
           <span className="prefix">L</span>

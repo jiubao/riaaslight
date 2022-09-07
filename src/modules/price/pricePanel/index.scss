@@ -1,3 +1,13 @@
+@media screen and (max-width: 1920px) {
+  .PricePanel-price-list-item {
+    width: 25%;
+  }
+}
+@media screen and (max-width: 1600px) {
+  .PricePanel-price-list-item {
+    width: 33.3%;
+  }
+}
 .PricePanel {
   position: fixed;
   top: 0;
@@ -70,9 +80,6 @@
     height: 0;
     background: #f1f2f7;
     padding: 12px;
-    &-item {
-      width: 33.33%;
-    }
   }
   &-trend {
     margin-top: 10px;

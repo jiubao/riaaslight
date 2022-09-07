@@ -2,6 +2,11 @@
   display: inline-block;
   padding: 6px 4px;
   height: 52px;
+  vertical-align: top;
+  &-icon {
+    width: 32px;
+    height: 32px;
+  }
   &-content {
     height: 40px;
     background: #ffffff;
@@ -11,6 +16,7 @@
     padding: 0 14px 0 10px;
   }
   &-title {
+    margin-left: 6px;
     font-family: 'PingFang SC';
     font-style: normal;
     font-weight: 600;
