@@ -45,11 +45,16 @@ export const ShelfDetailLeft: React.FC = () => {
         <ShelfShotInfo shelfShot={shots[shelfIndex]} store={store} />
       </div>
       <div className={`${PREFIX}-thumbSwiper`}>
-        <Slider
-          srcs={shots.map((s) => s.thumbnail_url)}
-          index={shelfIndex}
-          onClick={handleChange}
-        />
+        <Slider total={shots.length} index={shelfIndex}>
+          {({ index }) => (
+            <img
+              key={index}
+              src={shots[index]?.thumbnail_url}
+              alt=""
+              onClick={() => handleChange(index)}
+            />
+          )}
+        </Slider>
       </div>
     </div>
   )

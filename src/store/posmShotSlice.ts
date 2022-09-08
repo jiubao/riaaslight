@@ -26,28 +26,32 @@ export const fetchPosmShotDetail = createAsyncThunk(
     if (state.posmShot.lockDetail) return Promise.reject(0)
     dispatch(updatePosmShot({ lockDetail: true }))
     try {
-      return await posmService.getDetail(imgId)
+      const detail = await posmService.getDetail(imgId)
+      let shots = detail
+        ? await posmService.get({ store_id: detail.store_id })
+        : []
+      dispatch(updatePosmShot({ detail, shots }))
     } finally {
       dispatch(updatePosmShot({ lockDetail: false }))
     }
   }
 )
 
-export const fetchPosmDetailShots = createAsyncThunk(
-  'posmShot/fetchPosmDetailShots',
-  async (_, { dispatch, getState }) => {
-    const state = getState() as RootState
-    if (state.posmShot.lockShots) return Promise.reject(0)
-    const store_id = state.posmShot.shot?.store_id
-    if (!store_id) return Promise.reject(0)
-    dispatch(updatePosmShot({ lockShots: true }))
-    try {
-      return await posmService.get({ store_id })
-    } finally {
-      dispatch(updatePosmShot({ lockShots: false }))
-    }
-  }
-)
+// export const fetchPosmDetailShots = createAsyncThunk(
+//   'posmShot/fetchPosmDetailShots',
+//   async (_, { dispatch, getState }) => {
+//     const state = getState() as RootState
+//     if (state.posmShot.lockShots) return Promise.reject(0)
+//     const store_id = state.posmShot.shot?.store_id
+//     if (!store_id) return Promise.reject(0)
+//     dispatch(updatePosmShot({ lockShots: true }))
+//     try {
+//       return await posmService.get({ store_id })
+//     } finally {
+//       dispatch(updatePosmShot({ lockShots: false }))
+//     }
+//   }
+// )
 
 export const posmShotSlice = createSlice({
   name: 'posmShot',
@@ -67,14 +71,14 @@ export const posmShotSlice = createSlice({
       // state.shot = undefined
     },
   },
-  extraReducers(builder) {
-    builder.addCase(fetchPosmShotDetail.fulfilled, (state, action) => {
-      if (action.payload) state.detail = action.payload
-    })
-    builder.addCase(fetchPosmDetailShots.fulfilled, (state, action) => {
-      if (action.payload) state.shots = action.payload
-    })
-  },
+  // extraReducers(builder) {
+  //   builder.addCase(fetchPosmShotDetail.fulfilled, (state, action) => {
+  //     if (action.payload) state.detail = action.payload
+  //   })
+  //   builder.addCase(fetchPosmDetailShots.fulfilled, (state, action) => {
+  //     if (action.payload) state.shots = action.payload
+  //   })
+  // },
 })
 
 export const { update: updatePosmShot, reset: resetPosmShot } =

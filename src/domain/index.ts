@@ -106,6 +106,7 @@ export interface IPosmShot extends IPosmShotSnap {
   img_id: string
   img_url: string
   thumbnail_url: string
+  crop_url: string
   visit_date: string
   store_city: string
   store_state_or_province: string
