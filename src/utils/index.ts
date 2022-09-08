@@ -1,4 +1,5 @@
 import { IStoreDetail } from '../domain'
+import { PositionType, RectType } from '../domain/shape'
 
 export const parseStoreAddress = (store?: IStoreDetail) => {
   if (!store) return ''
@@ -17,3 +18,10 @@ export const removeEmptyProps = <T extends Record<string, any>>(
 }
 
 export const date2Month = (date: string) => date.slice(0, 7)
+
+export const twoPoint2Rect = ([l, t, r, b]: PositionType): RectType => [
+  l,
+  t,
+  r - l,
+  b - t,
+]
