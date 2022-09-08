@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import { ImageMaskWindow } from '../../components/imageMaskWindow'
 import { Slider } from '../../components/slider'
@@ -8,6 +8,7 @@ import {
   selectPosmShotIndex,
   selectPosmShots,
 } from '../../store/posmShotSlice'
+import { twoPoint2Rect } from '../../utils'
 
 const PREFIX = 'PosmShotDetailLeft'
 
@@ -18,6 +19,10 @@ export const PosmShotDetailLeft: React.FC<{
   const detail = useSelector(selectPosmShotDetail)
   const shots = useSelector(selectPosmShots)
   const index = useSelector(selectPosmShotIndex)
+
+  const rects = useMemo(() => {
+    return detail?.posmshots?.map((p) => twoPoint2Rect(p.position)) || []
+  }, [detail?.posmshots])
 
   // useEffect(() => {
   //   dispatch(fetchPosmDetailShots() as any)
@@ -33,10 +38,11 @@ export const PosmShotDetailLeft: React.FC<{
           <ImageMaskWindow
             // src={[detail.thumbnail_url, detail.img_url]}
             src={[detail.img_url]}
-            rectangles={detail.posmshots?.map((p) => p.position) || []}
+            // rectangles={detail.posmshots?.map((p) => p.position) || []}
+            rectangles={rects}
             className={`${PREFIX}-Window`}
-            mask={false}
-            mode="spot"
+            mask={true}
+            mode="box"
             drawing={true}
           />
         )}
