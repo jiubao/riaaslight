@@ -25,6 +25,7 @@ interface IProps {
   mask?: boolean
   mode?: 'box' | 'spot'
   drawing?: boolean
+  actives?: number[]
 }
 
 const PREFIX = 'ImageMaskWindow'
@@ -37,6 +38,7 @@ export const ImageMaskWindow: React.FC<PropsWithClassName<IProps>> = React.memo(
     mask = true,
     mode = 'box',
     drawing = true,
+    actives = [],
   }) => {
     const [loaded, setLoaded] = useState(false)
     const [image, setImage] = useState<HTMLImageElement>()
@@ -47,6 +49,8 @@ export const ImageMaskWindow: React.FC<PropsWithClassName<IProps>> = React.memo(
 
     const [wrapStyle, setWrapStyle] = useState<CSSProperties>()
     const [zoomStyle, setZoomStyle] = useState<CSSProperties>()
+    const [zoom, setZoom] = useState(1)
+    // const zoomRef = useRef(1)
 
     const setStyle = useCallback(
       (iw: number, ih: number, dw: number, dh: number) => {
@@ -83,6 +87,10 @@ export const ImageMaskWindow: React.FC<PropsWithClassName<IProps>> = React.memo(
 
           zoom = [dw / iw, 0, 0, dw / iw, 0, 0] as TransformMatrix2D
         }
+        // zoomRef.current = zoom[0]
+        setZoom(zoom[0])
+
+        console.log('zoom: ', zoom)
 
         setZoomStyle({
           width: `${iw}px`,
@@ -159,6 +167,10 @@ export const ImageMaskWindow: React.FC<PropsWithClassName<IProps>> = React.memo(
                       image={image as HTMLImageElement}
                       // rect={JSON.stringify(rect)}
                       rect={rect}
+                      zoom={zoom}
+                      // stroke={2/zoom}
+                      active={actives.indexOf(index) >= 0}
+                      // active={false}
                     />
                   ))}
                 </div>

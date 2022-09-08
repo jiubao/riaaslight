@@ -7,6 +7,8 @@ interface IProps {
   rect: RectType
   // rect: string
   stroke?: IStroke
+  zoom: number
+  active: boolean
 }
 
 const PREFIX = 'ImageMaskWindow-SpotWindow'
@@ -14,7 +16,7 @@ const PREFIX = 'ImageMaskWindow-SpotWindow'
 // const size = 30
 
 export const SpotWindow: React.FC<IProps> = React.memo<IProps>(
-  ({ image, rect, stroke = { size: 8, color: '#ffffff' } }) => {
+  ({ image, rect, zoom, stroke = { size: 8, color: '#ffffff' }, active }) => {
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const helperRef = useRef<CanvasHelper | null>(null)
 
@@ -47,7 +49,7 @@ export const SpotWindow: React.FC<IProps> = React.memo<IProps>(
           top - size
         }px, 0)`
       }
-    }, [image, rect, stroke])
+    }, [image, rect])
 
     return <canvas ref={canvasRef} className={PREFIX} />
   }

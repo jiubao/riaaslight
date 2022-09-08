@@ -7,12 +7,14 @@ interface IProps {
   rect: RectType
   // rect: string
   stroke?: IStroke
+  zoom: number
+  active: boolean
 }
 
 const PREFIX = 'ImageMaskWindow-Window'
 
 export const MaskWindow: React.FC<IProps> = React.memo<IProps>(
-  ({ image, rect, stroke = { size: 3, color: '#ffffff' } }) => {
+  ({ image, rect, zoom, stroke = { size: 50, color: '#ffffff' }, active }) => {
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const helperRef = useRef<CanvasHelper | null>(null)
 
@@ -23,12 +25,17 @@ export const MaskWindow: React.FC<IProps> = React.memo<IProps>(
 
         const { naturalWidth, naturalHeight } = image
         // const [x, y, w, h] = JSON.parse(rect) as RectType
+        const size = 2 / zoom
         const [x, y, w, h] = rect
-        const { size, color } = stroke
+        let { color } = stroke
+        if (active) color = '#FFA800'
         const left = x * naturalWidth
         const top = y * naturalHeight
         const width = w * naturalWidth
         const height = h * naturalHeight
+        // naturalWidth > naturalHeight
+        //   ? naturalWidth / 400
+        //   : naturalHeight / 300
         canvas.width = width
         canvas.height = height
         helper.drawImage(image, [left, top, width, height])
@@ -37,7 +44,7 @@ export const MaskWindow: React.FC<IProps> = React.memo<IProps>(
           top - size
         }px, 0)`
       }
-    }, [image, rect, stroke])
+    }, [active, image, rect, stroke, zoom])
 
     return <canvas ref={canvasRef} className={PREFIX} />
   }

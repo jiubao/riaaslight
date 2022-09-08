@@ -44,6 +44,10 @@ export const PosmShotDetailLeft: React.FC<{
             mask={true}
             mode="box"
             drawing={true}
+            actives={[
+              detail.posmshots.findIndex((s) => s.id === shots[index].id),
+            ]}
+            // actives={[detail.posmshots.]}
           />
         )}
       </div>
