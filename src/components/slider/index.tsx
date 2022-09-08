@@ -3,59 +3,70 @@ import React, { useEffect, useState } from 'react'
 import './index.scss'
 
 interface IProps {
-  srcs: string[]
+  total: number
   index: number
-  onClick?: (index: number) => void
   size?: number
+  children: ({
+    index,
+    active,
+  }: {
+    index: number
+    active: boolean
+  }) => React.ReactNode
 }
 
 const PREFIX = 'Slider'
 
 export const Slider: React.FC<IProps> = ({
-  srcs,
+  total,
   index,
-  onClick,
   size = 7,
+  children,
 }) => {
-  const [partial, setPartial] = useState<string[]>([])
-  const [current, setCurrent] = useState(-1)
+  const [current, setCurrent] = useState(0)
+  const [start, setStart] = useState(0)
+  const [end, setEnd] = useState(0)
   useEffect(() => {
-    const total = srcs.length
     if (total < size) {
-      setPartial(srcs)
+      setStart(0)
+      setEnd(total - 1)
       setCurrent(index)
     } else {
       const middle = ~~(size / 2)
-      let start = index - middle
       if (index < middle) {
-        start = 0
+        setStart(0)
+        setEnd(size - 1)
+        setCurrent(index)
       } else if (index + middle >= total) {
-        start = total - size
+        setStart(total - size)
+        setEnd(total - 1)
+        setCurrent(size - (total - index))
+      } else {
+        const s = index - middle
+        setStart(s)
+        setEnd(s + size - 1)
+        setCurrent(middle)
       }
-      const next = srcs.slice(start, start + size)
-      setPartial(next)
-      setCurrent(next.indexOf(srcs[index]))
     }
-  }, [srcs, index, size])
+  }, [index, size, total])
 
-  const handleClick = (src: string) => {
-    onClick?.(srcs.indexOf(src))
-  }
+  if (index < 0) return null
 
   return (
     <div className={PREFIX}>
-      {partial.map((src, index) => (
-        <div key={index} className={`${PREFIX}-item`}>
-          <div
-            onClick={() => handleClick(src)}
-            className={classNames(`${PREFIX}-wrap`, {
-              'is-active': index === current,
-            })}
-          >
-            <img src={src} alt="" />
+      {Array(end - start + 1)
+        .fill(1)
+        .map((_, i) => (
+          <div key={i} className={`${PREFIX}-item`}>
+            <div
+              className={classNames(`${PREFIX}-wrap`, {
+                'is-active': i === current,
+              })}
+            >
+              {children({ index: i + start, active: i === current })}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
     </div>
   )
 }

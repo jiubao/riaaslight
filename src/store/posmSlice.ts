@@ -125,3 +125,5 @@ export const selectPosmShotsGroup = (state: RootState) => {
 export const selectHasNextShots = (state: RootState) => {
   return state.posm.hasNextShots
 }
+
+export const selectPosmShots = (state: RootState) => state.posm.shots

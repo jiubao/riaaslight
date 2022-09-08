@@ -1,6 +1,6 @@
+import { IPrice } from '../../../../domain'
 let isReverse = false
 let showLabel = true
-import { IPrice } from '../../../../domain'
 export function getOption(
   source: { [key: string]: IPrice },
   color: string | null

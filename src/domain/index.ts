@@ -88,20 +88,29 @@ export interface IShelfShotDetail extends IShelfShot {
   survey: string
 }
 
-export interface IPosmShot extends IDocument {
-  store_id: number
-  retailer_id: number
+export interface IPosmShotSnap extends IDocument {
   category_id: number
   brand_id: number
   posm_internal_id: number
   posm_name: string
+  position: PositionType
+}
+
+export interface IPosmShot extends IPosmShotSnap {
+  store_id: number
+  retailer_id: number
+  // category_id: number
+  // brand_id: number
+  // posm_internal_id: number
+  // posm_name: string
   img_id: string
   img_url: string
   thumbnail_url: string
+  crop_url: string
   visit_date: string
   store_city: string
   store_state_or_province: string
-  position: PositionType
+  // position: PositionType
 }
 
 export interface IPosmShotRequest extends IPaginationRequest {
@@ -109,7 +118,7 @@ export interface IPosmShotRequest extends IPaginationRequest {
   category?: number
   retailer?: number | ''
   region?: string
-  store_id?: string
+  store_id?: number
 }
 
 // export type RegionType = 'NA' | 'SEA'
@@ -142,4 +151,13 @@ export interface IPriceMap {
   [key: string]: {
     [data: string]: IPrice
   }
+}
+export interface IPosmShotDetail {
+  store_id: number
+  retailer_id: number
+  img_id: string
+  img_url: string
+  thumbnail_url: string
+  visit_date: string
+  posmshots: IPosmShotSnap[]
 }

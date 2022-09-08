@@ -1,0 +1,70 @@
+@import '../../styles/base.scss';
+
+.PosmShotDetail {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  &-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    cursor: pointer;
+  }
+
+  &Right {
+    height: 100%;
+    padding: 64px 20px;
+    // border: solid 1px red;
+    &-title {
+      font-size: 14px;
+      color: #808080;
+      @include baseFont;
+      margin-bottom: 14px;
+    }
+  }
+
+  &Left {
+    height: 100%;
+
+    .swiper-slide {
+      background-size: cover;
+      background-position: center;
+    }
+
+    &-mainSwiper {
+      height: 80%;
+      width: 100%;
+      background-color: #666;
+      position: relative;
+    }
+
+    &-thumbSwiper {
+      height: 20%;
+      box-sizing: border-box;
+      // padding: 10px 0;
+
+      .swiper-slide {
+        width: 25%;
+        height: 100%;
+        opacity: 0.4;
+      }
+
+      .swiper-slide-thumb-active {
+        opacity: 1;
+      }
+    }
+
+
+    .swiper-slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    &-Window {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

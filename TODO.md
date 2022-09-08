@@ -1,4 +1,7 @@
 # ISSUES
+- rog list, rog detail cache
+- rog map: retailer call servcie
+- rog map: category no select means all
 - sort by brand count not work
 - new brand/retailer logos
 - rog detail - pagination
