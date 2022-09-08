@@ -22,7 +22,7 @@ export function getOption(
       color: '#86909C',
       fontWeight: 600,
       align: 'right',
-      padding: [0, 38, 30, 0],
+      padding: [0, 25, 30, 0],
       fontSize: 14,
       fontFamily: 'PingFang SC',
     },
@@ -32,7 +32,7 @@ export function getOption(
       color: '#86909C',
       fontWeight: 600,
       fontSize: 14,
-      margin: 38,
+      margin: 30,
       fontFamily: 'PingFang SC',
     },
     splitLine: {
@@ -96,8 +96,8 @@ export function getOption(
       },
     },
     grid: {
-      left: 60,
-      right: 60,
+      left: 40,
+      right: 18,
       bottom: 60,
       top: 80,
       containLabel: true,

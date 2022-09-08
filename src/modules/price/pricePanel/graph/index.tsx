@@ -1,4 +1,4 @@
-import { FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material'
+import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import cls from 'classnames'
 import ReactECharts from 'echarts-for-react'
 import React, { useEffect, useMemo, useState } from 'react'
@@ -11,8 +11,11 @@ import {
 import './index.scss'
 
 import { createSelector } from 'reselect'
+import { PNGIcon } from '../../../../components/icons/pngIcon'
 import { IRetailer } from '../../../../domain'
+import { PngIconType } from '../../../../domain/icon'
 import { getOption } from './util'
+
 const PREFIX = 'PriceGraph'
 interface IProps {
   className?: string
@@ -57,15 +60,38 @@ const PriceGraph: React.FC<IProps> = React.memo(function PriceGraph({
   }, [retailerList, retailerMap])
   return (
     <div className={cls(`${PREFIX}`, className)}>
-      <FormControl sx={{ m: 1, width: 162, marginLeft: 2 }} size="small">
-        <Select id="demo-select-small" value={value} onChange={handleChange}>
-          {retailerOptions.map((item) => (
-            <MenuItem key={item.value} value={item.value}>
-              {item.label}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      <Select
+        className={`${PREFIX}-select`}
+        size="small"
+        value={value}
+        onChange={handleChange}
+        renderValue={(val) => {
+          const retailer = retailerMap[val]
+          return (
+            <div className={`${PREFIX}-select-value`}>
+              <PNGIcon
+                className={`${PREFIX}-icon`}
+                name={retailer.retailer_name}
+                type={PngIconType.Retailer}
+              />
+              <span className={`${PREFIX}-select-value-text`}>
+                {retailer.retailer_name || value}
+              </span>
+            </div>
+          )
+        }}
+      >
+        {retailerOptions.map((item) => (
+          <MenuItem key={item.value} value={item.value}>
+            <PNGIcon
+              className={`${PREFIX}-icon`}
+              name={item.label}
+              type={PngIconType.Retailer}
+            />
+            {item.label}
+          </MenuItem>
+        ))}
+      </Select>
       <div className={`${PREFIX}-content`}>
         {options && (
           <ReactECharts

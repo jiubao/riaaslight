@@ -2,7 +2,18 @@
 .PriceSearch {
   margin: 12px 22px;
   height: 64px;
-
+  display: flex;
+  align-items: center;
   background: #f1f2f7;
+  padding: 0 19px;
   border-radius: 8px;
+  &-category {
+    margin-left: 16px;
+    background-color: white;
+    width: 220px;
+  }
+  &-country {
+    background-color: white;
+    width: 140px;
+  }
 }

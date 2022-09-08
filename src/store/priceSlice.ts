@@ -35,7 +35,7 @@ const initialState: IState = {
   noMoreSku: false,
   searchParams: {
     start: 0,
-    limit: 50,
+    limit: 100,
     category: 'All',
     country: 'All',
   },
@@ -122,13 +122,16 @@ export const fetchPriceMap = createAsyncThunk(
         dateList.push(...dates)
       })
       dateList = union(dateList)
+      const retailerList = Object.keys(res)
       api.dispatch(
         updatePrice({
           dateList,
           skuInfo,
           loading: false,
           priceMap: res,
-          retailerList: Object.keys(res),
+          retailerList,
+          leftRetailer: retailerList[0] || '',
+          rightRetailer: retailerList[1] || retailerList[0] || '',
         })
       )
       api.dispatch(updateSelectedDate(dateList[dateList.length - 1]))

@@ -74,13 +74,15 @@ function SkuCard<T extends WaterFallDataItem>(props: IProps<T>) {
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <img
-        className={cls(`${PREFIX}-img`, { hidden: !proxyUrl })}
-        src={proxyUrl}
-        alt=""
-      />
+      <div className={`${PREFIX}-img-box`}>
+        <img
+          className={cls(`${PREFIX}-img`, { hidden: !proxyUrl })}
+          src={proxyUrl}
+          alt=""
+        />
+      </div>
       {detailVisible && (
-        <div className={`${PREFIX}-detail`}>
+        <div className={`${PREFIX}-detail`} onClick={goDetail}>
           <div ref={detailRef} className={`${PREFIX}-detailContent`}>
             {skuNameList.map((i, index) => (
               <span className="text" key={index}>
@@ -91,9 +93,7 @@ function SkuCard<T extends WaterFallDataItem>(props: IProps<T>) {
               ...
             </span>
           </div>
-          <div className={`${PREFIX}-detailFooter`} onClick={goDetail}>
-            {'Details >'}
-          </div>
+          <div className={`${PREFIX}-detailFooter`}>{'Details >'}</div>
         </div>
       )}
     </div>

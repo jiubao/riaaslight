@@ -1,4 +1,4 @@
-import { FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material'
+import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import cls from 'classnames'
 import React, { useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -82,32 +82,30 @@ const PriceSearch: React.FC<IProps> = function PriceSearch(props) {
 
   return (
     <div className={cls(`${PREFIX}`, className)}>
-      <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-        <Select
-          id="demo-select-small"
-          value={params.country}
-          onChange={handleCountryChange}
-        >
-          {countryOptions.map((item) => (
-            <MenuItem key={item.value} value={item.value}>
-              {item.label}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-        <Select
-          id="demo-select-small"
-          value={params.category}
-          onChange={handleCategoryChange}
-        >
-          {categoryOptions.map((item) => (
-            <MenuItem key={item.value} value={item.value}>
-              {item.label}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      <Select
+        className={`${PREFIX}-country`}
+        value={params.country}
+        size="small"
+        onChange={handleCountryChange}
+      >
+        {countryOptions.map((item) => (
+          <MenuItem key={item.value} value={item.value}>
+            {item.label}
+          </MenuItem>
+        ))}
+      </Select>
+      <Select
+        className={`${PREFIX}-category`}
+        size="small"
+        value={params.category}
+        onChange={handleCategoryChange}
+      >
+        {categoryOptions.map((item) => (
+          <MenuItem key={item.value} value={item.value}>
+            {item.label}
+          </MenuItem>
+        ))}
+      </Select>
     </div>
   )
 }

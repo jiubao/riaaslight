@@ -1,11 +1,5 @@
 import CloseIcon from '@mui/icons-material/Close'
-import {
-  FormControl,
-  IconButton,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-} from '@mui/material'
+import { IconButton, MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import cls from 'classnames'
 import { pick } from 'lodash'
 import React, { useCallback, useEffect, useMemo } from 'react'
@@ -112,19 +106,18 @@ const PricePanel: React.FC<IProps> = React.memo(function PricePanel(props) {
             <div className="title">{skuInfo?.sku_name}</div>
             <div className="date">
               <span className="label">Price</span>
-              <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                <Select
-                  id="demo-select-small"
-                  value={selectedDate}
-                  onChange={handleDateChange}
-                >
-                  {dateList.map((item) => (
-                    <MenuItem key={item} value={item}>
-                      {item}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+              <Select
+                className={`${PREFIX}-date-select`}
+                size="small"
+                value={selectedDate}
+                onChange={handleDateChange}
+              >
+                {dateList.map((item) => (
+                  <MenuItem key={item} value={item}>
+                    {item}
+                  </MenuItem>
+                ))}
+              </Select>
             </div>
             <div className={`${PREFIX}-price-list`}>
               {priceItemList.map((item) => (
@@ -137,7 +130,7 @@ const PricePanel: React.FC<IProps> = React.memo(function PricePanel(props) {
           </div>
         </div>
         <div className={`${PREFIX}-trend`}>
-          <span className="label">Price</span>
+          <span className="label">Price Trends</span>
           <div className={`${PREFIX}-trend-content`}>
             <PriceGraph
               value={leftRetailer}
