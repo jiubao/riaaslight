@@ -1,8 +1,8 @@
 import { HttpService } from '.'
 import { BASE_SERVICE_URI } from '../constants'
 import { BASE_AUTH_URI } from '../constants'
+import { IUser } from '../domain'
 import { IAuthToken, ILinkedinResponse } from '../domain/auth'
-
 class AuthService {
   linkedinCallback(code: string) {
     return HttpService.get<ILinkedinResponse>(
@@ -18,6 +18,9 @@ class AuthService {
       client_secret:
         'xJ69gLGKFS4D4l8rukGt1NhXO5zyCPbPKHqvXb6ps6OKEfeTSzhJwzXYQD7UTT3Dj1qNbKgDZfdnybWQBWjr0uhfn85rz9LkAwnBlskaqNyIyIm1CJU9JZw2BDbg0nDS',
     })
+  }
+  user() {
+    return HttpService.get<IUser>(`${BASE_SERVICE_URI}/users/current`)
   }
 }
 

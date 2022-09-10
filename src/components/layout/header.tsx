@@ -6,6 +6,7 @@ import AccessAlarmIcon from '@mui/icons-material/AccessAlarm'
 import LocalAtmIcon from '@mui/icons-material/LocalAtm'
 import AnchorIcon from '@mui/icons-material/Anchor'
 import { useMatch } from 'react-router-dom'
+import { User } from './user'
 
 const PREFIX = 'Header'
 
@@ -47,6 +48,8 @@ export const MainHeader: React.FC = () => {
         to="/price"
         className={`${PREFIX}-menu`}
       />
+      <div className={`${PREFIX}-space`}></div>
+      <User />
     </div>
   )
 }

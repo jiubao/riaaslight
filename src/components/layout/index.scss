@@ -33,7 +33,8 @@
   );
 
   &-logo {
-    flex: 1 1;
+    flex: 0 0;
+    padding-right: 30px;
 
     svg {
       width: 135px;
@@ -65,5 +66,9 @@
     }
 
     @include baseFont;
+  }
+
+  &-space {
+    flex: 1 1;
   }
 }
