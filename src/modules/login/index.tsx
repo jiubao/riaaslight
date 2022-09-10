@@ -36,7 +36,7 @@ export const Login: React.FC = () => {
     clientId: LINKEDIN_CLIENTID,
     redirectUri,
     onSuccess: async (code) => {
-      console.log(code)
+      // console.log(code)
       setLoading(true)
       try {
         const linkedInRes = await authService.linkedinCallback(
