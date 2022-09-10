@@ -1,0 +1,69 @@
+$prefix: 'SkuCard';
+
+.#{$prefix} {
+  position: relative;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #eeeeee;
+  box-shadow: 0px 4px 4px 0px #eeeeee;
+  border-radius: 8px;
+  padding: 12px 8px;
+  &.active {
+    .#{$prefix}-footer {
+      display: block;
+    }
+  }
+  &-img-box {
+    height: 50%;
+  }
+  &-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    &.hidden {
+      display: none;
+    }
+  }
+  &-detail {
+    margin-top: 5px;
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    height: 2px;
+    font-family: 'PingFang SC';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 10px;
+    line-height: 14px;
+    color: #000000;
+    white-space: pre-wrap;
+    .text {
+      font-size: 12px;
+    }
+    .replace {
+      position: absolute;
+      left: 10000px;
+    }
+  }
+  &-footer {
+    display: none;
+    position: absolute;
+    height: 30px;
+    background: #4fb0f0;
+    font-family: 'PingFang SC';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 0 0 8px 8px;
+    cursor: pointer;
+    color: #ffffff;
+  }
+}

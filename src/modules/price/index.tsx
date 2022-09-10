@@ -10,7 +10,7 @@ import {
   skuList,
   skuListLoadingSelector,
 } from '../../store/priceSlice'
-import Card from './card'
+import Card from './card2'
 import './index.scss'
 import PricePanel from './pricePanel'
 import Search from './search'
@@ -32,7 +32,7 @@ export const Price: React.FC<IProps> = ({ id }) => {
       return {
         ...item,
         width: 120,
-        height: 160,
+        height: 212,
         url: item.sku_cover_pic_url,
       }
     })
