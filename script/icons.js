@@ -9,9 +9,9 @@ const encode_path = (path, target) => {
     if (err) return 0;
 
     const result = files.reduce((arr, file) => {
-      const fileName = file.endsWith('.png') ? file.slice(0, file.length - 4) : file;
+      // const fileName = file.endsWith('.png') ? file.slice(0, file.length - 4) : file;
       arr.push({
-        name: fileName,
+        name: file,
         base64: encode_base64(`${path}/${file}`),
       })
       return arr;

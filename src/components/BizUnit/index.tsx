@@ -6,6 +6,7 @@ import './index.scss'
 interface IProps {
   id?: string
   text: string
+  icon?: string | null
   // base64?: string | null
   type?: PngIconType
   // pure?: boolean
@@ -17,6 +18,7 @@ const PREFIX = 'BizUnit'
 export const BizUnit: React.FC<IProps> = ({
   id,
   text,
+  icon,
   type,
   // pure = false,
   onClick,
@@ -26,7 +28,7 @@ export const BizUnit: React.FC<IProps> = ({
   }
   return (
     <div className={PREFIX} onClick={handleClick}>
-      {type && <PNGIcon name={text} type={type} />}
+      {type && <PNGIcon name={icon} type={type} />}
       <span>{text}</span>
     </div>
   )

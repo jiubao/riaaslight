@@ -10,6 +10,7 @@ import { LR } from '../../components/layout/lr'
 import { LogoIcon } from '../../components/icons'
 import { CommonModal } from '../../components/modal'
 import { CircularProgress } from '@mui/material'
+import bg from '../../assets/login.jpg'
 
 const PREFIX = 'Login'
 
@@ -17,10 +18,11 @@ const Left = () => {
   return (
     <div className={`${PREFIX}-left fulfilled`}>
       <img
-        src="https://s.cn.bing.net/th?id=OHR.MidAutumn2022_ZH-CN9825550508_1920x1080.jpg&rf=LaDigue_1920x1080.jpg"
+        // src="https://s.cn.bing.net/th?id=OHR.MidAutumn2022_ZH-CN9825550508_1920x1080.jpg&rf=LaDigue_1920x1080.jpg"
+        src={bg}
         alt=""
       />
-      <div className={`${PREFIX}-mask fulfilled`}></div>
+      {/* <div className={`${PREFIX}-mask fulfilled`}></div> */}
       <span className="center">ROG PICTURES UPDATE DAILY</span>
     </div>
   )

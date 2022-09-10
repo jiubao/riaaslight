@@ -37,6 +37,7 @@ export const BrandList: React.FC = () => {
                 <BizUnit
                   id={String(item.id)}
                   text={item.brand_name}
+                  icon={item.brand_icon}
                   type={PngIconType.Brand}
                 />
               </ToggleSelectorItem>
@@ -48,6 +49,7 @@ export const BrandList: React.FC = () => {
                   <BizUnit
                     id={String(item.id)}
                     text={item.brand_name}
+                    icon={item.brand_icon}
                     type={PngIconType.Brand}
                   />
                 </ToggleSelectorItem>

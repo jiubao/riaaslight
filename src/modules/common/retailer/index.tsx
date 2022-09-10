@@ -33,6 +33,7 @@ export const RetailerList: React.FC<IProps> = React.memo(
               <BizUnit
                 id={String(item.id)}
                 text={item.retailer_name}
+                icon={item.retailer_icon}
                 type={PngIconType.Retailer}
               />
             </ToggleSelectorItem>

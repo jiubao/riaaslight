@@ -6,7 +6,7 @@ import { PngIconType } from '../../domain/icon'
 import classNames from 'classnames'
 
 interface IProps {
-  name: string
+  name?: string | null
   type: PngIconType
 }
 
@@ -27,18 +27,15 @@ const IconHash = {
   [PngIconType.Retailer]: retailerHash,
 }
 
-// const getSrc = (name: string, type: PngIconType) => {
-//   switch (type) {
-//     case PngIconType.Retailer:
-//       return retailerHash
-//     case PngIconType.Brand:
-//     default:
-//       return brandHash
-//   }
-// }
+const getIcon = (type: PngIconType, name?: string | null) => {
+  return (
+    IconHash[type].get(name ?? 'Default.png') ??
+    IconHash[type].get('Default.png')
+  )
+}
 
 export const PNGIcon: React.FC<PropsWithClassName<IProps>> = ({
-  name,
+  name = 'Default.png',
   type,
   className,
 }) => {
@@ -46,7 +43,7 @@ export const PNGIcon: React.FC<PropsWithClassName<IProps>> = ({
     <img
       className={classNames(PREFIX, className)}
       alt=""
-      src={IconHash[type].get(name)}
+      src={getIcon(type, name)}
     />
   )
 }

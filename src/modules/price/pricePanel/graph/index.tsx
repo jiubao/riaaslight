@@ -62,6 +62,7 @@ const PriceGraph: React.FC<IProps> = React.memo(function PriceGraph({
       return {
         label: retailer.retailer_name || item,
         value: item,
+        icon: retailer.retailer_icon,
       }
     })
   }, [retailerList, retailerMap])
@@ -78,7 +79,7 @@ const PriceGraph: React.FC<IProps> = React.memo(function PriceGraph({
             <div className={`${PREFIX}-select-value`}>
               <PNGIcon
                 className={`${PREFIX}-icon`}
-                name={retailer?.retailer_name}
+                name={retailer?.retailer_icon}
                 type={PngIconType.Retailer}
               />
               <span className={`${PREFIX}-select-value-text`}>
@@ -92,7 +93,7 @@ const PriceGraph: React.FC<IProps> = React.memo(function PriceGraph({
           <MenuItem key={item.value} value={item.value}>
             <PNGIcon
               className={`${PREFIX}-icon`}
-              name={item.label}
+              name={item.icon}
               type={PngIconType.Retailer}
             />
             {item.label}

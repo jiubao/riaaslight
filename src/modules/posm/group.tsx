@@ -49,7 +49,7 @@ export const PosmShotGroup: React.FC<IProps> = ({ month, shots, onClick }) => {
               data-id={shot.retailer_id}
             >
               <PNGIcon
-                name={retailerHash[shot.retailer_id]?.retailer_name}
+                name={retailerHash[shot.retailer_id]?.retailer_icon}
                 type={PngIconType.Retailer}
               />
               {retailerHash[shot.retailer_id]?.retailer_name}

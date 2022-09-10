@@ -14,13 +14,13 @@ interface IProps {
 
 const PriceItem: React.FC<IProps> = React.memo(function PriceItem(props) {
   const { className, data } = props
-  const { retailer_name, min, max } = data
+  const { retailer_name, retailer_icon, min, max } = data
   return (
     <div className={cls(`${PREFIX}`, className)}>
       <div className={cls(`${PREFIX}-content`)}>
         <PNGIcon
           className={`${PREFIX}-icon`}
-          name={retailer_name}
+          name={retailer_icon}
           type={PngIconType.Retailer}
         />
         <span className={`${PREFIX}-title`}>{retailer_name}</span>
