@@ -79,7 +79,7 @@ function SkuCard<T extends WaterFallDataItem>(props: IProps<T>) {
         />
       </div>
       <div className={`${PREFIX}-detail`} ref={detailRef}>
-        {skuNameList.map((i, index) => (
+        {skuNameList.map((i: any, index: any) => (
           <span className="text" key={index}>
             {i}
           </span>
