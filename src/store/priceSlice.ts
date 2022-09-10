@@ -106,7 +106,6 @@ export const fetchSkuList = createAsyncThunk(
 export const fetchPriceMap = createAsyncThunk(
   'common/fetchPriceMap',
   async (skuInfo: ISku, api) => {
-    const state = api.getState() as RootState
     api.dispatch(
       updatePrice({
         loading: true,
@@ -117,7 +116,7 @@ export const fetchPriceMap = createAsyncThunk(
       // 获取可选月份
       let dateList: string[] = []
 
-      Object.keys(res || {}).map((key) => {
+      Object.keys(res || {}).forEach((key) => {
         const dates = Object.keys(res[key])
         dateList.push(...dates)
       })
@@ -128,7 +127,7 @@ export const fetchPriceMap = createAsyncThunk(
           dateList,
           skuInfo,
           loading: false,
-          priceMap: res,
+          priceMap: res || {},
           retailerList,
           leftRetailer: retailerList[0] || '',
           rightRetailer: retailerList[1] || retailerList[0] || '',

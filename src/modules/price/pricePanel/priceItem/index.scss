@@ -28,12 +28,14 @@
     width: 0;
     margin-right: 10px;
     text-overflow: ellipsis;
+    white-space: nowrap;
   }
   &-price {
     font-family: 'PingFang SC';
     font-style: normal;
     font-weight: 600;
     font-size: 18px;
+    min-width: 84px;
     line-height: 25px;
 
     color: #545e6b;

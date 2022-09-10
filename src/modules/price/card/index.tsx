@@ -62,7 +62,7 @@ function SkuCard<T extends WaterFallDataItem>(props: IProps<T>) {
       childSelector: `.text`,
       replaceRef: replaceRef,
     },
-    [detailVisible]
+    detailVisible
   )
   const goDetail = () => {
     props.showDetail(data)

@@ -1,6 +1,6 @@
+import { CircularProgress } from '@mui/material'
 import React from 'react'
 import './index.scss'
-
 const PREFIX = 'WaterFallLoadingRow'
 
 interface IProps {
@@ -13,7 +13,9 @@ const WaterFallLoadingRow: React.FC<IProps> = React.memo(
     const { style } = props
     return (
       <div style={style} className={`${PREFIX}-loading`}>
-        <span>Loading...</span>
+        <span>
+          <CircularProgress />
+        </span>
       </div>
     )
   }

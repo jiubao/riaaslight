@@ -12,7 +12,7 @@ interface IUseHideWhenChildExceedRow {
       childSelector: string
       replaceRef: React.RefObject<P>
     },
-    deps: any[]
+    dep: any
   ): void
 }
 
@@ -20,7 +20,7 @@ const DEFAULT_LEFT = '10000px'
 
 export const useHideWhenChildExceedRow: IUseHideWhenChildExceedRow = (
   { ref, maxRow, childSelector, replaceRef },
-  deps
+  dep
 ) => {
   useLayoutEffect(() => {
     if (ref.current && replaceRef.current) {
@@ -66,5 +66,5 @@ export const useHideWhenChildExceedRow: IUseHideWhenChildExceedRow = (
         replaceRef.current.style.left = DEFAULT_LEFT
       }
     }
-  }, [childSelector, maxRow, ref, replaceRef, ...deps])
+  }, [childSelector, maxRow, ref, replaceRef, dep])
 }

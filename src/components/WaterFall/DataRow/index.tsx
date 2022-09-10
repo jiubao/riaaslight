@@ -1,7 +1,7 @@
-import { IDataItem, WaterFallDataItem } from '../interface'
-import Card from '../Card'
-import React from 'react'
 import cls from 'classnames'
+import React from 'react'
+import Card from '../Card'
+import { IDataItem, WaterFallDataItem } from '../interface'
 import './index.scss'
 
 const PREFIX = 'WaterFallDataRow'
@@ -22,17 +22,7 @@ interface IProps {
 }
 
 const WaterFallDataRow = function WaterFallDataRow(props: IProps) {
-  const {
-    style,
-    index,
-    height,
-    data,
-    gutter,
-    selectedItem,
-    render,
-    onClickItem,
-  } = props
-  const { row, offsetLeft = 0, width = 0 } = selectedItem || {}
+  const { style, height, data, gutter, render, onClickItem } = props
 
   return (
     <div className={`${PREFIX}-row`} style={style}>

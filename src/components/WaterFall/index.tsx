@@ -224,7 +224,6 @@ const WaterFall = function WaterFall({
       updateSelectedItem(imgGrid)
     }
   }, [
-    columnCount,
     initDataByColumnCount,
     loading,
     noMoreData,

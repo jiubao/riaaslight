@@ -1,10 +1,13 @@
 import { IPrice } from '../../../../domain'
 let isReverse = false
 let showLabel = true
-export function getOption(
-  source: { [key: string]: IPrice },
+export function getOption(params: {
+  source: { [key: string]: IPrice }
   color: string | null
-) {
+  yMax: number
+  yMin: number
+}) {
+  const { source, color, yMax, yMin } = params
   let option
 
   const category = Object.keys(source)
@@ -18,6 +21,8 @@ export function getOption(
   let yAxis: any = {
     type: 'value',
     name: 'unit：$',
+    min: yMax === 0 ? null : yMin,
+    max: yMax === 0 ? null : yMax,
     nameTextStyle: {
       color: '#86909C',
       fontWeight: 600,
@@ -88,10 +93,6 @@ export function getOption(
           const range = item.data.range
           html += item.marker + range[0] + ' - ' + range[1] + '<br/>'
         })
-        const {
-          name,
-          data: { range },
-        } = params[0]
         return axisValue + '<br/>' + html
       },
     },
@@ -120,7 +121,7 @@ function createSeries(
   const { min, max, minLabel } = dataFormat(arr, name, isReverse)
 
   const maxPosition = isReverse ? 'right' : 'top'
-  const minPosition = isReverse ? 'left' : 'bottom'
+  // const minPosition = isReverse ? 'left' : 'bottom'
 
   newSeries = [
     {
@@ -131,12 +132,12 @@ function createSeries(
       },
       // 透明
       itemStyle: {
-        barBorderColor: 'rgba(0,0,0,0)',
+        borderColor: 'rgba(0,0,0,0)',
         color: 'rgba(0,0,0,0)',
       },
       emphasis: {
         itemStyle: {
-          barBorderColor: 'rgba(0,0,0,0)',
+          borderColor: 'rgba(0,0,0,0)',
           color: 'rgba(0,0,0,0)',
         },
       },

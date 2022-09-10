@@ -59,7 +59,8 @@ const PriceSearch: React.FC<IProps> = function PriceSearch(props) {
 
   useEffect(() => {
     dispatch(fetchSkuList(true) as any)
-  }, [])
+  }, [dispatch])
+
   const handleCategoryChange = (e: SelectChangeEvent<string>) => {
     dispatch(
       updateParams({
@@ -67,7 +68,6 @@ const PriceSearch: React.FC<IProps> = function PriceSearch(props) {
       })
     )
     dispatch(fetchSkuList(true) as any)
-    console.log(e.target.value)
   }
 
   const handleCountryChange = (e: SelectChangeEvent<string>) => {
@@ -77,7 +77,6 @@ const PriceSearch: React.FC<IProps> = function PriceSearch(props) {
       })
     )
     dispatch(fetchSkuList(true) as any)
-    console.log(e.target.value)
   }
 
   return (

@@ -8,6 +8,11 @@
     width: 33.3%;
   }
 }
+@media screen and (max-width: 1300px) {
+  .PricePanel-price-list-item {
+    width: 50%;
+  }
+}
 .PricePanel {
   position: fixed;
   top: 0;
@@ -23,7 +28,11 @@
   &-loading {
     position: absolute;
     background-color: white;
-    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 36px;
+    z-index: 1;
     bottom: 0;
     right: 0;
     left: 0;
@@ -40,8 +49,8 @@
     border-radius: 10px 10px 0 0;
     &-close.MuiButtonBase-root {
       position: absolute;
-      right: 10px;
-      top: 10px;
+      right: 6px;
+      top: 6px;
     }
   }
   &-price {

@@ -41,10 +41,9 @@ export const Price: React.FC<IProps> = ({ id }) => {
   useEffect(() => {
     dispatch(fetchRetailers() as any)
     dispatch(fetchCategories() as any)
-  }, [])
+  }, [dispatch])
 
   const onDynamicLoad = () => {
-    console.log('loadingnext')
     dispatch(fetchSkuList(false) as any)
   }
   const showDetail = (data: WaterFallDataItem & ISku) => {

@@ -20,6 +20,8 @@ const PREFIX = 'PriceGraph'
 interface IProps {
   className?: string
   value: string
+  yMax: number
+  yMin: number
   onChange?: (data: string) => void
 }
 const retailerMapSelector = createSelector(selectAllRetailers, (retailers) => {
@@ -32,6 +34,8 @@ const retailerMapSelector = createSelector(selectAllRetailers, (retailers) => {
 const PriceGraph: React.FC<IProps> = React.memo(function PriceGraph({
   value,
   onChange,
+  yMin,
+  yMax,
   className,
 }) {
   const retailerList = useSelector(retailerListSelector)
@@ -41,9 +45,12 @@ const PriceGraph: React.FC<IProps> = React.memo(function PriceGraph({
   useEffect(() => {
     if (priceMap && value && priceMap[value]) {
       const retailer = retailerMap[value]
-      setOptions(getOption(priceMap[value], retailer?.retailer_color))
+      const color = retailer?.retailer_color
+        ? '#' + retailer?.retailer_color
+        : ''
+      setOptions(getOption({ source: priceMap[value], color, yMax, yMin }))
     }
-  }, [value, priceMap, retailerMap])
+  }, [value, priceMap, yMin, yMax, retailerMap])
 
   const handleChange = (e: SelectChangeEvent<string>) => {
     onChange?.(e.target.value)
@@ -71,11 +78,11 @@ const PriceGraph: React.FC<IProps> = React.memo(function PriceGraph({
             <div className={`${PREFIX}-select-value`}>
               <PNGIcon
                 className={`${PREFIX}-icon`}
-                name={retailer.retailer_name}
+                name={retailer?.retailer_name}
                 type={PngIconType.Retailer}
               />
               <span className={`${PREFIX}-select-value-text`}>
-                {retailer.retailer_name || value}
+                {retailer?.retailer_name || value}
               </span>
             </div>
           )
