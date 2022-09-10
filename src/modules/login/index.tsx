@@ -26,18 +26,23 @@ const Left = () => {
   )
 }
 
+const redirectUri = `${window.location.origin}/linkedin`
+
 export const Login: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
   const { linkedInLogin } = useLinkedIn({
     clientId: LINKEDIN_CLIENTID,
-    redirectUri: `${window.location.origin}/linkedin`,
+    redirectUri,
     onSuccess: async (code) => {
       console.log(code)
       setLoading(true)
       try {
-        const linkedInRes = await authService.linkedinCallback(code)
+        const linkedInRes = await authService.linkedinCallback(
+          code,
+          redirectUri
+        )
         const authToken = await authService.convertToken(
           linkedInRes.access_token
         )

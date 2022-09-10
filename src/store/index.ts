@@ -6,6 +6,7 @@ import shelfReducer from './shelfSlice'
 import posmReducer from './posmSlice'
 import priceReducer from './priceSlice'
 import posmShotReducer from './posmShotSlice'
+import userReducer from './userSlice'
 
 const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
     posm: posmReducer,
     price: priceReducer,
     posmShot: posmShotReducer,
+    user: userReducer,
   },
 })
 

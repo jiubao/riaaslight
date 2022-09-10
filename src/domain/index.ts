@@ -161,3 +161,12 @@ export interface IPosmShotDetail {
   visit_date: string
   posmshots: IPosmShotSnap[]
 }
+
+export interface IUser {
+  avatar: {
+    small: string
+  }
+  email: string
+  first_name: string
+  last_name: string
+}
