@@ -8,9 +8,9 @@ import {
 import { PngIconType } from '../../../domain/icon'
 import {
   fetchStores,
+  resetRogBrand,
   selectRogBrands,
   selectSelectedBrandIds,
-  updateRog,
 } from '../../../store/rogSlice'
 
 const PREFIX = 'BrandList'
@@ -23,7 +23,7 @@ export const BrandList: React.FC = () => {
   const brands = useSelector(selectRogBrands)
   const brandIds = useSelector(selectSelectedBrandIds)
   const handleChange = (value: number[]) => {
-    dispatch(updateRog({ selectedBrandIds: value }))
+    dispatch(resetRogBrand({ selectedBrandIds: value }))
     dispatch(fetchStores() as any)
   }
 

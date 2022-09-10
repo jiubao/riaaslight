@@ -28,8 +28,11 @@ interface IProps {
 }
 
 const PREFIX = 'Rog'
-const CENTER = { lat: Coordinates.newyork[0], lng: Coordinates.newyork[1] }
-const DEFAULT_MAP_OPTIONS = { center: CENTER, zoom: 8 }
+const CENTER = {
+  lat: Coordinates.philippines[0],
+  lng: Coordinates.philippines[1],
+}
+const DEFAULT_MAP_OPTIONS = { center: CENTER, zoom: 6 }
 
 export const Rog: React.FC<IProps> = ({ id }) => {
   const dispatch = useDispatch()
@@ -109,9 +112,11 @@ export const Rog: React.FC<IProps> = ({ id }) => {
             ))}
           </Map>
         </MapWrapper>
-        <div className={`${PREFIX}-storeOnMap`}>
-          {storeDetail && <StoreInfo store={storeDetail} />}
-        </div>
+        {storeDetail && (
+          <div className={`${PREFIX}-storeOnMap`}>
+            <StoreInfo store={storeDetail} />
+          </div>
+        )}
       </>
     </LR>
   )

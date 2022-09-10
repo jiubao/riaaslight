@@ -27,10 +27,15 @@ export const StoreInfo: React.FC<IProps> = ({ store }) => {
         <img src={store.latest_thumbnail_url} alt="" />
       </div>
       <div className={`${PREFIX}-info`}>
-        <div className={`${PREFIX}-name textNoWrap`}>{store.store_name}</div>
-        <div className={`${PREFIX}-address flexMiddle textNoWrap`}>
+        <div className={`${PREFIX}-name textNoWrap`} title={store.store_name}>
+          {store.store_name}
+        </div>
+        <div
+          className={`${PREFIX}-address flexMiddle`}
+          title={parseStoreAddress(store)}
+        >
           <SvgIcon component={PlaceOutlinedIcon} fontSize="small" />
-          {parseStoreAddress(store)}
+          <span className="textNoWrap">{parseStoreAddress(store)}</span>
         </div>
         <div className={`${PREFIX}-date flexMiddle`}>
           <SvgIcon component={DateRangeIcon} fontSize="small" />

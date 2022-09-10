@@ -89,6 +89,28 @@ export const rogSlice = createSlice({
         ...action.payload,
       }
     },
+    resetCategory(state, action: PayloadAction<Partial<IState>>) {
+      state.selectedCategoryIds = action.payload.selectedCategoryIds || []
+      state.selectedBrandIds = []
+      state.storeDetail = undefined
+      state.stores = []
+      state.brands = []
+    },
+    resetBrand(state, action: PayloadAction<Partial<IState>>) {
+      // state.selectedCategoryIds = action.payload.selectedCategoryIds
+      state.selectedBrandIds = action.payload.selectedBrandIds || []
+      state.storeDetail = undefined
+      state.stores = []
+      // state.brands = []
+    },
+    resetRetailer(state, action: PayloadAction<Partial<IState>>) {
+      // state.selectedCategoryIds = action.payload.selectedCategoryIds
+      // state.selectedBrandIds = action.payload.selectedBrandIds
+      state.selectedRetailerIds = action.payload.selectedRetailerIds || []
+      state.storeDetail = undefined
+      state.stores = []
+      // state.brands = []
+    },
   },
   extraReducers(builder) {
     builder.addCase(fetchStores.fulfilled, (state, action) => {
@@ -103,7 +125,12 @@ export const rogSlice = createSlice({
   },
 })
 
-export const { update: updateRog } = rogSlice.actions
+export const {
+  update: updateRog,
+  resetCategory: resetRogCategory,
+  resetBrand: resetRogBrand,
+  resetRetailer: resetRogRetailer,
+} = rogSlice.actions
 
 export default rogSlice.reducer
 

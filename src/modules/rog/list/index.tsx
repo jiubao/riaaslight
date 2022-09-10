@@ -9,9 +9,10 @@ import {
 import {
   fetchBrands,
   fetchStores,
+  resetRogCategory,
+  resetRogRetailer,
   selectSelectedCategoryIds,
   selectSelectedRetailerIds,
-  updateRog,
 } from '../../../store/rogSlice'
 import { BrandList } from './brand'
 import { CategoryList } from '../../common/category'
@@ -31,20 +32,17 @@ export const RogList: React.FC<IProps> = ({ id }) => {
   const selectedRetailerIds = useSelector(selectSelectedRetailerIds)
 
   const handleRetailerChange = (value: number[]) => {
-    dispatch(updateRog({ selectedRetailerIds: value }))
+    dispatch(resetRogRetailer({ selectedRetailerIds: value }))
     dispatch(fetchStores() as any)
   }
 
   const handleCategoryChange = (value: number[]) => {
-    dispatch(
-      updateRog({
-        selectedCategoryIds: value,
-        brands: [],
-        selectedBrandIds: [],
-      })
-    )
-    value.length && dispatch(fetchBrands(value[0]) as any)
-    dispatch(fetchStores() as any)
+    dispatch(resetRogCategory({ selectedCategoryIds: value }))
+    // dispatch(updateRog({ selectedCategoryIds: value }))
+    if (value.length) {
+      dispatch(fetchBrands(value[0]) as any)
+      dispatch(fetchStores() as any)
+    }
   }
 
   return (
