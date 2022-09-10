@@ -22,6 +22,10 @@
     background-color: rgba(0, 0, 0, 0.5);
   }
 
+  &-loading {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+
   &-right {
     flex-direction: column;
     background: linear-gradient(280.89deg, #00B4ED 1.75%, #00A0E9 41.71%, #0CA4D5 80.89%, #51A2FF 93.59%);

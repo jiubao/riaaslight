@@ -16,7 +16,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 import { fetchShelf } from '../../store/shelfSlice'
 import { ShelfDetail } from '../shelf'
 import { useIntersection } from '../../hooks/useIntersection'
-import { Modal } from '../../components/modal'
+import { BUModal } from '../../components/modal'
 
 interface IProps {
   id?: string
@@ -118,9 +118,9 @@ export const StoreImages: React.FC<IProps> = ({ id }) => {
       </Drawer> */}
 
       {detailVisible && (
-        <Modal>
+        <BUModal>
           <ShelfDetail onClose={handleCloseDetail} />
-        </Modal>
+        </BUModal>
       )}
     </div>
   )

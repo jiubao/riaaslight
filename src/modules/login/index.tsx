@@ -8,6 +8,8 @@ import store from 'store'
 import { useNavigate } from 'react-router-dom'
 import { LR } from '../../components/layout/lr'
 import { LogoIcon } from '../../components/icons'
+import { CommonModal } from '../../components/modal'
+import { CircularProgress } from '@mui/material'
 
 const PREFIX = 'Login'
 
@@ -25,6 +27,7 @@ const Left = () => {
 }
 
 export const Login: React.FC = () => {
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
   const { linkedInLogin } = useLinkedIn({
@@ -32,10 +35,17 @@ export const Login: React.FC = () => {
     redirectUri: `${window.location.origin}/linkedin`,
     onSuccess: async (code) => {
       console.log(code)
-      const linkedInRes = await authService.linkedinCallback(code)
-      const authToken = await authService.convertToken(linkedInRes.access_token)
-      store.set('access_token', authToken.access_token)
-      navigate('/')
+      setLoading(true)
+      try {
+        const linkedInRes = await authService.linkedinCallback(code)
+        const authToken = await authService.convertToken(
+          linkedInRes.access_token
+        )
+        store.set('access_token', authToken.access_token)
+        navigate('/')
+      } finally {
+        setLoading(false)
+      }
     },
     scope: 'r_emailaddress r_liteprofile',
     onError: (error) => {
@@ -56,6 +66,14 @@ export const Login: React.FC = () => {
           style={{ maxWidth: '180px', cursor: 'pointer' }}
         />
       </div>
+
+      {loading && (
+        <CommonModal>
+          <div className={`${PREFIX}-loading fulfilled flexCore`}>
+            <CircularProgress />
+          </div>
+        </CommonModal>
+      )}
     </LR>
   )
 }

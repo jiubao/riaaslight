@@ -4,7 +4,7 @@ import { isArray } from 'lodash'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Measure from 'react-measure'
 import { useDispatch, useSelector } from 'react-redux'
-import { Modal } from '../../components/modal'
+import { BUModal } from '../../components/modal'
 import { ITimelineItem, Timeline } from '../../components/timeline'
 import { useTimelineScrollItems } from '../../components/timeline/hooks'
 import { IPosmShot } from '../../domain'
@@ -107,9 +107,9 @@ export const Posm: React.FC = () => {
         )}
       </Measure>
       {detailVisible && selectedShot && (
-        <Modal>
+        <BUModal>
           <PosmShotDetail shot={selectedShot} onClose={handleCloseDetail} />
-        </Modal>
+        </BUModal>
       )}
     </div>
   )

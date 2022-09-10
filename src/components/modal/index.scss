@@ -1,11 +1,15 @@
-.BUModal {
-  position: fixed;
+.Modal {
   z-index: 99;
-  top: 90px;
+  position: fixed;
+  top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: #fff;
-  border-radius: 20px 20px 0 0;
-  box-shadow: 0px -8px 13px rgba(0, 0, 0, 0.25);
+
+  &BU {
+    top: 90px;
+    background-color: #fff;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0px -8px 13px rgba(0, 0, 0, 0.25);
+  }
 }
