@@ -55,7 +55,7 @@ export const Rog: React.FC<IProps> = ({ id }) => {
   }, [dispatch])
 
   useEffect(() => {
-    dispatch(fetchStores({}) as any)
+    dispatch(fetchStores() as any)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentBounds])
 

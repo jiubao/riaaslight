@@ -8,6 +8,7 @@ import {
 } from '../../../store/commonSlice'
 import {
   fetchBrands,
+  fetchStores,
   selectSelectedCategoryIds,
   selectSelectedRetailerIds,
   updateRog,
@@ -15,7 +16,6 @@ import {
 import { BrandList } from './brand'
 import { CategoryList } from '../../common/category'
 import { RetailerList } from '../../common/retailer'
-// import { RetailerList } from './retailer'
 
 interface IProps {
   id?: string
@@ -32,6 +32,7 @@ export const RogList: React.FC<IProps> = ({ id }) => {
 
   const handleRetailerChange = (value: number[]) => {
     dispatch(updateRog({ selectedRetailerIds: value }))
+    dispatch(fetchStores() as any)
   }
 
   const handleCategoryChange = (value: number[]) => {
@@ -42,11 +43,8 @@ export const RogList: React.FC<IProps> = ({ id }) => {
         selectedBrandIds: [],
       })
     )
-    if (value.length) {
-      dispatch(fetchBrands(value[0]) as any)
-    } else {
-      dispatch(updateRog({ brands: [] }))
-    }
+    value.length && dispatch(fetchBrands(value[0]) as any)
+    dispatch(fetchStores() as any)
   }
 
   return (

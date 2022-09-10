@@ -4,7 +4,6 @@ import { isNil } from 'lodash'
 export const shrinkInterceptor = (instance: AxiosInstance) => {
   instance.interceptors.request.use((config: AxiosRequestConfig) => {
     const params = config?.params
-    console.log(params)
     if (params) {
       config.params = Object.keys(params).reduce<any>((result, key) => {
         const item = params[key]
@@ -13,7 +12,6 @@ export const shrinkInterceptor = (instance: AxiosInstance) => {
         }
         return result
       }, {})
-      console.log(config.params)
     }
     return config
   })

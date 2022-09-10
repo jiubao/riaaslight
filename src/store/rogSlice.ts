@@ -36,12 +36,28 @@ export const fetchBrands = createAsyncThunk(
 
 export const fetchStores = createAsyncThunk(
   'common/fetchStores',
-  async (params: Partial<IStoreRequest>, api) => {
-    const state = api.getState() as RootState
-    const bounds = state.rog.bounds
-    const baseParams: IStoreRequest = {
-      brand: state.rog.selectedBrandIds.join(','),
-      category: state.rog.selectedCategoryIds.join(','),
+  async (_, { getState, dispatch }) => {
+    const state = getState() as RootState
+    const {
+      bounds,
+      selectedBrandIds,
+      selectedCategoryIds,
+      selectedRetailerIds,
+    } = state.rog
+
+    if (selectedCategoryIds.length === 0) {
+      dispatch(
+        updateRog({
+          selectedBrandIds: [],
+        })
+      )
+      return []
+    }
+
+    const query: IStoreRequest = {
+      retailer: selectedRetailerIds.join(','),
+      brand: selectedBrandIds.join(','),
+      category: selectedCategoryIds.join(','),
       field_set,
       location_range: bounds
         ? `${bounds.ne.lat},${bounds.ne.lng},${bounds.sw.lat},${bounds.sw.lng}`
@@ -50,10 +66,9 @@ export const fetchStores = createAsyncThunk(
       limit: 5000,
     }
 
-    const query = { ...baseParams, ...params }
-    if (!query.brand || !query.category || !query.location_range)
-      return Promise.resolve([])
-    return await storeService.get({ ...baseParams, ...params })
+    if (!query.location_range) return Promise.resolve([])
+
+    return await storeService.get(query)
   }
 )
 

@@ -6,12 +6,10 @@ import {
   ToggleSelectorItem,
 } from '../../../components/toggleSelector'
 import { PngIconType } from '../../../domain/icon'
-// import { selectAllBrands } from '../../../store/commonSlice'
 import {
   fetchStores,
   selectRogBrands,
   selectSelectedBrandIds,
-  selectSelectedCategoryIds,
   updateRog,
 } from '../../../store/rogSlice'
 
@@ -23,20 +21,10 @@ export const BrandList: React.FC = () => {
   const [showMore, setShowMore] = useState(false)
   const dispatch = useDispatch()
   const brands = useSelector(selectRogBrands)
-  const categoryIds = useSelector(selectSelectedCategoryIds)
   const brandIds = useSelector(selectSelectedBrandIds)
   const handleChange = (value: number[]) => {
     dispatch(updateRog({ selectedBrandIds: value }))
-    if (value.length && categoryIds.length) {
-      dispatch(
-        fetchStores({
-          brand: value.join(',') as unknown as any,
-          category: categoryIds[0],
-        }) as any
-      )
-    } else {
-      dispatch(updateRog({ stores: [] }))
-    }
+    dispatch(fetchStores() as any)
   }
 
   return (
