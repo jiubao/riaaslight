@@ -4,9 +4,9 @@ import { BASE_AUTH_URI } from '../constants'
 import { IUser } from '../domain'
 import { IAuthToken, ILinkedinResponse } from '../domain/auth'
 class AuthService {
-  linkedinCallback(code: string) {
+  linkedinCallback(code: string, redirectUri: string) {
     return HttpService.get<ILinkedinResponse>(
-      `${BASE_SERVICE_URI}/accounts/linkedin/callback?code=${code}`
+      `${BASE_SERVICE_URI}/accounts/linkedin/callback?code=${code}&redirect_uri=${redirectUri}`
     )
   }
   convertToken(token: string) {
