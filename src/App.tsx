@@ -1,6 +1,7 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
+import { createBrowserHistory } from 'history'
+import { unstable_HistoryRouter as HistoryRouter } from 'react-router-dom'
 import { MainRouter } from './router'
 import './styles/index.scss'
 import './styles/utils.scss'
@@ -11,18 +12,17 @@ const darkTheme = createTheme({
   },
 })
 
+export const history = createBrowserHistory()
+
 function App() {
   return (
-    <BrowserRouter>
+    <HistoryRouter history={history}>
       <ThemeProvider theme={darkTheme}>
         <div className="App">
-          {/* <MainMenu />
-          <header className="App-header">
-          </header> */}
           <MainRouter></MainRouter>
         </div>
       </ThemeProvider>
-    </BrowserRouter>
+    </HistoryRouter>
   )
 }
 

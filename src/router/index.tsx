@@ -10,16 +10,19 @@ import { GoogleMapDemo } from '../debug/map'
 import { DemoMask } from '../debug/mask'
 import { DemoMasonry } from '../debug/masonry'
 import { DemoToggleBox } from '../debug/togglebox'
+import { Login } from '../modules/login'
 import { NotFound } from '../modules/notFound'
 import { Posm } from '../modules/posm'
 import { Price } from '../modules/price'
 import { Rog } from '../modules/rog'
 // import { StoreGallery } from '../modules/rog/gallery'
 import { Store } from '../modules/store'
+import { LinkedInCallback } from 'react-linkedin-login-oauth2'
 
 export const MainRouter: React.FC = () => {
   return (
     <Routes>
+      <Route path="/linkedin" element={<LinkedInCallback />} />
       <Route path="/" element={<Layout />}>
         <Route index element={<Rog />} />
         <Route path="rog" element={<Rog />} />
@@ -28,6 +31,7 @@ export const MainRouter: React.FC = () => {
         <Route path="price" element={<Price />} />
       </Route>
       {/* <Route path="store/:retailerId/gallery/:id" element={<StoreGallery />} /> */}
+      <Route path="/login" element={<Login />} />
       <Route path="/debug" element={<Debug />}>
         <Route path="toggle" element={<DemoToggleBox />} />
         <Route path="gallery" element={<DebugGallery />} />
