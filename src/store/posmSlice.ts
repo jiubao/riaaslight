@@ -3,7 +3,7 @@ import { last } from 'lodash'
 import { RootState } from '.'
 import { IPosmShot, RegionEnum } from '../domain'
 import { posmService } from '../services/posm'
-import { date2Month, removeEmptyProps } from '../utils'
+import { date2Month } from '../utils'
 
 interface IState {
   shots: IPosmShot[]
@@ -48,14 +48,12 @@ export const fetchPosmShots = createAsyncThunk(
 
     dispatch(updatePosm({ lockShot: true }))
     try {
-      const shots = await posmService.get(
-        removeEmptyProps({
-          start: nextShotIndex,
-          limit: PAGE_SIZE,
-          region: selectedRegions.join(','),
-          retailer: selectedRetailerIds.join(','),
-        })
-      )
+      const shots = await posmService.get({
+        start: nextShotIndex,
+        limit: PAGE_SIZE,
+        region: selectedRegions.join(','),
+        retailer: selectedRetailerIds.join(','),
+      })
       dispatch(appendPosmShots(shots))
       return shots
     } finally {

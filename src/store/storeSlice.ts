@@ -4,7 +4,7 @@ import { RootState } from '.'
 import { IShelfShot, IStoreDetail } from '../domain'
 import { shelfShotService } from '../services/shelfShot'
 import { storeService } from '../services/store'
-import { date2Month, removeEmptyProps } from '../utils'
+import { date2Month } from '../utils'
 
 interface IState {
   storeDetail?: IStoreDetail
@@ -44,15 +44,13 @@ export const fetchShelfShots = createAsyncThunk(
         selectedBrandIds,
         selectedCategoryIds,
       } = state.store
-      const shots = await shelfShotService.get(
-        removeEmptyProps({
-          start: nextShotIndex,
-          limit: SHOT_PAGE_SIZE,
-          store_id: storeId || storeDetail?.store_id,
-          brand: selectedBrandIds.join(','),
-          category: selectedCategoryIds.join(','),
-        })
-      )
+      const shots = await shelfShotService.get({
+        start: nextShotIndex,
+        limit: SHOT_PAGE_SIZE,
+        store_id: storeId || storeDetail?.store_id,
+        brand: selectedBrandIds.join(','),
+        category: selectedCategoryIds.join(','),
+      })
       dispatch(appendShelfShots(shots))
       return shots
     } finally {

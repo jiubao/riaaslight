@@ -11,8 +11,7 @@
  */
 
 import { AxiosInstance, AxiosResponse } from 'axios'
-import { PartialRequestConfig } from '..'
-import { has, isArray, isObject, mapValues } from 'lodash'
+import { isArray, isObject, mapValues } from 'lodash'
 // import { message } from 'antd';
 
 export const uniqueKey = () => {
@@ -37,13 +36,6 @@ export const mapDeep = (
 
 export const bottomInterceptor = (instance: AxiosInstance) => {
   instance.interceptors.response.use((response: AxiosResponse) => {
-    const config = response.config as PartialRequestConfig
-    if (config.successToastMessage) {
-      // message.success(config.successToastMessage);
-    }
-    if (has(response?.data, 'wrapped')) {
-      delete response.data.wrapped
-    }
     return response.data
   })
 }

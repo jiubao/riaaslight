@@ -116,7 +116,7 @@ export interface IPosmShot extends IPosmShotSnap {
 export interface IPosmShotRequest extends IPaginationRequest {
   brand?: number
   category?: number
-  retailer?: number | ''
+  retailer?: number | '' | string
   region?: string
   store_id?: number
 }

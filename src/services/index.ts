@@ -2,6 +2,7 @@ import { bottomInterceptor } from './interceptors'
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 import { authInterceptor } from './interceptors/auth'
 import { errorInterceptor } from './interceptors/error'
+import { shrinkInterceptor } from './interceptors/shrink'
 
 type PaginationConfig = { pagination: boolean }
 type MultipartConfig = { multipart: boolean }
@@ -61,6 +62,7 @@ class Http {
   constructor() {
     const instance = (this.axiosInstance = axios.create(defaultConfig))
     authInterceptor(instance)
+    shrinkInterceptor(instance)
     bottomInterceptor(instance)
     errorInterceptor(instance)
   }
