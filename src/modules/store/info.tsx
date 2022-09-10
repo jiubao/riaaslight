@@ -1,7 +1,7 @@
 import { SvgIcon } from '@mui/material'
 import React, { useCallback, useEffect } from 'react'
 // import { BizUnit } from '../../components/BizUnit'
-import { CategoryList } from '../common/category/category'
+import { CategoryList } from '../common/category'
 // import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore'
 import GitHubIcon from '@mui/icons-material/GitHub'
 // import PlaceIcon from '@mui/icons-material/Place'

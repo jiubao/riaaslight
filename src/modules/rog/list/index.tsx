@@ -3,16 +3,19 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   // fetchBrands,
   selectAllCategories,
+  selectAllRetailers,
   // updateCommon,
 } from '../../../store/commonSlice'
 import {
   fetchBrands,
   selectSelectedCategoryIds,
+  selectSelectedRetailerIds,
   updateRog,
 } from '../../../store/rogSlice'
 import { BrandList } from './brand'
-import { CategoryList } from '../../common/category/category'
-import { RetailerList } from './retailer'
+import { CategoryList } from '../../common/category'
+import { RetailerList } from '../../common/retailer'
+// import { RetailerList } from './retailer'
 
 interface IProps {
   id?: string
@@ -24,6 +27,12 @@ export const RogList: React.FC<IProps> = ({ id }) => {
   const dispatch = useDispatch()
   const categories = useSelector(selectAllCategories)
   const selectedCategoryIds = useSelector(selectSelectedCategoryIds)
+  const retailers = useSelector(selectAllRetailers)
+  const selectedRetailerIds = useSelector(selectSelectedRetailerIds)
+
+  const handleRetailerChange = (value: number[]) => {
+    dispatch(updateRog({ selectedRetailerIds: value }))
+  }
 
   const handleCategoryChange = (value: number[]) => {
     dispatch(
@@ -43,7 +52,11 @@ export const RogList: React.FC<IProps> = ({ id }) => {
   return (
     <div className={PREFIX}>
       <span className={`${PREFIX}-title`}>RETAILER</span>
-      <RetailerList />
+      <RetailerList
+        retailers={retailers}
+        selected={selectedRetailerIds}
+        onChange={handleRetailerChange}
+      />
       <span className={`${PREFIX}-title`}>CATEGORY</span>
       <CategoryList
         categories={categories}

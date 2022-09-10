@@ -7,7 +7,7 @@ import {
   updateShelf,
 } from '../../store/shelfSlice'
 import { BrandList } from '../common/brand'
-import { CategoryList } from '../common/category/category'
+import { CategoryList } from '../common/category'
 import CloseIcon from '@mui/icons-material/Close'
 
 const PREFIX = 'ShelfDetailRight'

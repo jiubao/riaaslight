@@ -12,14 +12,9 @@ import { selectSelectedRetailerIds, updateRog } from '../../../store/rogSlice'
 const PREFIX = 'RetailerList'
 
 export const RetailerList: React.FC = () => {
-  // const navigate = useNavigate()
   const dispatch = useDispatch()
   const retailers = useSelector(selectAllRetailers)
   const retailerIds = useSelector(selectSelectedRetailerIds)
-
-  // const gotoDetail = (id?: string) => {
-  //   id !== undefined && navigate(`/store/${id}`)
-  // }
 
   const handleChange = (value: number[]) => {
     dispatch(updateRog({ selectedRetailerIds: value }))
