@@ -105,8 +105,10 @@ const PricePanel: React.FC<IProps> = React.memo(function PricePanel(props) {
 
   // 更新数据
   useEffect(() => {
-    if (data) {
-      dispatch(fetchPriceMap(data) as any)
+    if (visible) {
+      if (data) {
+        dispatch(fetchPriceMap(data) as any)
+      }
     }
   }, [visible, dispatch, data])
 

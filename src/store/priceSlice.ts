@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { union } from 'lodash'
+import dayjs from 'dayjs'
+import { debounce, union } from 'lodash'
 import { RootState } from '.'
 import { IPrice, IPriceMap, ISku } from '../domain'
 import { skuService } from '../services/sku'
@@ -13,8 +14,8 @@ interface IState {
   searchParams: {
     start: number
     limit: number
-    category: string
-    country: string
+    category: string[]
+    country: string[]
   }
   skuList: ISku[]
   price: {
@@ -36,8 +37,8 @@ const initialState: IState = {
   searchParams: {
     start: 0,
     limit: 100,
-    category: '',
-    country: '',
+    category: [],
+    country: [],
   },
   skuList: [],
   price: {
@@ -55,52 +56,64 @@ const initialState: IState = {
 
 export const fetchSkuList = createAsyncThunk(
   'common/fetchSkuList',
-  async (startFromScratch: boolean, api) => {
-    if (startFromScratch) {
+  debounce(
+    async (startFromScratch: boolean, api) => {
+      if (startFromScratch) {
+        api.dispatch(
+          update({
+            noMoreSku: false,
+            skuList: [],
+          })
+        )
+      }
+      const state = api.getState() as RootState
+      if (state.price.noMoreSku) return
       api.dispatch(
         update({
-          noMoreSku: false,
-          skuList: [],
+          skuListLoading: true,
         })
       )
+      let params: any = {
+        start: startFromScratch ? 0 : state.price.skuList.length,
+        limit: state.price.searchParams.limit,
+      }
+      if (state.price.searchParams.country?.length) {
+        params.country = state.price.searchParams.country.join(',')
+      }
+      if (state.price.searchParams.category?.length) {
+        params.category = state.price.searchParams.category.join(',')
+      }
+      try {
+        const res = await skuService.get(params)
+        let noMoreSku =
+          Array.isArray(res) &&
+          res.length &&
+          res.length === state.price.searchParams.limit
+            ? false
+            : true
+        api.dispatch(
+          update({
+            skuListLoading: false,
+            noMoreSku,
+            skuList: res?.length
+              ? [...state.price.skuList, ...res]
+              : state.price.skuList,
+          })
+        )
+      } catch (error) {
+        api.dispatch(
+          update({
+            skuListLoading: false,
+          })
+        )
+      }
+    },
+    500,
+    {
+      leading: true,
+      trailing: true,
     }
-    const state = api.getState() as RootState
-    if (state.price.noMoreSku) return
-    api.dispatch(
-      update({
-        skuListLoading: true,
-      })
-    )
-    let params: any = {
-      start: startFromScratch ? 0 : state.price.skuList.length,
-      limit: state.price.searchParams.limit,
-    }
-    if (state.price.searchParams.country !== 'All') {
-      params.country = state.price.searchParams.country
-    }
-    if (state.price.searchParams.category !== 'All') {
-      params.category = state.price.searchParams.category
-    }
-    try {
-      const res = await skuService.get(params)
-      let noMoreSku = Array.isArray(res) && res.length ? false : true
-      api.dispatch(
-        update({
-          skuListLoading: false,
-          noMoreSku,
-          skuList: !noMoreSku
-            ? [...state.price.skuList, ...res]
-            : state.price.skuList,
-        })
-      )
-    } catch (error) {
-      api.dispatch(
-        update({
-          skuListLoading: false,
-        })
-      )
-    }
-  }
+  )
 )
 
 export const fetchPriceMap = createAsyncThunk(
@@ -112,7 +125,13 @@ export const fetchPriceMap = createAsyncThunk(
       })
     )
     try {
-      const res = await skuService.getSkuPriceMap({ sku_id: skuInfo.sku_id })
+      const year_month_end = dayjs().format('YYYYMM')
+      const year_month_start = dayjs().subtract(6, 'months').format('YYYYMM')
+      const res = await skuService.getSkuPriceMap({
+        sku_id: skuInfo.sku_id,
+        year_month_end,
+        year_month_start,
+      })
       // 获取可选月份
       let dateList: string[] = []
 

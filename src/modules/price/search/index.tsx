@@ -67,19 +67,19 @@ const PriceSearch: React.FC<IProps> = function PriceSearch(props) {
     dispatch(fetchSkuList(true) as any)
   }, [dispatch])
 
-  const handleCategoryChange = (e: SelectChangeEvent<string>) => {
+  const handleCategoryChange = (e: SelectChangeEvent<string[]>) => {
     dispatch(
       updateParams({
-        category: e.target.value,
+        category: e.target.value as string[],
       })
     )
     dispatch(fetchSkuList(true) as any)
   }
 
-  const handleCountryChange = (e: SelectChangeEvent<string>) => {
+  const handleCountryChange = (e: SelectChangeEvent<string[]>) => {
     dispatch(
       updateParams({
-        country: e.target.value,
+        country: e.target.value as string[],
       })
     )
     dispatch(fetchSkuList(true) as any)
@@ -96,6 +96,7 @@ const PriceSearch: React.FC<IProps> = function PriceSearch(props) {
       >
         <InputLabel id="region-label">Region</InputLabel>
         <Select
+          multiple
           className={`${PREFIX}-country`}
           labelId="region-label"
           label="Region"
@@ -119,6 +120,7 @@ const PriceSearch: React.FC<IProps> = function PriceSearch(props) {
       >
         <InputLabel id="category-label">Category</InputLabel>
         <Select
+          multiple
           labelId="category-label"
           label="Category"
           value={params.category}

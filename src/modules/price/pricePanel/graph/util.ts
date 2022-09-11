@@ -1,6 +1,19 @@
 import { IPrice } from '../../../../domain'
 let isReverse = false
 let showLabel = true
+function toFixed(value: string, count: number) {
+  if (typeof value !== 'string') return ''
+  const [integer, decimal] = value?.split('.')
+  if (decimal) {
+    if (decimal.length < count) {
+      return integer + '.' + (decimal + '000').slice(0, count)
+    }
+    return value
+  } else {
+    return integer + '.00'
+  }
+}
+
 export function getOption(params: {
   source: { [key: string]: IPrice }
   color: string | null
@@ -55,7 +68,7 @@ export function getOption(params: {
     },
     axisLabel: {
       show: true,
-      align: 'top',
+      align: 'center',
       color: '#000000',
       fontWeight: 600,
       fontSize: 12,
@@ -198,6 +211,7 @@ function dataFormat(
       value: item[0], // 对值进行格式化
       coord: item[0] ? coord : [],
       label: {
+        formatter: toFixed('' + item[0], 2),
         position: 'bottom',
         color: item[2],
         fontFamily: 'PingFang SC',
@@ -211,7 +225,7 @@ function dataFormat(
       range: item, // tooltip 显示
       name, // legend 显示
       label: {
-        formatter: '' + item[1], // 最终值作为显示值
+        formatter: toFixed('' + item[1], 2), // 最终值作为显示值
         color: item[2],
         fontFamily: 'PingFang SC',
         fontSize: 16,

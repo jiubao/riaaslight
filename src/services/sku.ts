@@ -15,9 +15,18 @@ class SkuService {
       // country: 'Philippines',
     })
   }
-  getSkuPriceMap(params: Pick<ISku, 'sku_id'>) {
+  getSkuPriceMap(
+    params: Pick<ISku, 'sku_id'> & {
+      year_month_start: string
+      year_month_end: string
+    }
+  ) {
     return HttpService.get<IPriceMap>(
-      `${BASE_SERVICE_URI}/skus/${params.sku_id}/price`
+      `${BASE_SERVICE_URI}/skus/${params.sku_id}/price`,
+      {
+        year_month_start: params.year_month_start,
+        year_month_end: params.year_month_end,
+      }
     )
   }
 }
