@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { Publishers } from './publishers'
 import './index.scss'
 import { InputAdornment, TextField } from '@mui/material'
@@ -11,6 +11,7 @@ import {
   selectPublishersWithIcon,
   selectSelectedPublisherIds,
 } from '../../../store/publicationSlice'
+import { debounce } from 'lodash'
 
 const PREFIX = 'PublicationFilter'
 
@@ -28,12 +29,16 @@ export const PublicationFilter: React.FC = () => {
     [dispatch]
   )
 
+  const fetchMore = useMemo(() => {
+    return debounce(() => dispatch(fetchPublications() as any), 300)
+  }, [dispatch])
+
   const handleSearchTextChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       dispatch(resetPublicationFilter({ searchText: event.target.value }))
-      dispatch(fetchPublications() as any)
+      fetchMore()
     },
-    [dispatch]
+    [dispatch, fetchMore]
   )
 
   return (

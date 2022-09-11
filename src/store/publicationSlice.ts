@@ -27,7 +27,7 @@ const initialState: IState = {
   searchText: '',
 }
 
-const limit = 200
+const limit = 10
 
 export const fetchPublishers = createAsyncThunk(
   'publication/fetchPublishers',
@@ -139,3 +139,5 @@ export const selectSelectedPublisherIds = (state: RootState) =>
   state.publication.selectedPublisherIds
 export const selectPublicationSearchText = (state: RootState) =>
   state.publication.searchText
+export const selectPublicationHasNext = (state: RootState) =>
+  state.publication.hasNext
