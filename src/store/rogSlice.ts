@@ -20,6 +20,7 @@ const initialState: IState = {
   selectedRetailerIds: [],
   selectedCategoryIds: [],
   selectedBrandIds: [],
+  storeDetail: undefined,
   brands: [],
 }
 
@@ -111,6 +112,9 @@ export const rogSlice = createSlice({
       state.stores = []
       // state.brands = []
     },
+    reset(state) {
+      return { ...initialState }
+    },
   },
   extraReducers(builder) {
     builder.addCase(fetchStores.fulfilled, (state, action) => {
@@ -130,6 +134,7 @@ export const {
   resetCategory: resetRogCategory,
   resetBrand: resetRogBrand,
   resetRetailer: resetRogRetailer,
+  reset: resetRog,
 } = rogSlice.actions
 
 export default rogSlice.reducer

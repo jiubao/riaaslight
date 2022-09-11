@@ -1,15 +1,14 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { last } from 'lodash'
 import { RootState } from '.'
-import { IPosmShot, RegionEnum } from '../domain'
+import { IPosmShot } from '../domain'
 import { posmService } from '../services/posm'
 import { date2Month } from '../utils'
 
 interface IState {
-  shots: IPosmShot[]
-  selectedRetailerIds: number[]
   selectedRegions: string[]
-  region?: RegionEnum
+  selectedRetailerIds: number[]
+  shots: IPosmShot[]
   nextShotIndex: number
   hasNextShots: boolean
   lockShot: boolean
@@ -17,13 +16,13 @@ interface IState {
 }
 
 const initialState: IState = {
+  selectedRegions: [],
+  selectedRetailerIds: [],
   shots: [],
   nextShotIndex: 0,
   hasNextShots: true,
   lockShot: false,
   monthes: [],
-  selectedRetailerIds: [],
-  selectedRegions: [],
 }
 
 const PAGE_SIZE = 20
@@ -92,6 +91,9 @@ export const posmSlice = createSlice({
       state.nextShotIndex = nextShots.length
       state.hasNextShots = incoming.length === PAGE_SIZE
     },
+    reset() {
+      return { ...initialState }
+    },
   },
   // extraReducers(builder) {
   //   builder.addCase(fetchPosmShots.fulfilled, (state, action) => {
@@ -100,7 +102,11 @@ export const posmSlice = createSlice({
   // },
 })
 
-export const { update: updatePosm, append: appendPosmShots } = posmSlice.actions
+export const {
+  update: updatePosm,
+  append: appendPosmShots,
+  reset: resetPosm,
+} = posmSlice.actions
 
 export default posmSlice.reducer
 

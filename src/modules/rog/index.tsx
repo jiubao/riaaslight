@@ -13,6 +13,7 @@ import {
   fetchBrands,
   fetchStoreDetail,
   fetchStores,
+  resetRog,
   selectMapBounds,
   selectStoreDetail,
   selectStores,
@@ -53,7 +54,8 @@ export const Rog: React.FC<IProps> = ({ id }) => {
     dispatch(fetchAllBrands() as any)
 
     return () => {
-      dispatch(updateRog({ selectedBrandIds: [], storeDetail: undefined }))
+      // dispatch(updateRog({ selectedBrandIds: [], storeDetail: undefined }))
+      dispatch(resetRog())
     }
   }, [dispatch])
 

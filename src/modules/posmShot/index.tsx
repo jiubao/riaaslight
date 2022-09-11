@@ -21,11 +21,12 @@ const PREFIX = 'PosmShotDetail'
 
 export const PosmShotDetail: React.FC<IProps> = ({ shot, onClose }) => {
   const dispatch = useDispatch()
+
   useEffect(() => {
     dispatch(updatePosmShot({ shot }))
     dispatch(fetchPosmShotDetail(shot.img_id) as any)
     return () => {
-      dispatch(resetPosmShot() as any)
+      dispatch(resetPosmShot())
     }
   }, [dispatch, shot])
 

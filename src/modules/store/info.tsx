@@ -1,10 +1,6 @@
 import { SvgIcon } from '@mui/material'
 import React, { useCallback, useEffect } from 'react'
-// import { BizUnit } from '../../components/BizUnit'
 import { CategoryList } from '../common/category'
-// import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore'
-import GitHubIcon from '@mui/icons-material/GitHub'
-// import PlaceIcon from '@mui/icons-material/Place'
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined'
 import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined'
 import { useNavigate, useParams } from 'react-router'
@@ -12,16 +8,19 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   fetchShelfShots,
   fetchStoreDetail,
-  resetStore,
+  resetStoreBrand,
+  resetStoreCategory,
   selectSelectedBrandIds,
   selectSelectedCategoryIds,
   selectStoreBrands,
   selectStoreCategories,
   selectStoreDetail,
-  updateStore,
+  selectStoreRetailer,
 } from '../../store/storeSlice'
 import { parseStoreAddress } from '../../utils'
 import { BrandList } from '../common/brand'
+import { PNGIcon } from '../../components/icons/pngIcon'
+import { PngIconType } from '../../domain/icon'
 
 const PREFIX = 'StoreInfo'
 
@@ -34,13 +33,11 @@ export const StoreInfo: React.FC = () => {
   const categories = useSelector(selectStoreCategories)
   const selectedBrandIds = useSelector(selectSelectedBrandIds)
   const brands = useSelector(selectStoreBrands)
+  const retailer = useSelector(selectStoreRetailer)
 
   const handleCategoryChange = useCallback(
     (value: number[]) => {
-      dispatch(
-        updateStore({ selectedCategoryIds: value, selectedBrandIds: [] })
-      )
-      dispatch(resetStore())
+      dispatch(resetStoreCategory(value))
       dispatch(fetchShelfShots({}) as any)
     },
     [dispatch]
@@ -48,28 +45,11 @@ export const StoreInfo: React.FC = () => {
 
   const handleBrandChange = useCallback(
     (value: number[]) => {
-      console.log(value)
-      dispatch(updateStore({ selectedBrandIds: value }))
-      dispatch(resetStore())
+      dispatch(resetStoreBrand(value))
       dispatch(fetchShelfShots({}) as any)
     },
     [dispatch]
   )
-
-  // useEffect(() => {
-  //   dispatch(fetchCategories() as any).then((res: any) => {
-  //     const categories = res.payload as ICategory[]
-  //     if (categories?.length) {
-  //       const id = categories[0].id
-  //       dispatch(updateStore({ selectedCategoryIds: [id] }))
-  //       // dispatch(fetchBrands(id) as any)
-  //     }
-  //   })
-  // }, [dispatch, handleCategoryChange, id])
-
-  // useEffect(() => {
-  //   dispatch(updateStore({ selectedCategoryIds: categories[0]?.id }))
-  // }, [categories, dispatch])
 
   useEffect(() => {
     id && dispatch(fetchStoreDetail(Number(id)) as any)
@@ -85,7 +65,11 @@ export const StoreInfo: React.FC = () => {
           onClick={() => navigate('/rog')}
         />
         <div className={`${PREFIX}-brand flex middle`}>
-          <SvgIcon component={GitHubIcon} fontSize="large" />
+          <PNGIcon
+            type={PngIconType.Retailer}
+            name={retailer?.retailer_icon}
+            className={`${PREFIX}-retailer`}
+          />
           <span>{storeDetail?.store_name}</span>
         </div>
         <div className={`${PREFIX}-location flex middle`}>

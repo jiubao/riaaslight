@@ -10,7 +10,6 @@ interface IState {
   storeDetail?: IStoreDetail
   selectedCategoryIds: number[]
   selectedBrandIds: number[]
-  // brands: IBrand[]
   shelfShots: IShelfShot[]
   monthes: Array<{ month: string; shelfIds: number[] }>
   nextShotIndex: number
@@ -19,10 +18,10 @@ interface IState {
 }
 
 const initialState: IState = {
-  shelfShots: [],
+  storeDetail: undefined,
   selectedCategoryIds: [],
   selectedBrandIds: [],
-  // brands: [],
+  shelfShots: [],
   monthes: [],
   nextShotIndex: 0,
   hasNextShots: true,
@@ -96,26 +95,37 @@ export const storeSlice = createSlice({
       state.nextShotIndex = nextShelfShots.length
       state.hasNextShots = incoming.length === SHOT_PAGE_SIZE
     },
-    reset(state) {
-      state.hasNextShots = true
-      state.monthes = []
-      state.nextShotIndex = 0
-      state.shelfShots = []
+    resetCategory(state, action) {
+      return {
+        ...initialState,
+        storeDetail: state.storeDetail,
+        selectedCategoryIds: action.payload,
+      }
+    },
+    resetBrand(state, action) {
+      return {
+        ...initialState,
+        storeDetail: state.storeDetail,
+        selectedCategoryIds: state.selectedCategoryIds,
+        selectedBrandIds: action.payload,
+      }
+    },
+    reset() {
+      return { ...initialState }
     },
   },
   extraReducers(builder) {
     builder.addCase(fetchStoreDetail.fulfilled, (state, action) => {
       state.storeDetail = action.payload
     })
-    // builder.addCase(fetchShelfShots.fulfilled, (state, action) => {
-    //   state.shelfShots = action.payload
-    // })
   },
 })
 
 export const {
   update: updateStore,
   appendShelfShots,
+  resetCategory: resetStoreCategory,
+  resetBrand: resetStoreBrand,
   reset: resetStore,
 } = storeSlice.actions
 
@@ -173,4 +183,9 @@ export const selectShelfShotsGroup = (state: RootState) => {
 
 export const selectHasNextShots = (state: RootState) => {
   return state.store.hasNextShots
+}
+
+export const selectStoreRetailer = (state: RootState) => {
+  const id = state.store.storeDetail?.retailer_id
+  return id ? state.common.retailers.find((r) => r.id === id) : undefined
 }

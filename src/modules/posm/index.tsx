@@ -12,6 +12,7 @@ import { useIntersection } from '../../hooks/useIntersection'
 import { fetchAllBrands, fetchRetailers } from '../../store/commonSlice'
 import {
   fetchPosmShots,
+  resetPosm,
   selectHasNextShots,
   selectPosmShotsGroup,
 } from '../../store/posmSlice'
@@ -38,6 +39,10 @@ export const Posm: React.FC = () => {
     dispatch(fetchAllBrands() as any)
     dispatch(fetchRetailers() as any)
     dispatch(fetchPosmShots(true) as any)
+
+    return () => {
+      dispatch(resetPosm())
+    }
   }, [dispatch])
 
   useIntersection(

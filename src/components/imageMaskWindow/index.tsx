@@ -63,7 +63,7 @@ export const ImageMaskWindow: React.FC<PropsWithClassName<IProps>> = React.memo(
         //   dh = divSize.height
         if ([iw, ih, dw, dh].indexOf(0) >= 0) return
 
-        console.log('l3...')
+        // console.log('l3...')
         const ir = iw / ih
         const dr = dw / dh
         const center = [1, 0, 0, 1, -iw / 2, -ih / 2] as TransformMatrix2D
@@ -90,7 +90,7 @@ export const ImageMaskWindow: React.FC<PropsWithClassName<IProps>> = React.memo(
         // zoomRef.current = zoom[0]
         setZoom(zoom[0])
 
-        console.log('zoom: ', zoom)
+        // console.log('zoom: ', zoom)
 
         setZoomStyle({
           width: `${iw}px`,

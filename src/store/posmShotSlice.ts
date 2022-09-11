@@ -5,7 +5,6 @@ import { IPosmShot, IPosmShotDetail } from '../domain'
 import { posmService } from '../services/posm'
 
 interface IState {
-  // imgId: string
   shot?: IPosmShot
   detail?: IPosmShotDetail
   lockDetail: boolean
@@ -14,9 +13,11 @@ interface IState {
 }
 
 const initialState: IState = {
+  shot: undefined,
+  detail: undefined,
   lockDetail: false,
-  lockShots: false,
   shots: [],
+  lockShots: false,
 }
 
 export const fetchPosmShotDetail = createAsyncThunk(
@@ -104,6 +105,5 @@ export const selectPosmShots = (state: RootState) => state.posmShot.shots
 export const selectPosmShotIndex = (state: RootState) => {
   const { shots, shot } = state.posmShot
   const index = shots.findIndex((s) => s.id === shot?.id)
-  console.log('s:', index)
   return index
 }
