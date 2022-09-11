@@ -1,17 +1,21 @@
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   fetchPublications,
   fetchPublishers,
   resetPublication,
+  selectPublications,
 } from '../../store/publicationSlice'
 import './index.scss'
 import { PublicationFilter } from './filter'
+import { PublicationItem } from './item'
+import { Masonry } from '../../components/masonry'
 
 const PREFIX = 'Publication'
 
 export const Publication: React.FC = () => {
   const dispatch = useDispatch()
+  const publications = useSelector(selectPublications)
 
   useEffect(() => {
     dispatch(fetchPublishers() as any)
@@ -24,6 +28,12 @@ export const Publication: React.FC = () => {
 
   return (
     <div className={PREFIX}>
+      <Masonry columnCount={5} total={publications.length} gutter={15}>
+        {({ index }: { index: number }) => {
+          const item = publications[index]
+          return <PublicationItem data={item} />
+        }}
+      </Masonry>
       <PublicationFilter />
     </div>
   )
