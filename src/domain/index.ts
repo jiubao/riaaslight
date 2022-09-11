@@ -171,3 +171,25 @@ export interface IUser {
   first_name: string
   last_name: string
 }
+
+export interface IPublisher {
+  id: number
+  publisher_name: string
+  publisher_desc: string
+  publisher_status: number
+  publisher_icon: string
+}
+
+export interface IPublication {
+  id: number
+  publisher_id: number
+  title: string
+  desc: string
+  url: string
+  cover_url: string
+}
+
+export interface IPublicationRequest extends IPaginationRequest {
+  publisher?: string // 1,2,3,4
+  search?: string
+}

@@ -15,9 +15,9 @@ import { NotFound } from '../modules/notFound'
 import { Posm } from '../modules/posm'
 import { Price } from '../modules/price'
 import { Rog } from '../modules/rog'
-// import { StoreGallery } from '../modules/rog/gallery'
 import { Store } from '../modules/store'
 import { LinkedInCallback } from 'react-linkedin-login-oauth2'
+import { Publication } from '../modules/publication'
 
 export const MainRouter: React.FC = () => {
   return (
@@ -29,8 +29,8 @@ export const MainRouter: React.FC = () => {
         <Route path="store/:id" element={<Store />} />
         <Route path="posm" element={<Posm />} />
         <Route path="price" element={<Price />} />
+        <Route path="publication" element={<Publication />} />
       </Route>
-      {/* <Route path="store/:retailerId/gallery/:id" element={<StoreGallery />} /> */}
       <Route path="/login" element={<Login />} />
       <Route path="/debug" element={<Debug />}>
         <Route path="toggle" element={<DemoToggleBox />} />

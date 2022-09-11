@@ -15,6 +15,7 @@ export const MainHeader: React.FC = () => {
   const matchRogDetail = useMatch('/retailer/:id')
   const matchPosmDetail = useMatch('/posm/:id')
   const matchStore = useMatch('/store/:id')
+  const matchPublication = useMatch('/publication')
 
   return (
     <div className={PREFIX}>
@@ -39,7 +40,8 @@ export const MainHeader: React.FC = () => {
       <MenuButton
         text="Publications"
         icon={<AnchorIcon />}
-        to="/publications"
+        to="/publication"
+        match={!!matchPublication}
         className={`${PREFIX}-menu`}
       />
       <MenuButton

@@ -10,10 +10,3 @@ export interface IStroke {
 }
 
 export type PositionType = [number, number, number, number] // left top right bottom
-
-// export interface IRect {
-//   x: number
-//   y: number
-//   w: number
-//   h: number
-// }
