@@ -74,3 +74,5 @@ export const selectPublications = (state: RootState) =>
   state.publication.publications
 export const selectSelectedPublisherIds = (state: RootState) =>
   state.publication.selectedPublisherIds
+export const selectPublicationSearchText = (state: RootState) =>
+  state.publication.searchText

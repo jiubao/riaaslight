@@ -1,35 +1,29 @@
-import React, { useCallback } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React from 'react'
 import { BizUnit } from '../../../components/BizUnit'
 import {
   ToggleSelectorGroup,
   ToggleSelectorItem,
 } from '../../../components/toggleSelector'
+import { IPublisher } from '../../../domain'
 import { PngIconType } from '../../../domain/icon'
-import {
-  selectPublishers,
-  selectSelectedPublisherIds,
-  updatePublication,
-} from '../../../store/publicationSlice'
 
 const PREFIX = 'Publishers'
 
-export const Publishers: React.FC = React.memo(function Publishers() {
-  const dispatch = useDispatch()
-  const publishers = useSelector(selectPublishers)
-  const selected = useSelector(selectSelectedPublisherIds)
+interface IProps {
+  all: IPublisher[]
+  value: number[]
+  onChange: (value: number[]) => void
+}
 
-  const handleChange = useCallback(
-    (value: number[]) => {
-      dispatch(updatePublication({ selectedPublisherIds: value }))
-    },
-    [dispatch]
-  )
-
+export const Publishers: React.FC<IProps> = React.memo(function Publishers({
+  all,
+  value,
+  onChange,
+}) {
   return (
     <div className={PREFIX}>
-      <ToggleSelectorGroup value={selected} onChange={handleChange}>
-        {publishers.map((item) => (
+      <ToggleSelectorGroup value={value} onChange={onChange}>
+        {all.map((item) => (
           <ToggleSelectorItem value={item.id} key={item.id}>
             <BizUnit
               id={String(item.id)}
