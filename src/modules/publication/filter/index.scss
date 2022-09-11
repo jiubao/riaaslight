@@ -1,0 +1,37 @@
+.Publishers {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  .PNGIcon {
+    width: auto;
+    height: auto;
+  }
+
+  .BizUnit {
+    border: solid 1px #B5B5B5;
+    box-shadow: none;
+    background-color: #fff;
+  }
+}
+
+.PublicationFilter {
+  position: fixed;
+  // height: 64px;
+  top: 80px;
+  right: 22px;
+  left: 22px;
+  padding: 9px 8px 9px 8px;
+
+  background: #F1F2F7;
+  border-radius: 8px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  &-search {
+    background: #fff;
+  }
+}

@@ -10,6 +10,9 @@ interface IState {
   lockPublication: boolean
   next: number
   hasNext: boolean
+
+  selectedPublisherIds: number[]
+  searchText: string
 }
 
 const initialState: IState = {
@@ -19,6 +22,9 @@ const initialState: IState = {
   lockPublication: false,
   next: 0,
   hasNext: true,
+
+  selectedPublisherIds: [],
+  searchText: '',
 }
 
 export const fetchPublishers = createAsyncThunk(

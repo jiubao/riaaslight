@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { fetchPublishers, resetPublication } from '../../store/publicationSlice'
 import './index.scss'
+import { PublicationFilter } from './filter'
 
 const PREFIX = 'Publication'
 
@@ -18,7 +19,7 @@ export const Publication: React.FC = () => {
 
   return (
     <div className={PREFIX}>
-      <div>p</div>
+      <PublicationFilter />
     </div>
   )
 }
