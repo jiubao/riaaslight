@@ -27,6 +27,8 @@ const initialState: IState = {
   searchText: '',
 }
 
+const limit = 20
+
 export const fetchPublishers = createAsyncThunk(
   'publication/fetchPublishers',
   async (_, { dispatch, getState }) => {
@@ -44,6 +46,44 @@ export const fetchPublishers = createAsyncThunk(
   }
 )
 
+export const fetchPublications = createAsyncThunk(
+  'publication/fetchPublications',
+  async (_, { dispatch, getState }) => {
+    const state = getState() as RootState
+    const {
+      lockPublication,
+      hasNext,
+      next,
+      selectedPublisherIds,
+      searchText,
+      publications,
+    } = state.publication
+    if (lockPublication) return Promise.reject(false)
+    if (!hasNext) return []
+    dispatch(updatePublication({ lockPublisher: true }))
+    try {
+      const res =
+        (await publicationService.getPublications({
+          start: next,
+          limit,
+          search: searchText,
+          publisher: selectedPublisherIds.join(','),
+        })) || []
+
+      const nextList = publications.concat(res)
+      dispatch(
+        updatePublication({
+          publications: nextList,
+          next: nextList.length,
+          hasNext: res.length === limit,
+        })
+      )
+    } finally {
+      dispatch(updatePublication({ lockPublisher: false }))
+    }
+  }
+)
+
 export const publicationSlice = createSlice({
   name: 'publication',
   initialState,
@@ -51,6 +91,15 @@ export const publicationSlice = createSlice({
     update(state, action: PayloadAction<Partial<IState>>) {
       return {
         ...state,
+        ...action.payload,
+      }
+    },
+    resetFilter(state, action: PayloadAction<Partial<IState>>) {
+      return {
+        ...initialState,
+        publishers: state.publishers,
+        selectedPublisherIds: state.selectedPublisherIds,
+        searchText: state.searchText,
         ...action.payload,
       }
     },
@@ -63,8 +112,11 @@ export const publicationSlice = createSlice({
   },
 })
 
-export const { update: updatePublication, reset: resetPublication } =
-  publicationSlice.actions
+export const {
+  update: updatePublication,
+  reset: resetPublication,
+  resetFilter: resetPublicationFilter,
+} = publicationSlice.actions
 
 export default publicationSlice.reducer
 

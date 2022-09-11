@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { fetchPublishers, resetPublication } from '../../store/publicationSlice'
+import {
+  fetchPublications,
+  fetchPublishers,
+  resetPublication,
+} from '../../store/publicationSlice'
 import './index.scss'
 import { PublicationFilter } from './filter'
 
@@ -11,6 +15,7 @@ export const Publication: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchPublishers() as any)
+    dispatch(fetchPublications() as any)
 
     return () => {
       dispatch(resetPublication())

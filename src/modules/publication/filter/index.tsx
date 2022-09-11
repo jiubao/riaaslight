@@ -5,10 +5,11 @@ import { InputAdornment, TextField } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import { useDispatch, useSelector } from 'react-redux'
 import {
+  fetchPublications,
+  resetPublicationFilter,
   selectPublicationSearchText,
   selectPublishers,
   selectSelectedPublisherIds,
-  updatePublication,
 } from '../../../store/publicationSlice'
 
 const PREFIX = 'PublicationFilter'
@@ -21,14 +22,16 @@ export const PublicationFilter: React.FC = () => {
 
   const handlePublisherChange = useCallback(
     (value: number[]) => {
-      dispatch(updatePublication({ selectedPublisherIds: value }))
+      dispatch(resetPublicationFilter({ selectedPublisherIds: value }))
+      dispatch(fetchPublications() as any)
     },
     [dispatch]
   )
 
   const handleSearchTextChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      dispatch(updatePublication({ searchText: event.target.value }))
+      dispatch(resetPublicationFilter({ searchText: event.target.value }))
+      dispatch(fetchPublications() as any)
     },
     [dispatch]
   )
