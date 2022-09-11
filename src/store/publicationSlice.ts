@@ -27,7 +27,7 @@ export const fetchPublishers = createAsyncThunk(
     const state = getState() as RootState
     const { publishers, lockPublisher } = state.publication
     if (lockPublisher) return Promise.reject(false)
-    if (publishers) return publishers
+    if (publishers.length) return publishers
     dispatch(updatePublication({ lockPublisher: true }))
     try {
       const res = await publicationService.getPublishers()
@@ -48,9 +48,10 @@ export const publicationSlice = createSlice({
         ...action.payload,
       }
     },
-    reset() {
+    reset(state) {
       return {
         ...initialState,
+        publishers: state.publishers,
       }
     },
   },

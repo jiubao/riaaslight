@@ -26,3 +26,4 @@ const encode_path = (path, target) => {
 
 encode_path('./static/icons/retailers', './src/assets/jsons/retailers.json')
 encode_path('./static/icons/brands', './src/assets/jsons/brands.json')
+encode_path('./static/icons/publishers', './src/assets/jsons/publishers.json')
