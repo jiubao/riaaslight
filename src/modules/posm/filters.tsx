@@ -52,7 +52,7 @@ export const PosmFilters: React.FC<IProps> = ({ onChange }) => {
 
   return (
     <div className={PREFIX}>
-      <FormControl fullWidth>
+      <FormControl fullWidth size="small">
         <InputLabel id="region-label">Region</InputLabel>
         <Select
           multiple
@@ -67,7 +67,7 @@ export const PosmFilters: React.FC<IProps> = ({ onChange }) => {
           <MenuItem value={RegionEnum.SEA}>{RegionEnum.SEA}</MenuItem>
         </Select>
       </FormControl>
-      <FormControl fullWidth>
+      <FormControl fullWidth size="small">
         <InputLabel id="retailer-label">Retailer</InputLabel>
         <Select
           multiple

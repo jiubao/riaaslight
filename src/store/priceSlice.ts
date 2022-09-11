@@ -36,8 +36,8 @@ const initialState: IState = {
   searchParams: {
     start: 0,
     limit: 100,
-    category: 'All',
-    country: 'All',
+    category: '',
+    country: '',
   },
   skuList: [],
   price: {

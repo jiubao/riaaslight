@@ -83,6 +83,7 @@ interface IProps<T> {
   scrollToBottomCallback: () => void
   forwardRef?: (instance: IWaterfallInstance) => void
   loading?: boolean
+  onResize?: () => void
   render: (
     item: T,
     onClick?: (item: T) => void
@@ -105,6 +106,7 @@ const WaterFall = function WaterFall({
   loading,
   noMoreData,
   forceBreak,
+  onResize,
   render,
 }: IProps<WaterFallDataItem>) {
   const wrapper = useRef<HTMLDivElement>(null)
@@ -118,6 +120,7 @@ const WaterFall = function WaterFall({
 
   const handleResize = () => {
     updateDataList()
+    onResize?.()
   }
 
   const updateSelectedItem = useCallback(

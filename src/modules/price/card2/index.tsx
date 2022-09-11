@@ -9,12 +9,13 @@ interface IProps<T> {
   className?: string
   data: T
   url: string
+  forceUpdate?: number
   onClick?: (item: any) => void
   showDetail: (data: T) => void
 }
 
 function SkuCard<T extends WaterFallDataItem>(props: IProps<T>) {
-  const { className, url, data } = props
+  const { className, url, data, forceUpdate } = props
   const [detailVisible, setDetailVisible] = useState<boolean>(false)
   const dataRef = useRef<any>(data)
   const detailRef = useRef<HTMLDivElement>(null)
@@ -43,7 +44,7 @@ function SkuCard<T extends WaterFallDataItem>(props: IProps<T>) {
     return
   }, [url])
 
-  const skuNameList = useMemo(() => {
+  const skuNameList: string[] = useMemo(() => {
     return data.sku_name.split(/\s/).map((i: string) => i + ' ')
   }, [data.sku_name])
 
@@ -53,13 +54,14 @@ function SkuCard<T extends WaterFallDataItem>(props: IProps<T>) {
   const onMouseLeave = () => {
     setDetailVisible(false)
   }
+  const updateText = detailVisible + '' + forceUpdate
   useHideWhenChildExceedRow(
     {
       ref: detailRef,
       childSelector: `.text`,
       replaceRef: replaceRef,
     },
-    detailVisible
+    updateText
   )
   const goDetail = () => {
     props.showDetail(data)

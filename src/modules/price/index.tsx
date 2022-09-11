@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import WaterFall from '../../components/WaterFall'
 import { WaterFallDataItem } from '../../components/WaterFall/interface'
@@ -27,12 +27,13 @@ export const Price: React.FC<IProps> = ({ id }) => {
   const noMoreSku = useSelector(noMoreSkuSelector)
   const [visible, setVisible] = useState<boolean>(false)
   const [currentItem, setCurrentItem] = useState<WaterFallDataItem & ISku>()
+  const [resizeTime, setResizeTime] = useState<number>(0)
   const photos: Array<WaterFallDataItem & ISku> = useMemo(() => {
     return list.map((item) => {
       return {
         ...item,
         width: 120,
-        height: 212,
+        height: 150,
         url: item.sku_cover_pic_url,
       }
     })
@@ -55,12 +56,17 @@ export const Price: React.FC<IProps> = ({ id }) => {
     setVisible(false)
   }
 
+  const onResize = useCallback(() => {
+    setResizeTime((c) => c + 1)
+  }, [])
+
   return (
     <div className={PREFIX}>
       <Search></Search>
       <WaterFall
         loading={skuListLoading}
         className="Price-list"
+        onResize={onResize}
         gutter={8}
         noMoreData={noMoreSku}
         columnCount={10}
@@ -70,6 +76,7 @@ export const Price: React.FC<IProps> = ({ id }) => {
           return (
             <Card
               onClick={onClick}
+              forceUpdate={resizeTime}
               showDetail={showDetail}
               data={item as any}
               url={item.url}

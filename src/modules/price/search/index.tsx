@@ -1,4 +1,10 @@
-import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from '@mui/material'
 import cls from 'classnames'
 import React, { useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -34,7 +40,7 @@ const PriceSearch: React.FC<IProps> = function PriceSearch(props) {
         })
         return out
       },
-      [{ label: 'All', value: 'All' }] as Array<{
+      [] as Array<{
         label: string
         value: number | string
       }>
@@ -50,7 +56,7 @@ const PriceSearch: React.FC<IProps> = function PriceSearch(props) {
         })
         return out
       },
-      [{ label: 'All', value: 'All' }] as Array<{
+      [] as Array<{
         label: string
         value: string
       }>
@@ -81,30 +87,50 @@ const PriceSearch: React.FC<IProps> = function PriceSearch(props) {
 
   return (
     <div className={cls(`${PREFIX}`, className)}>
-      <Select
-        className={`${PREFIX}-country`}
-        value={params.country}
+      <FormControl
         size="small"
-        onChange={handleCountryChange}
+        sx={{
+          width: '140px',
+          backgroundColor: 'white',
+        }}
       >
-        {countryOptions.map((item) => (
-          <MenuItem key={item.value} value={item.value}>
-            {item.label}
-          </MenuItem>
-        ))}
-      </Select>
-      <Select
-        className={`${PREFIX}-category`}
+        <InputLabel id="region-label">Region</InputLabel>
+        <Select
+          className={`${PREFIX}-country`}
+          labelId="region-label"
+          label="Region"
+          value={params.country}
+          onChange={handleCountryChange}
+        >
+          {countryOptions.map((item) => (
+            <MenuItem key={item.value} value={item.value}>
+              {item.label}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      <FormControl
         size="small"
-        value={params.category}
-        onChange={handleCategoryChange}
+        sx={{
+          marginLeft: '16px',
+          width: '220px',
+          backgroundColor: 'white',
+        }}
       >
-        {categoryOptions.map((item) => (
-          <MenuItem key={item.value} value={item.value}>
-            {item.label}
-          </MenuItem>
-        ))}
-      </Select>
+        <InputLabel id="category-label">Category</InputLabel>
+        <Select
+          labelId="category-label"
+          label="Category"
+          value={params.category}
+          onChange={handleCategoryChange}
+        >
+          {categoryOptions.map((item) => (
+            <MenuItem key={item.value} value={item.value}>
+              {item.label}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
     </div>
   )
 }
