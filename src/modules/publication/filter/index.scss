@@ -13,15 +13,19 @@
     box-shadow: none;
     background-color: #fff;
   }
+  .ToggleSelector-item.isChecked {
+    .BizUnit {
+      border: 2px solid #01A2EA;
+    }
+  }
 }
 
 .PublicationFilter {
   position: fixed;
-  // height: 64px;
   top: 80px;
   right: 22px;
   left: 22px;
-  padding: 9px 16px 9px 8px;
+  padding: 9px 8px;
 
   background: #F1F2F7;
   border-radius: 8px;
@@ -33,6 +37,6 @@
 
   &-search {
     background: #fff;
-    margin: 0 !important;
+    margin: 2px !important;
   }
 }
