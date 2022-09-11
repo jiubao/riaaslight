@@ -122,6 +122,17 @@ export default publicationSlice.reducer
 
 export const selectPublishers = (state: RootState) =>
   state.publication.publishers
+export const selectPublishersWithIcon = (state: RootState) =>
+  state.publication.publishers.filter((item) => !!item.publisher_icon)
+export const selectPublisherHash = (state: RootState) => {
+  return state.publication.publishers.reduce<Record<string, IPublisher>>(
+    (hash, item) => {
+      hash[item.id] = item
+      return hash
+    },
+    {}
+  )
+}
 export const selectPublications = (state: RootState) =>
   state.publication.publications
 export const selectSelectedPublisherIds = (state: RootState) =>

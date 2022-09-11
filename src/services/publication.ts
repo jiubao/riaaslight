@@ -6,9 +6,7 @@ class PublicationService {
   getPublishers() {
     return HttpService.get<IPublisher[]>(
       `${BASE_SERVICE_URI}/publishers?status=active`
-    ).then((res) => {
-      return res?.filter((item) => !!item.publisher_icon) || []
-    })
+    )
   }
   getPublications(params: IPublicationRequest) {
     return HttpService.get<IPublication[]>(

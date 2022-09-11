@@ -8,7 +8,7 @@ import {
   fetchPublications,
   resetPublicationFilter,
   selectPublicationSearchText,
-  selectPublishers,
+  selectPublishersWithIcon,
   selectSelectedPublisherIds,
 } from '../../../store/publicationSlice'
 
@@ -16,7 +16,7 @@ const PREFIX = 'PublicationFilter'
 
 export const PublicationFilter: React.FC = () => {
   const dispatch = useDispatch()
-  const publishers = useSelector(selectPublishers)
+  const publishers = useSelector(selectPublishersWithIcon)
   const selectedPublisherIds = useSelector(selectSelectedPublisherIds)
   const searchText = useSelector(selectPublicationSearchText)
 

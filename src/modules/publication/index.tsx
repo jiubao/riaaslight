@@ -28,13 +28,13 @@ export const Publication: React.FC = () => {
 
   return (
     <div className={PREFIX}>
+      <PublicationFilter />
       <Masonry columnCount={5} total={publications.length} gutter={15}>
         {({ index }: { index: number }) => {
           const item = publications[index]
           return <PublicationItem data={item} />
         }}
       </Masonry>
-      <PublicationFilter />
     </div>
   )
 }
