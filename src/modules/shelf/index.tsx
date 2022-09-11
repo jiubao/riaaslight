@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { LR } from '../../components/layout/lr'
 import './index.scss'
 import { ShelfDetailRight } from './right'
 import { ShelfDetailLeft } from './left'
-// import { useWindowResize } from '../../hooks/useWindowResize'
+import { useDispatch } from 'react-redux'
+import { resetShelf } from '../../store/shelfSlice'
 
 const PREFIX = 'ShelfDetail'
 
@@ -12,19 +13,16 @@ interface IProps {
 }
 
 export const ShelfDetail: React.FC<IProps> = ({ onClose }) => {
-  // const [style, setStyle] = useState<CSSProperties>()
+  const dispatch = useDispatch()
 
-  // useWindowResize(() => {
-  //   setStyle({ height: window.innerHeight - 90 })
-  // }, [])
+  useEffect(() => {
+    return () => {
+      dispatch(resetShelf())
+    }
+  }, [dispatch])
 
   return (
-    <LR
-      className={PREFIX}
-      // style={style}
-      percent={77}
-      left={<ShelfDetailLeft />}
-    >
+    <LR className={PREFIX} percent={77} left={<ShelfDetailLeft />}>
       <ShelfDetailRight onClose={onClose} />
     </LR>
   )

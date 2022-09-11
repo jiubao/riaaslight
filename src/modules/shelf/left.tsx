@@ -8,12 +8,12 @@ import { selectShelfShots, selectStoreDetail } from '../../store/storeSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   fetchShelfByIndex,
-  // resetShelf,
+  resetShelfSelection,
   selectSelectedBrandsPositions,
   selectShelfIndex,
 } from '../../store/shelfSlice'
-import { ShelfShotInfo } from './info'
 import { Slider } from '../../components/slider'
+import { BizInfo } from '../../components/BizInfo'
 
 const PREFIX = 'ShelfDetailLeft'
 
@@ -26,7 +26,7 @@ export const ShelfDetailLeft: React.FC = () => {
 
   const handleChange = (index: number) => {
     if (index >= 0) {
-      // dispatch(resetShelf() as any)
+      dispatch(resetShelfSelection())
       dispatch(fetchShelfByIndex(index) as any)
     }
   }
@@ -42,7 +42,11 @@ export const ShelfDetailLeft: React.FC = () => {
           mode="spot"
           drawing={true}
         />
-        <ShelfShotInfo shelfShot={shots[shelfIndex]} store={store} />
+        <BizInfo
+          date={shots[shelfIndex]?.visit_date}
+          name={store?.store_name}
+          address={`${store?.store_address}, ${store?.store_city}, ${store?.store_country}`}
+        />
       </div>
       <div className={`${PREFIX}-thumbSwiper`}>
         <Slider total={shots.length} index={shelfIndex}>

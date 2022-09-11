@@ -9,10 +9,10 @@ interface IState {
   detail?: IShelfShotDetail
   selectedCategoryIds: number[]
   selectedBrandIds: number[]
-  currentShelfId?: number
 }
 
 const initialState: IState = {
+  detail: undefined,
   selectedCategoryIds: [],
   selectedBrandIds: [],
 }
@@ -45,9 +45,14 @@ export const shelfSlice = createSlice({
         ...action.payload,
       }
     },
-    reset(state) {
-      state.selectedCategoryIds = []
-      state.selectedBrandIds = []
+    resetShelf(state) {
+      return {
+        ...initialState,
+        detail: state.detail,
+      }
+    },
+    reset() {
+      return { ...initialState }
     },
   },
   extraReducers(builder) {
@@ -57,7 +62,11 @@ export const shelfSlice = createSlice({
   },
 })
 
-export const { update: updateShelf, reset: resetShelf } = shelfSlice.actions
+export const {
+  update: updateShelf,
+  reset: resetShelf,
+  resetShelf: resetShelfSelection,
+} = shelfSlice.actions
 
 export default shelfSlice.reducer
 
@@ -68,13 +77,14 @@ export const selectSelectedBrandIds = (state: RootState) =>
   state.shelf.selectedBrandIds
 
 export const selectShelfBrands = (state: RootState) => {
+  const brandMap = state.shelf.detail?.brand_map
+  if (!brandMap) return []
   const hash = new Map()
   state.common.brands.forEach((brand) => hash.set(`${brand.id}`, brand))
-  return state.shelf.detail
-    ? Object.keys(state.shelf.detail.brand_map)
-        .map((id) => hash.get(id))
-        .filter(Boolean)
-    : []
+  return Object.keys(brandMap)
+    .map((id) => ({ brand: hash.get(id), count: brandMap[id].length }))
+    .sort((a, b) => b.count - a.count)
+    .map((item) => item.brand)
 }
 
 export const selectShelfCategories = (state: RootState) => {

@@ -1,0 +1,33 @@
+@import '../../styles/base.scss';
+
+.BizInfo {
+  position: absolute;
+  left: 20px;
+  bottom: 17px;
+  right: 20px;
+  font-size: 16px;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &-right {
+    display: flex;
+  }
+
+  &-storeName {
+    font-size: 22px;
+    margin-right: 10px;
+  }
+
+  &-address {
+    font-weight: 400;
+    font-size: 14px;
+  }
+
+  .MuiSvgIcon-root {
+    margin-right: 5px;
+  }
+
+  @include baseFont;
+}
