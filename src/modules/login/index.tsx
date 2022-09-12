@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useLinkedIn } from 'react-linkedin-login-oauth2'
 import linkedin from 'react-linkedin-login-oauth2/assets/linkedin.png'
-import { LINKEDIN_CLIENTID } from '../../constants'
 import { authService } from '../../services/auth'
 import './index.scss'
 import store from 'store'
@@ -11,6 +10,7 @@ import { LogoIcon } from '../../components/icons'
 import { CommonModal } from '../../components/modal'
 import { CircularProgress } from '@mui/material'
 import bg from '../../assets/login.jpg'
+import { LINKEDIN_CLIENTID } from '../../config'
 
 const PREFIX = 'Login'
 

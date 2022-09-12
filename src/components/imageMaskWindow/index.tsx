@@ -18,6 +18,9 @@ import {
 } from '../../utils/matrix'
 import { SpotWindow } from './spotWindow'
 import { loadImageByOrder } from '../../utils/image'
+import { Fab } from '@mui/material'
+import ZoomInIcon from '@mui/icons-material/ZoomIn'
+import { grey } from '@mui/material/colors'
 
 interface IProps {
   src: string[]
@@ -31,7 +34,7 @@ interface IProps {
 const PREFIX = 'ImageMaskWindow'
 
 export const ImageMaskWindow: React.FC<PropsWithClassName<IProps>> = React.memo(
-  ({
+  function ImageMaskWindow({
     className,
     src,
     rectangles,
@@ -39,7 +42,7 @@ export const ImageMaskWindow: React.FC<PropsWithClassName<IProps>> = React.memo(
     mode = 'box',
     drawing = true,
     actives = [],
-  }) => {
+  }) {
     const [loaded, setLoaded] = useState(false)
     const [image, setImage] = useState<HTMLImageElement>()
     const [nativeSrc, setSrc] = useState('')
@@ -178,6 +181,25 @@ export const ImageMaskWindow: React.FC<PropsWithClassName<IProps>> = React.memo(
             )}
           </div>
         )}
+        <Fab
+          // color="primary"
+          aria-label="add"
+          sx={{
+            display: 'none',
+            position: 'absolute',
+            top: 20,
+            right: 10,
+            bgcolor: grey[500],
+            color: '#fff',
+            '&:hover': {
+              bgcolor: grey[600],
+            },
+          }}
+          // color={grey}
+        >
+          <ZoomInIcon sx={{ fontSize: 30 }} />
+          {/* <ZoomInIcon /> */}
+        </Fab>
       </div>
     )
   }

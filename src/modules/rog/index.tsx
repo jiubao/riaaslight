@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { MapWrapper, Map } from '../../components/googleMap'
 import { Marker } from '../../components/googleMap/marker'
 import { LR } from '../../components/layout/lr'
-import { Coordinates } from '../../constants/map'
+import { GoogleMapCenter, GoogleMapZoom } from '../../config'
 import {
   fetchAllBrands,
   fetchCategories,
@@ -30,10 +30,10 @@ interface IProps {
 
 const PREFIX = 'Rog'
 const CENTER = {
-  lat: Coordinates.philippines[0],
-  lng: Coordinates.philippines[1],
+  lat: GoogleMapCenter[0],
+  lng: GoogleMapCenter[1],
 }
-const DEFAULT_MAP_OPTIONS = { center: CENTER, zoom: 6 }
+const DEFAULT_MAP_OPTIONS = { center: CENTER, zoom: GoogleMapZoom }
 
 export const Rog: React.FC<IProps> = ({ id }) => {
   const dispatch = useDispatch()

@@ -57,3 +57,12 @@
   height: 700px;
   overflow: auto;
 }
+
+.DemoZoom {
+  width: 1200px;
+  height: 700px;
+  border: solid 1px black;
+  img {
+    width: 100%;
+  }
+}

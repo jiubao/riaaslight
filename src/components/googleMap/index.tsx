@@ -2,8 +2,8 @@ import React, { PropsWithChildren, useEffect, useRef } from 'react'
 import { Wrapper, Status } from '@googlemaps/react-wrapper'
 import { PropsWithClassName } from '../../domain/common'
 import classNames from 'classnames'
-import { GoogleMapApiKey } from '../../constants/map'
 import { useDeepCompareEffectForMaps } from '../../hooks/map'
+import { GoogleMapApiKey } from '../../config'
 
 const PREFIX = 'GoogleMap'
 

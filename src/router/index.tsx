@@ -18,6 +18,7 @@ import { Rog } from '../modules/rog'
 import { Store } from '../modules/store'
 import { LinkedInCallback } from 'react-linkedin-login-oauth2'
 import { Publication } from '../modules/publication'
+import { DemoZoom } from '../debug/zoom'
 
 export const MainRouter: React.FC = () => {
   return (
@@ -41,6 +42,7 @@ export const MainRouter: React.FC = () => {
         <Route path="line" element={<DemoTimeline />} />
         <Route path="line2" element={<DemoTimeline2 />} />
         <Route path="images" element={<DemoImages />} />
+        <Route path="zoom" element={<DemoZoom />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
