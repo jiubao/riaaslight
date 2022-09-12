@@ -164,8 +164,8 @@ export interface IPosmShotDetail {
 }
 
 export interface IUser {
-  avatar: {
-    small: string
+  avatar?: {
+    small?: string
   }
   email: string
   first_name: string

@@ -37,7 +37,11 @@ export const User: React.FC = () => {
   return (
     <>
       <div className={`${PREFIX} flexMiddle`} onClick={handleClick}>
-        {user?.avatar.small && <Avatar alt="" src={user?.avatar.small} />}
+        <Avatar
+          alt=""
+          src={user?.avatar?.small}
+          sx={{ width: 32, height: 32 }}
+        />
         <div className={`${PREFIX}-info`}>{user?.first_name}</div>
         <ExpandMoreIcon fontSize="small" />
       </div>
