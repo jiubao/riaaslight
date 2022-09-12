@@ -21,6 +21,7 @@ import { loadImageByOrder } from '../../utils/image'
 import { Fab } from '@mui/material'
 import ZoomInIcon from '@mui/icons-material/ZoomIn'
 import { grey } from '@mui/material/colors'
+import { ZoomWindow } from '../zoom/window'
 
 interface IProps {
   src: string[]
@@ -54,6 +55,7 @@ export const ImageMaskWindow: React.FC<PropsWithClassName<IProps>> = React.memo(
     const [zoomStyle, setZoomStyle] = useState<CSSProperties>()
     const [zoom, setZoom] = useState(1)
     // const zoomRef = useRef(1)
+    const [showZoom, setShowZoom] = useState(false)
 
     const setStyle = useCallback(
       (iw: number, ih: number, dw: number, dh: number) => {
@@ -151,8 +153,20 @@ export const ImageMaskWindow: React.FC<PropsWithClassName<IProps>> = React.memo(
       [mode]
     )
 
+    const handleRightClick = useCallback(
+      (event: React.MouseEvent<HTMLDivElement>) => {
+        setShowZoom(false)
+        event.preventDefault()
+      },
+      []
+    )
+
     return (
-      <div className={classNames(PREFIX, className)} ref={divRef}>
+      <div
+        className={classNames(PREFIX, className)}
+        ref={divRef}
+        onContextMenu={handleRightClick}
+      >
         {loaded && (
           <div className={`${PREFIX}-wrapper`} style={wrapStyle}>
             <img src={nativeSrc} alt="" />
@@ -179,23 +193,24 @@ export const ImageMaskWindow: React.FC<PropsWithClassName<IProps>> = React.memo(
                 </div>
               </>
             )}
+            {showZoom && <ZoomWindow src={nativeSrc} />}
           </div>
         )}
         <Fab
           // color="primary"
           aria-label="add"
           sx={{
-            display: 'none',
+            display: showZoom ? 'none' : 'block',
             position: 'absolute',
             top: 20,
-            right: 10,
+            right: 20,
             bgcolor: grey[500],
             color: '#fff',
             '&:hover': {
               bgcolor: grey[600],
             },
           }}
-          // color={grey}
+          onClick={() => setShowZoom(true)}
         >
           <ZoomInIcon sx={{ fontSize: 30 }} />
           {/* <ZoomInIcon /> */}

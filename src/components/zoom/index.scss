@@ -1,0 +1,17 @@
+.ZoomWindow {
+  z-index: 99;
+  &-cover {
+    z-index: 10;
+    cursor: crosshair;
+  }
+  &-img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    // opacity: 0.3;
+    transform-origin: top left;
+  }
+  &-borderClip {
+    background-color: #fff;
+  }
+}

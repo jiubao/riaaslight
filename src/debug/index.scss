@@ -59,10 +59,17 @@
 }
 
 .DemoZoom {
-  width: 1200px;
-  height: 700px;
-  border: solid 1px black;
-  img {
-    width: 100%;
+  width: 95%;
+  height: 600px;
+  border: solid 1px blue;
+  overflow: hidden;
+  &-wrap {
+    position: relative;
+    height: 100%;
+    border: solid 1px red;
+  }
+
+  &-img {
+    height: 100%;
   }
 }
