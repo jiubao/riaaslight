@@ -81,10 +81,23 @@ export const selectShelfBrands = (state: RootState) => {
   if (!brandMap) return []
   const hash = new Map()
   state.common.brands.forEach((brand) => hash.set(`${brand.id}`, brand))
-  return Object.keys(brandMap)
-    .map((id) => ({ brand: hash.get(id), count: brandMap[id].length }))
-    .sort((a, b) => b.count - a.count)
-    .map((item) => item.brand)
+  const list = Object.keys(brandMap).map((id) => ({
+    brand: hash.get(id),
+    count: brandMap[id].length,
+  }))
+  const otherIndex = list.findIndex(
+    (item) => String(item.brand.brand_name).toUpperCase() === 'OTHER'
+  )
+  let others: any[] = []
+  if (otherIndex >= 0) {
+    others = list.splice(otherIndex, 1)
+  }
+
+  const sorted = list.sort((a, b) => b.count - a.count)
+  if (otherIndex >= 0) {
+    sorted.push(others[0])
+  }
+  return sorted.map((item) => item.brand)
 }
 
 export const selectShelfCategories = (state: RootState) => {

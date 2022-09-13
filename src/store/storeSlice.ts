@@ -160,12 +160,28 @@ export const selectStoreBrands = (state: RootState) => {
 
   const store = state.store.storeDetail
   if (!store || !store.brand_map || all.length === 0) return []
-  const list = Object.keys(store.brand_map).map((key) => ({
-    brandId: Number(key),
-    count: store.brand_map[key],
-  }))
+  const list = Object.keys(store.brand_map).map((key) => {
+    const name = map.get(Number(key))?.brand_name
+    return {
+      brandId: Number(key),
+      count: store.brand_map[key],
+      name,
+    }
+  })
+
+  const otherIndex = list.findIndex(
+    (item) => String(item.name).toUpperCase() === 'OTHER'
+  )
+  let others: any[] = []
+  if (otherIndex >= 0) {
+    others = list.splice(otherIndex, 1)
+  }
 
   const sorted = orderBy(list, ['count'], ['desc'])
+  if (otherIndex >= 0) {
+    sorted.push(others[0])
+  }
+
   return sorted.map((item) => map.get(item.brandId)).filter(Boolean)
 }
 
