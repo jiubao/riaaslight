@@ -12,8 +12,8 @@ import { RectType } from '../../domain/shape'
 import { PropsWithClassName } from '../../domain/common'
 import classNames from 'classnames'
 import {
-  commonTransformMatrix,
   IdentityTransformMatrix2D,
+  multiplyMatrices,
   TransformMatrix2D,
 } from '../../utils/matrix'
 import { SpotWindow } from './spotWindow'
@@ -59,19 +59,10 @@ export const ImageMaskWindow: React.FC<PropsWithClassName<IProps>> = React.memo(
 
     const setStyle = useCallback(
       (iw: number, ih: number, dw: number, dh: number) => {
-        // console.log('l2...')
-        // const { width: iw, height: ih } = imageSize
-        // const { width: dw, height: dh } = divSize
-        // const iw = imageSize.width,
-        //   ih = imageSize.height
-        // const dw = divSize.width,
-        //   dh = divSize.height
         if ([iw, ih, dw, dh].indexOf(0) >= 0) return
 
-        // console.log('l3...')
         const ir = iw / ih
         const dr = dw / dh
-        const center = [1, 0, 0, 1, -iw / 2, -ih / 2] as TransformMatrix2D
         let zoom = IdentityTransformMatrix2D
         if (dr >= ir) {
           const w = dh * ir
@@ -92,18 +83,14 @@ export const ImageMaskWindow: React.FC<PropsWithClassName<IProps>> = React.memo(
 
           zoom = [dw / iw, 0, 0, dw / iw, 0, 0] as TransformMatrix2D
         }
-        // zoomRef.current = zoom[0]
         setZoom(zoom[0])
-
-        // console.log('zoom: ', zoom)
 
         setZoomStyle({
           width: `${iw}px`,
           height: `${ih}px`,
-          transform: `matrix(${commonTransformMatrix(
-            IdentityTransformMatrix2D,
+          transform: `matrix(${multiplyMatrices(
             zoom,
-            center
+            IdentityTransformMatrix2D
           ).join(',')})`,
         })
       },
@@ -113,27 +100,8 @@ export const ImageMaskWindow: React.FC<PropsWithClassName<IProps>> = React.memo(
     useEffect(() => {
       if (!divRef.current) return
       const div = divRef.current
-
-      // const img = new Image()
-      // const off = on(img, 'load', () => {
-      //   // console.log('l1...')
-      //   setLoaded(true)
-      //   setImage(img)
-      //   setStyle(
-      //     img.naturalWidth,
-      //     img.naturalHeight,
-      //     div.clientWidth,
-      //     div.clientHeight
-      //   )
-      // })
-      // img.src = src
-
-      // return () => {
-      //   off()
-      // }
       loadImageByOrder(src).then((result) => {
         if (result) {
-          // console.log('l1...')
           const { img } = result
           setLoaded(true)
           setImage(img)

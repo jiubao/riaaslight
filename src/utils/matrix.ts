@@ -113,14 +113,3 @@ export const cosTheta = (v1: Vector2D, v2: Vector2D) =>
 //     a1 * b4 + a3 * b5 + a5,
 //   ] as TransformMatrix2D;
 // };
-
-export const commonTransformMatrix = (
-  origin: TransformMatrix2D,
-  matrix: TransformMatrix2D,
-  center: TransformMatrix2D
-) => {
-  return multiplyMatrices(
-    multiplyMatrices(multiplyMatrices(origin, center), matrix),
-    revertMatrix(center)
-  )
-}
