@@ -4,6 +4,9 @@ export const CLIENT_SECRET =
   'xJ69gLGKFS4D4l8rukGt1NhXO5zyCPbPKHqvXb6ps6OKEfeTSzhJwzXYQD7UTT3Dj1qNbKgDZfdnybWQBWjr0uhfn85rz9LkAwnBlskaqNyIyIm1CJU9JZw2BDbg0nDS'
 
 export const GoogleMapApiKey = 'AIzaSyBhUlTLE7gqk00FEdOKVFhCOd2j0uqVSxw'
+// newyork: [40.6976637, -74.1197618],
+// shanghai: [31.2246325, 121.1965787],
+// philippines: [12, 123],
 export const GoogleMapCenter = [12, 123]
 export const GoogleMapZoom = 6
 

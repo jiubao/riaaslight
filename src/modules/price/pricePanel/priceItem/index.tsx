@@ -1,6 +1,7 @@
 import cls from 'classnames'
 import React from 'react'
 import { PNGIcon } from '../../../../components/icons/pngIcon'
+import { CURRENCY_SYMBOL } from '../../../../config'
 import { PngIconType } from '../../../../domain/icon'
 import { IPriceItem } from '../interface'
 import './index.scss'
@@ -26,11 +27,11 @@ const PriceItem: React.FC<IProps> = React.memo(function PriceItem(props) {
         <span className={`${PREFIX}-title`}>{retailer_name}</span>
         <div className={`${PREFIX}-price low`}>
           <span className="prefix">L</span>
-          <span className="price">${min}</span>
+          <span className="price">{`${CURRENCY_SYMBOL}${min}`}</span>
         </div>
         <div className={`${PREFIX}-price high`}>
           <span className="prefix">H</span>
-          <span className="price">${max}</span>
+          <span className="price">{`${CURRENCY_SYMBOL}${max}`}</span>
         </div>
       </div>
     </div>

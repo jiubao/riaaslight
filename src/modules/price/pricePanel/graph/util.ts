@@ -1,3 +1,4 @@
+import { CURRENCY_SYMBOL } from '../../../../config'
 import { IPrice } from '../../../../domain'
 let isReverse = false
 let showLabel = true
@@ -33,7 +34,7 @@ export function getOption(params: {
 
   let yAxis: any = {
     type: 'value',
-    name: 'unit：$',
+    name: `unit：${CURRENCY_SYMBOL}`,
     min: yMax === 0 ? null : yMin,
     max: yMax === 0 ? null : yMax,
     nameTextStyle: {
