@@ -11,6 +11,7 @@ import { CommonModal } from '../../components/modal'
 import { CircularProgress } from '@mui/material'
 import bg from '../../assets/login.jpg'
 import { LINKEDIN_CLIENTID } from '../../config'
+import logoSlogan from '../../assets/logo_solgan.png'
 
 const PREFIX = 'Login'
 
@@ -23,7 +24,9 @@ const Left = () => {
         alt=""
       />
       {/* <div className={`${PREFIX}-mask fulfilled`}></div> */}
-      <span className="center">ROG PICTURES UPDATE DAILY</span>
+      <span className="center">
+        "Seeing is Believing" - Real-Time Shelf Image
+      </span>
     </div>
   )
 }
@@ -64,7 +67,8 @@ export const Login: React.FC = () => {
     <LR className={PREFIX} left={<Left />} percent={68}>
       <div className={`${PREFIX}-right fulfilled flexCore`}>
         <div className={`${PREFIX}-logo`}>
-          <LogoIcon width="98" height="29" viewBox="0 0 98 29" />
+          {/* <LogoIcon width="98" height="29" viewBox="0 0 98 29" /> */}
+          <img src={logoSlogan} alt="" />
         </div>
         <img
           onClick={linkedInLogin}

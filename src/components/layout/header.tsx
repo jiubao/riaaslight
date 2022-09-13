@@ -1,5 +1,5 @@
 import React from 'react'
-import { LogoIcon } from '../icons'
+import { LogoIcon, PosmIcon, PublicationIcon } from '../icons'
 import { MenuButton } from './menu'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm'
@@ -31,14 +31,14 @@ export const MainHeader: React.FC = () => {
       />
       <MenuButton
         text="POSM"
-        icon={<AccessAlarmIcon />}
+        icon={<PosmIcon />}
         to="/posm"
         match={!!matchPosmDetail}
         className={`${PREFIX}-menu`}
       />
       <MenuButton
         text="Publications"
-        icon={<AnchorIcon />}
+        icon={<PublicationIcon />}
         to="/publication"
         match={!!matchPublication}
         className={`${PREFIX}-menu`}
