@@ -6,7 +6,6 @@ import './index.scss'
 import store from 'store'
 import { useNavigate } from 'react-router-dom'
 import { LR } from '../../components/layout/lr'
-import { LogoIcon } from '../../components/icons'
 import { CommonModal } from '../../components/modal'
 import { CircularProgress } from '@mui/material'
 import bg from '../../assets/login.jpg'
@@ -24,9 +23,10 @@ const Left = () => {
         alt=""
       />
       {/* <div className={`${PREFIX}-mask fulfilled`}></div> */}
-      <span className="center">
-        "Seeing is Believing" - Real-Time Shelf Image
-      </span>
+      <div className={`center ${PREFIX}-saying`}>
+        <span>"Seeing is Believing"</span>
+        <span>Real-Time Shelf Image</span>
+      </div>
     </div>
   )
 }

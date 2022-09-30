@@ -9,8 +9,7 @@
       object-fit: cover;
     }
     span {
-      font-weight: 500;
-      font-size: 40px;
+      // font-weight: 500;
       color: #FFFFFF;
       white-space: nowrap;
 
@@ -39,5 +38,19 @@
     height: 126px;
     margin-bottom: 60px;
     overflow: hidden;
+  }
+
+  &-saying {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    span:first-child {
+      font-size: 72px;
+      // color: green;
+    }
+    span:last-child {
+      font-size: 40px;
+      // color: red;
+    }
   }
 }
